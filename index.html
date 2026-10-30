@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d1c">
+  <title>A2Z Song — Your Music. Your Choice.</title>
+  <meta name="description" content="Listen to and download your favourite songs on A2Z Song.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="A2Z Song home"><span class="brand-mark">♫</span><span>A2Z <b>Song</b></span></a>
+    <div class="top-actions">
+      <a class="admin-link" href="admin.html">Admin</a>
+      <a class="top-cta" href="#all-songs">Explore songs <span>↗</span></a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="live-dot"></span> YOUR MUSIC DESTINATION</div>
+        <h1>Every song.<br><span>One place.</span></h1>
+        <p>Find your favourites, press play, and enjoy the music.</p>
+        <a class="hero-button" href="#all-songs">Listen now <span>▶</span></a>
+      </div>
+      <div class="hero-art" aria-label="Decorative music artwork">
+        <div class="art-glow"></div><div class="vinyl"><div class="vinyl-label">A2Z<br><small>SONG</small></div></div>
+        <div class="floating-note note-one">♪</div><div class="floating-note note-two">♫</div>
+        <div class="art-caption"><span>NOW PLAYING</span><b>Good music, good mood.</b></div>
+      </div>
+    </section>
+
+    <section class="section-head" id="all-songs">
+      <div><div class="eyebrow">THE COLLECTION</div><h2>All songs <span class="count" id="song-count">0</span></h2></div>
+      <label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Search songs, albums..." autocomplete="off"></label>
+    </section>
+
+    <section class="filter-row">
+      <span class="filter-label">YOUR LIBRARY</span>
+      <span class="filter-note">Play online · Download anytime</span>
+    </section>
+    <div id="song-list" class="song-list">
+      <div class="empty-state"><div class="empty-icon">♫</div><h3>Your next favourite song is waiting.</h3><p>Songs added from the admin panel will appear here.</p></div>
+    </div>
+    <div id="status" class="status" role="status"></div>
+  </main>
+
+  <footer class="footer"><a class="brand footer-brand" href="./"><span class="brand-mark">♫</span><span>A2Z <b>Song</b></span></a><span>Made for music lovers.</span><a href="admin.html">Admin panel</a></footer>
+
+  <div class="player-bar" id="player-bar" hidden>
+    <div class="player-track"><div class="mini-cover">♫</div><div class="player-meta"><b id="now-title">Select a song</b><span id="now-artist">A2Z Song</span></div></div>
+    <div class="player-controls"><button id="prev" aria-label="Previous song">⏮</button><button id="toggle-play" class="play-main" aria-label="Play">▶</button><button id="next" aria-label="Next song">⏭</button></div>
+    <div class="player-progress"><span id="current-time">0:00</span><input id="seek" type="range" min="0" max="100" value="0"><span id="duration">0:00</span></div>
+    <audio id="audio" preload="metadata"></audio>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
