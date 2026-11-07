@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>A2Z Songs - Alex Morgan</title>
+<title>A2Z Songs</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 html{overflow-y:auto}
@@ -54,6 +54,7 @@ body.player-locked .phone{height:100dvh;min-height:0;overflow:hidden;padding-bot
 .stats b{font-size:26px;display:block} .stats span{font-size:14px;color:#aaa}
 .edit-wrap{text-align:center;margin-top:10px}
 .edit-btn{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff;border:none;padding:9px 28px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer}
+.logout-btn{background:#2a2a2a;color:#ff5a7a;border:1px solid #444;padding:9px 22px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;margin-left:8px}
 .dots{margin-left:auto;font-size:20px;color:#ddd}
 h3{font-size:24px;margin:28px 0 12px}
 .set-row{background:#1c1c1e;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer}
@@ -107,7 +108,6 @@ h3{font-size:24px;margin:28px 0 12px}
 .small-btn{background:#333;border:none;color:#fff;padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}
 .small-btn.red{background:#ff2d55}.small-btn.blue{background:#3a7bd5}
 .tick-mini{width:32px;height:32px;background:#1db954;border-radius:50%;display:grid;place-items:center;color:#000;font-weight:800}
-/* --- EDIT PROFILE FORM --- */
 .form-label{font-size:14px;font-weight:700;color:#ddd;margin:18px 0 8px;display:block}
 .form-input{width:100%;background:#1c1c1e;border:1px solid #333;border-radius:12px;padding:14px;color:#fff;outline:none;font-size:15px}
 .form-input:focus{border-color:#ff2d55}
@@ -122,6 +122,18 @@ h3{font-size:24px;margin:28px 0 12px}
 .edit-avatar img{width:100%;height:100%;object-fit:cover}
 .change-photo{color:#ff5a7a;font-size:14px;font-weight:700;margin-top:8px;cursor:pointer;display:block;text-align:center}
 .success-msg{background:#1db954;color:#fff;padding:12px;border-radius:10px;text-align:center;font-weight:700;display:none;margin-top:14px}
+.error-msg{background:#ff2d55;color:#fff;padding:12px;border-radius:10px;text-align:center;font-weight:700;display:none;margin-top:14px}
+/* --- AUTH --- */
+.auth-logo{width:90px;height:90px;border-radius:24px;background:linear-gradient(135deg,#ff2d55,#ff8a5a);margin:14px auto;display:grid;place-items:center;font-size:44px}
+.auth-title{text-align:center;font-size:26px;font-weight:800;margin:6px 0}
+.auth-sub{text-align:center;color:#aaa;font-size:14px;margin-bottom:6px}
+.auth-tabs{display:flex;background:#1c1c1e;border-radius:14px;padding:5px;gap:5px;margin:18px 0}
+.auth-tabs button{flex:1;border:none;padding:12px 0;border-radius:10px;background:transparent;color:#aaa;font-size:15px;font-weight:700;cursor:pointer}
+.auth-tabs button.active{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff}
+.auth-switch{text-align:center;color:#aaa;font-size:14px;margin-top:16px}
+.auth-switch b{color:#ff5a7a;cursor:pointer}
+.demo-box{background:#1c1c1e;border-radius:12px;padding:12px;text-align:center;color:#aaa;font-size:13px;margin-top:14px}
+.demo-box b{color:#fff}
 </style>
 </head>
 <body>
@@ -129,7 +141,7 @@ h3{font-size:24px;margin:28px 0 12px}
 
 <!-- HOME -->
 <div id="page-home" class="page active">
-  <div class="header"><h1 id="homeGreeting">Good Evening, Alex 👋</h1></div>
+  <div class="header"><h1 id="homeGreeting">Good Evening, Guest 👋</h1></div>
   <div class="hero"><small>🔥 TRENDING NOW</small><h2>A2Z Songs</h2><p>Best Malayalam & Hindi Hits</p><button onclick="go('album')">▶ Play All</button></div>
   <div class="tabs">
     <button id="tab-actor" class="active" onclick="showTab('actor')">🎬 Actor</button>
@@ -215,12 +227,53 @@ h3{font-size:24px;margin:28px 0 12px}
   <div style="height:30px"></div>
 </div>
 
-<!-- MY PROFILE -->
+<!-- AUTH - LOGIN & SIGN UP -->
+<div id="page-auth" class="page">
+  <div class="header"><h1>Profile</h1></div>
+  <div class="auth-logo">🎵</div>
+  <h2 class="auth-title">Welcome to A2Z Songs</h2>
+  <p class="auth-sub" id="authSub">Login cheythu ningalude playlists kaanu</p>
+  <div class="auth-tabs">
+    <button id="authTabLogin" class="active" onclick="switchAuth('login')">Login</button>
+    <button id="authTabSignup" onclick="switchAuth('signup')">Sign Up</button>
+  </div>
+  <!-- LOGIN FORM -->
+  <div id="loginForm">
+    <label class="form-label">📧 Email / Username</label>
+    <input class="form-input" id="loginEmail" placeholder="e.g. alex@gmail.com or alex_morgan">
+    <label class="form-label">🔒 Password</label>
+    <div class="pass-wrap"><input class="form-input" id="loginPassword" type="password" placeholder="Password"><button class="eye-btn" type="button" onclick="let p=document.getElementById('loginPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div>
+    <div class="error-msg" id="loginError"></div>
+    <div class="success-msg" id="loginSuccess"></div>
+    <button class="save-btn" onclick="doLogin()">Login →</button>
+    <div class="auth-switch">Account illa? <b onclick="switchAuth('signup')">Sign Up cheyyu</b></div>
+  </div>
+  <!-- SIGN UP FORM -->
+  <div id="signupForm" style="display:none">
+    <label class="form-label">👤 Full Name</label>
+    <input class="form-input" id="signupName" placeholder="e.g. Alex Morgan">
+    <label class="form-label">@ Username</label>
+    <input class="form-input" id="signupUsername" placeholder="e.g. alex_morgan">
+    <label class="form-label">📧 Email</label>
+    <input class="form-input" id="signupEmail" type="email" placeholder="e.g. alex@gmail.com">
+    <label class="form-label">🔒 Password</label>
+    <div class="pass-wrap"><input class="form-input" id="signupPassword" type="password" placeholder="Min 4 letters"><button class="eye-btn" type="button" onclick="let p=document.getElementById('signupPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div>
+    <div class="form-hint">Password min 4 aksharam</div>
+    <div class="error-msg" id="signupError"></div>
+    <div class="success-msg" id="signupSuccess"></div>
+    <button class="save-btn" onclick="doSignup()">✨ Create Account</button>
+    <div class="auth-switch">Already account undu? <b onclick="switchAuth('login')">Login cheyyu</b></div>
+  </div>
+  <div class="demo-box">Demo: First time <b>Sign Up</b> cheyyu,<br>pinne athe Email + Password vechu <b>Login</b> cheyyam</div>
+  <div style="height:30px"></div>
+</div>
+
+<!-- MY PROFILE - LOGIN CHEYTHAL MATHRAM -->
 <div id="page-profile" class="page">
   <div class="header"><h1>Profile</h1><div class="gear">⚙️</div></div>
   <div class="profile-top"><div class="avatar" id="profileAvatarWrap"><span id="profileAvatarLetter">👤</span><img id="profileAvatarImg" src="" style="display:none" onerror="this.style.display='none'"></div><h2 id="profileName">Alex Morgan</h2><div class="profile-username" id="profileUsername">@alex_morgan</div><div class="profile-email" id="profileEmail">alex.morgan@gmail.com</div></div>
   <div class="stats"><div><b>128</b><span>Following</span></div><div><b>1.2k</b><span>Followers</span></div><div><b id="profilePlaylistCount">4</b><span>Playlists</span></div></div>
-  <div class="edit-wrap"><button class="edit-btn" onclick="go('editprofile')">Edit Profile</button></div>
+  <div class="edit-wrap"><button class="edit-btn" onclick="go('editprofile')">Edit Profile</button><button class="logout-btn" onclick="doLogout()">Logout</button></div>
   <h3>🎵 My Playlists</h3>
   <button class="follow-btn" style="margin:0 0 12px" onclick="createPlaylistPrompt()">+ New Playlist</button>
   <div id="myPlaylists"></div>
@@ -232,7 +285,7 @@ h3{font-size:24px;margin:28px 0 12px}
   <div style="height:30px"></div>
 </div>
 
-<!-- EDIT PROFILE - NEW PAGE -->
+<!-- EDIT PROFILE -->
 <div id="page-editprofile" class="page">
   <div class="header"><div class="back" onclick="history.back()">‹</div><h1>Edit Profile</h1></div>
   <div class="edit-avatar-wrap">
@@ -244,7 +297,6 @@ h3{font-size:24px;margin:28px 0 12px}
   <input class="form-input" id="editName" placeholder="e.g. Alex Morgan">
   <label class="form-label">@ Username</label>
   <input class="form-input" id="editUsername" placeholder="e.g. alex_morgan">
-  <div class="form-hint">Username-il space venda, _ mathram use cheyyu</div>
   <label class="form-label">📧 Email</label>
   <input class="form-input" id="editEmail" type="email" placeholder="e.g. alex@gmail.com">
   <label class="form-label">🔒 Password</label>
@@ -282,9 +334,84 @@ h3{font-size:24px;margin:28px 0 12px}
 </div>
 
 <script>
-/* --- USER PROFILE - localStorage-il save --- */
-let userProfile = JSON.parse(localStorage.getItem('a2z_user')||'null') || {name:"Alex Morgan", username:"alex_morgan", email:"alex.morgan@gmail.com", password:"123456", avatar:""};
+/* --- AUTH - LOGIN / SIGNUP --- */
+let allUsers = JSON.parse(localStorage.getItem('a2z_users')||'[]');
+let currentEmail = localStorage.getItem('a2z_current')||'';
+let userProfile = null;
+function getCurrentUser(){
+  if(!currentEmail) return null;
+  return allUsers.find(u=>u.email.toLowerCase()===currentEmail.toLowerCase() || u.username.toLowerCase()===currentEmail.toLowerCase()) || null;
+}
+function isLoggedIn(){ return !!getCurrentUser(); }
+function switchAuth(mode){
+  document.getElementById('authTabLogin').classList.toggle('active', mode==='login');
+  document.getElementById('authTabSignup').classList.toggle('active', mode==='signup');
+  document.getElementById('loginForm').style.display = mode==='login' ? 'block' : 'none';
+  document.getElementById('signupForm').style.display = mode==='signup' ? 'block' : 'none';
+  document.getElementById('authSub').innerText = mode==='login' ? 'Login cheythu ningalude playlists kaanu' : 'Puthiya account undakku - Free aanu!';
+  document.getElementById('loginError').style.display='none';
+  document.getElementById('signupError').style.display='none';
+}
+function showAuthError(id, msg){
+  let el=document.getElementById(id); el.innerText=msg; el.style.display='block';
+}
+function doSignup(){
+  let name=document.getElementById('signupName').value.trim();
+  let username=document.getElementById('signupUsername').value.trim().replace(/\s+/g,'_').toLowerCase();
+  let email=document.getElementById('signupEmail').value.trim().toLowerCase();
+  let pass=document.getElementById('signupPassword').value.trim();
+  if(!name) return showAuthError('signupError','❌ Name ezhuthu!');
+  if(!username) return showAuthError('signupError','❌ Username ezhuthu!');
+  if(!email || !email.includes('@')) return showAuthError('signupError','❌ Correct Email ezhuthu!');
+  if(!pass || pass.length<4) return showAuthError('signupError','❌ Password min 4 aksharam venam!');
+  if(allUsers.some(u=>u.email===email)) return showAuthError('signupError','❌ Ee Email already und - Login cheyyu!');
+  if(allUsers.some(u=>u.username===username)) return showAuthError('signupError','❌ Ee Username already eduthu - vere username nokku!');
+  let newUser={name:name, username:username, email:email, password:pass, avatar:""};
+  allUsers.push(newUser);
+  localStorage.setItem('a2z_users', JSON.stringify(allUsers));
+  localStorage.setItem('a2z_current', email);
+  currentEmail=email; userProfile=newUser;
+  renderProfile();
+  let s=document.getElementById('signupSuccess'); s.innerText='✅ Account Created! Welcome, '+name; s.style.display='block';
+  setTimeout(()=>{ go('profile'); }, 700);
+}
+function doLogin(){
+  let ident=document.getElementById('loginEmail').value.trim().toLowerCase();
+  let pass=document.getElementById('loginPassword').value.trim();
+  if(!ident) return showAuthError('loginError','❌ Email / Username ezhuthu!');
+  if(!pass) return showAuthError('loginError','❌ Password ezhuthu!');
+  let user=allUsers.find(u=> (u.email.toLowerCase()===ident || u.username.toLowerCase()===ident) && u.password===pass);
+  if(!user) return showAuthError('loginError','❌ Email / Password thettaanu! Sign Up cheythittundo ennu nokku.');
+  localStorage.setItem('a2z_current', user.email);
+  currentEmail=user.email; userProfile=user;
+  renderProfile();
+  let s=document.getElementById('loginSuccess'); s.innerText='✅ Welcome back, '+user.name+'!'; s.style.display='block';
+  setTimeout(()=>{ go('profile'); }, 600);
+}
+function doLogout(){
+  if(!confirm('Logout cheyyano?')) return;
+  localStorage.removeItem('a2z_current');
+  currentEmail=''; userProfile=null;
+  document.getElementById('loginEmail').value=''; document.getElementById('loginPassword').value='';
+  switchAuth('login');
+  go('profile');
+}
+function openProfilePage(){
+  if(isLoggedIn()){
+    userProfile=getCurrentUser();
+    renderProfile();
+    showPageOnly('profile');
+  } else {
+    switchAuth('login');
+    showPageOnly('auth');
+  }
+}
 function renderProfile(){
+  userProfile=getCurrentUser();
+  if(!userProfile){
+    document.getElementById('homeGreeting').innerText='Good Evening, Guest 👋';
+    return;
+  }
   document.getElementById('profileName').innerText=userProfile.name;
   document.getElementById('profileUsername').innerText='@'+userProfile.username;
   document.getElementById('profileEmail').innerText=userProfile.email;
@@ -295,6 +422,8 @@ function renderProfile(){
   else { pImg.style.display='none'; document.getElementById('profileAvatarLetter').style.display='block'; }
 }
 function openEditProfile(){
+  if(!isLoggedIn()){ openProfilePage(); return; }
+  userProfile=getCurrentUser();
   document.getElementById('editName').value=userProfile.name;
   document.getElementById('editUsername').value=userProfile.username;
   document.getElementById('editEmail').value=userProfile.email;
@@ -324,16 +453,20 @@ function previewAvatar(input){
 function saveProfile(){
   let name=document.getElementById('editName').value.trim();
   let username=document.getElementById('editUsername').value.trim().replace(/\s+/g,'_').toLowerCase();
-  let email=document.getElementById('editEmail').value.trim();
+  let email=document.getElementById('editEmail').value.trim().toLowerCase();
   let pass=document.getElementById('editPassword').value.trim();
   if(!name){ alert('Name ezhuthu!'); return; }
   if(!username){ alert('Username ezhuthu!'); return; }
   if(!email || !email.includes('@')){ alert('Correct Email ezhuthu!'); return; }
-  userProfile.name=name;
-  userProfile.username=username;
-  userProfile.email=email;
+  let idx=allUsers.findIndex(u=>u.email===userProfile.email);
+  if(allUsers.some((u,i)=>i!==idx && u.email===email)){ alert('Ee Email vere aalkkullathaanu!'); return; }
+  if(allUsers.some((u,i)=>i!==idx && u.username===username)){ alert('Ee Username vere aalkkullathaanu!'); return; }
+  userProfile.name=name; userProfile.username=username; userProfile.email=email;
   if(pass) userProfile.password=pass;
-  localStorage.setItem('a2z_user', JSON.stringify(userProfile));
+  allUsers[idx]=userProfile;
+  localStorage.setItem('a2z_users', JSON.stringify(allUsers));
+  localStorage.setItem('a2z_current', email);
+  currentEmail=email;
   renderProfile();
   let m=document.getElementById('saveMsg');
   m.style.display='block';
@@ -608,7 +741,7 @@ function showPageOnly(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-  let navMap={home:'home',album:'album',track:'track',profile:'profile',artist:'home',albumdetail:'album',player:'track',detail:'profile',editprofile:'profile'};
+  let navMap={home:'home',album:'album',track:'track',profile:'profile',artist:'home',albumdetail:'album',player:'track',detail:'profile',editprofile:'profile',auth:'profile'};
   document.getElementById('nav-'+(navMap[name]||'home')).classList.add('active');
   if(name==='player'){
     document.documentElement.classList.add('player-locked');
@@ -629,6 +762,8 @@ function router(){
   else if(page==='player'&&param) openPlayer(param);
   else if(page==='detail'&&param) openDetail(param);
   else if(page==='editprofile') openEditProfile();
+  else if(page==='profile') openProfilePage();
+  else if(page==='auth') showPageOnly('auth');
   else showPageOnly(page==='albumdetail'?'album':page);
 }
 window.addEventListener('hashchange',router);
