@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>A2Z Songs - Alex Morgan</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+html,body{height:100%;overflow-x:hidden}
 body{background:#000;color:#fff;display:flex;justify-content:center}
 .phone{width:100%;max-width:430px;min-height:100vh;background:linear-gradient(180deg,#3a0f22 0%,#1a0714 35%,#0a0a0a 70%);padding:18px 18px 110px;position:relative}
 .page{display:none}.page.active{display:block}
@@ -37,15 +38,6 @@ body{background:#000;color:#fff;display:flex;justify-content:center}
 .album-card b{font-size:15px;display:block}.album-card small{color:#aaa;font-size:12px}
 .big-avatar{width:110px;height:110px;border-radius:50%;margin:10px auto;display:grid;place-items:center;font-size:48px;font-weight:800}
 .follow-btn{background:linear-gradient(90deg,#ff2d55,#ff5a7a);border:none;color:#fff;padding:10px 30px;border-radius:20px;font-weight:700;margin:10px auto;display:block}
-.player-cover{width:220px;height:220px;border-radius:20px;margin:20px auto;display:grid;place-items:center;font-size:80px}
-.player-title{text-align:center}.player-title h2{font-size:24px}.player-title p{color:#aaa;margin-top:4px}
-.credit-box{background:#1c1c1e;border-radius:14px;padding:14px;margin:18px 0;display:flex;flex-direction:column;gap:8px}
-.credit-box div{display:flex;justify-content:space-between}.credit-box span{color:#aaa}.credit-box b{text-align:right}
-.progress{height:6px;background:#333;border-radius:10px;margin:20px 0 6px;overflow:hidden}.progress-fill{height:100%;background:#ff2d55;width:20%}
-.time-row{display:flex;justify-content:space-between;color:#aaa;font-size:12px}
-.controls{display:flex;justify-content:center;align-items:center;gap:22px;margin:22px 0}
-.ctrl{width:52px;height:52px;border-radius:50%;background:#1c1c1e;display:grid;place-items:center;font-size:22px;cursor:pointer}
-.ctrl-main{width:72px;height:72px;background:#ff2d55;font-size:28px}
 .profile-top{text-align:center}
 .avatar{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#ff5a7a,#ff8a5a);margin:6px auto 10px;display:grid;place-items:center;font-size:42px}
 .profile-top h2{font-size:26px;font-weight:800}
@@ -61,6 +53,51 @@ h3{font-size:24px;margin:28px 0 12px}
 .nav button{background:none;border:none;color:#888;font-size:11px;text-align:center;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer}
 .nav button.active{color:#ff2d55}.nav .ico{font-size:22px}
 .detail-hero{background:#1c1c1e;border-radius:16px;padding:20px;text-align:center;margin-bottom:14px}
+/* --- PLAYER - NO BOX, NO KOLAM, SEAMLESS BACKGROUND --- */
+#page-player{overflow:hidden;background:transparent}
+.player-page{background:transparent !important;background-image:none !important;box-shadow:none !important;border:none !important;border-radius:0 !important;margin:-18px -18px 0;padding:14px 18px 8px;height:calc(100dvh - 74px);min-height:560px;max-height:760px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.player-top{display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0;background:transparent;border:none;box-shadow:none}
+.player-top .back2{font-size:24px;cursor:pointer;line-height:1}
+.player-top-center{text-align:center;flex:1;padding:0 10px;overflow:hidden;background:transparent}
+.player-top-center small{color:#ddd;font-size:12px}
+.player-top-center h3{font-size:15px;margin:3px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-dots{font-size:26px;letter-spacing:2px;cursor:pointer;line-height:1}
+.player-cover-big{width:100%;flex:1;min-height:0;max-height:360px;border-radius:16px;margin:12px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.player-cover-big .big-emoji{font-size:64px}
+.player-cover-big .cover-title{font-size:36px;font-weight:900;letter-spacing:1px;line-height:1;text-shadow:0 4px 20px rgba(0,0,0,.6)}
+.player-cover-big .cover-sub{font-size:12px;letter-spacing:4px;margin-top:6px;opacity:.9}
+.player-song-row{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.player-song-row .txt{flex:1;min-width:0}
+/* --- SEAMLESS MARQUEE - VIDEO POLE --- */
+.marquee{overflow:hidden;white-space:nowrap;width:100%;position:relative}
+.marquee-inner{display:flex;white-space:nowrap;will-change:transform;width:max-content;align-items:center}
+.mq-text{white-space:nowrap}
+.mq-gap{width:80px;flex-shrink:0}
+.marquee h2{font-size:20px;display:inline-block}
+.marquee p{color:#bbb;font-size:14px;margin-top:2px;display:inline-block}
+.add-btn{width:48px;height:48px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:30px;font-weight:300;cursor:pointer;flex-shrink:0;background:rgba(255,255,255,.08);transition:all .2s}
+.add-btn.added{background:#1db954;border-color:#1db954;color:#000;font-size:24px;font-weight:800}
+.credit-box{background:#1c1c1e;border-radius:14px;padding:14px;margin:18px 0;display:flex;flex-direction:column;gap:8px}
+.credit-box div{display:flex;justify-content:space-between}.credit-box span{color:#aaa}.credit-box b{text-align:right}
+.progress-wrap{margin:14px 0 4px;flex-shrink:0}
+.progress-track{height:4px;background:#5a5a5a;border-radius:10px;position:relative}
+.progress-fill{height:100%;background:#fff;border-radius:10px;width:12%;position:relative}
+.progress-dot{position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:14px;height:14px;background:#fff;border-radius:50%}
+.time-row{display:flex;justify-content:space-between;color:#ccc;font-size:13px;margin-top:6px}
+.controls-new{display:flex;justify-content:center;align-items:center;gap:44px;margin:14px 0 4px;flex-shrink:0}
+.ctrl-prev,.ctrl-next{font-size:34px;cursor:pointer;color:#fff}
+.ctrl-play{width:68px;height:68px;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:30px;color:#000;cursor:pointer}
+.sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.sheet-overlay.open{display:flex}
+.sheet{width:100%;max-width:430px;background:#1e1e1e;border-radius:20px 20px 0 0;padding:18px;max-height:75vh;overflow:auto}
+.sheet h3{margin:0 0 4px}.sheet p{color:#aaa;font-size:13px;margin-bottom:14px}
+.sheet input{width:100%;background:#2a2a2a;border:1px solid #333;border-radius:10px;padding:12px;color:#fff;outline:none;font-size:15px}
+.create-btn{width:100%;background:linear-gradient(90deg,#ff2d55,#ff5a7a);border:none;color:#fff;padding:12px;border-radius:10px;font-weight:700;margin:10px 0 16px;cursor:pointer}
+.pl-row{background:#2a2a2a;border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center;margin-bottom:8px;cursor:pointer}
+.pl-row b{flex:1}.pl-row small{color:#aaa;display:block}
+.small-btn{background:#333;border:none;color:#fff;padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}
+.small-btn.red{background:#ff2d55}.small-btn.blue{background:#3a7bd5}
+.tick-mini{width:32px;height:32px;background:#1db954;border-radius:50%;display:grid;place-items:center;color:#000;font-weight:800}
 </style>
 </head>
 <body>
@@ -105,24 +142,41 @@ h3{font-size:24px;margin:28px 0 12px}
 <!-- ALBUM DETAIL -->
 <div id="page-albumdetail" class="page">
   <div class="header"><div class="back" onclick="history.back()">‹</div><h1>Album Details</h1></div>
-  <div style="text-align:center"><div class="player-cover t2" style="width:160px;height:160px" id="albumDetailCover">💿</div><h2 id="albumDetailName">Premam</h2><p style="color:#aaa" id="albumDetailMeta">2015 • 12 Songs</p><button class="follow-btn" onclick="go('track')">▶ Play All</button></div>
+  <div style="text-align:center"><div class="player-cover-big t2" style="width:160px;height:160px;flex:none;aspect-ratio:auto" id="albumDetailCover"><span class="big-emoji">💿</span></div><h2 id="albumDetailName">Premam</h2><p style="color:#aaa" id="albumDetailMeta">2015 • 12 Songs</p><button class="follow-btn" onclick="go('track')">▶ Play All</button></div>
   <div class="section-title">Tracks in this Album</div><div id="albumDetailTracks"></div>
   <div class="credit-box"><div><span>Music Director</span><b id="albumDetailMD" style="cursor:pointer;color:#ff5a7a" onclick="go('artist/'+this.innerText)">Shaan Rahman</b></div><div><span>Singers</span><b id="albumDetailSingers">Vineeth Sreenivasan</b></div></div>
 </div>
 
-<!-- PLAYER -->
+<!-- MUSIC PLAYER - TOP SEAMLESS -->
 <div id="page-player" class="page">
-  <div class="header"><div class="back" onclick="history.back()">‹</div><h1>Now Playing</h1></div>
-  <div class="player-cover t1" id="playerCover">🎵</div>
-  <div class="player-title"><h2 id="playerTitle">Malare</h2><p id="playerAlbum" style="cursor:pointer;color:#ff5a7a" onclick="go('album/'+this.innerText)">Premam</p></div>
-  <div class="credit-box">
-    <div><span>🎼 Music Director</span><b id="playerMD" style="cursor:pointer;color:#ff5a7a" onclick="go('artist/'+this.innerText)">Shaan Rahman</b></div>
-    <div><span>🎤 Singer</span><b id="playerSinger" style="cursor:pointer;color:#ff5a7a" onclick="go('artist/'+this.innerText)">Vineeth Sreenivasan</b></div>
-    <div><span>🎬 Actor</span><b id="playerActor" style="cursor:pointer;color:#ff5a7a" onclick="go('artist/'+this.innerText)">Nivin Pauly</b></div>
+  <div class="player-page">
+    <div class="player-top">
+      <div class="back2" onclick="history.back()">⌄</div>
+      <div class="player-top-center"><small>Playing from Album</small><h3 id="playerAlbumTop">Velipadinte Pusthakam</h3></div>
+      <div class="player-dots" onclick="openAddSheet()">⋮</div>
+    </div>
+    <div class="player-cover-big t3" id="playerCover">
+      <div class="big-emoji" id="playerCoverEmoji">🎵</div>
+      <div class="cover-title" id="playerCoverTitle">JIMIKKI KAMMAL</div>
+      <div class="cover-sub" id="playerCoverSub">MALAYALAM</div>
+    </div>
+    <div class="player-song-row">
+      <div class="txt">
+        <div class="marquee"><div class="marquee-inner" id="marqueeTitle"><h2 id="playerTitle">Jimikki Kammal - From "Velipadinte Pusthakam"</h2></div></div>
+        <div class="marquee"><div class="marquee-inner" id="marqueeSinger"><p id="playerSingerLine">Vineeth Sreenivasan, Shaan Rahman</p></div></div>
+      </div>
+      <div class="add-btn" id="addBtn" onclick="openAddSheet()">+</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"><div class="progress-dot"></div></div></div>
+      <div class="time-row"><span id="curTime">0:09</span><span>4:24</span></div>
+    </div>
+    <div class="controls-new">
+      <div class="ctrl-prev" onclick="prevTrack()">⏮</div>
+      <div class="ctrl-play" id="playBtn" onclick="togglePlay()">⏸</div>
+      <div class="ctrl-next" onclick="nextTrack()">⏭</div>
+    </div>
   </div>
-  <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
-  <div class="time-row"><span id="curTime">0:45</span><span>3:45</span></div>
-  <div class="controls"><div class="ctrl" onclick="prevTrack()">⏮</div><div class="ctrl ctrl-main" id="playBtn" onclick="togglePlay()">⏸</div><div class="ctrl" onclick="nextTrack()">⏭</div></div>
 </div>
 
 <!-- GENERIC DETAIL -->
@@ -136,19 +190,30 @@ h3{font-size:24px;margin:28px 0 12px}
 <div id="page-profile" class="page">
   <div class="header"><h1>Profile</h1><div class="gear">⚙️</div></div>
   <div class="profile-top"><div class="avatar">👤</div><h2>Alex Morgan</h2></div>
-  <div class="stats"><div><b>128</b><span>Following</span></div><div><b>1.2k</b><span>Followers</span></div><div><b>46</b><span>Playlists</span></div></div>
+  <div class="stats"><div><b>128</b><span>Following</span></div><div><b>1.2k</b><span>Followers</span></div><div><b id="profilePlaylistCount">46</b><span>Playlists</span></div></div>
   <div class="edit-wrap"><button class="edit-btn" onclick="go('detail/Edit Profile')">Edit Profile</button></div>
-  <div style="margin-top:22px;display:flex;flex-direction:column;gap:10px">
-    <div class="card" onclick="go('detail/Liked Songs')"><div class="thumb t2">❤️</div><div><b>Liked Songs</b><br><small>124 songs</small></div><div class="dots">›</div></div>
-    <div class="card" onclick="go('detail/Late Night Moods')"><div class="thumb t1">Late Night Moods</div><div><b>Late Night Moods</b><br><small>32 songs</small></div><div class="dots">›</div></div>
-    <div class="card" onclick="go('detail/Workout Hits')"><div class="thumb t2"></div><div><b>Workout Hits</b><br><small>24 songs</small></div><div class="dots">›</div></div>
-  </div>
+  <h3>🎵 My Playlists</h3>
+  <button class="follow-btn" style="margin:0 0 12px" onclick="createPlaylistPrompt()">+ New Playlist</button>
+  <div id="myPlaylists"></div>
   <h3>Settings</h3>
   <div class="set-row" onclick="go('detail/Account')"><span>⚙️</span><span>Account</span><div class="arrow">›</div></div>
   <div class="set-row" onclick="go('detail/Notifications')"><span>🔔</span><span>Notifications</span><div class="arrow">›</div></div>
   <div class="set-row" onclick="go('detail/Downloads')"><span>⬇️</span><span>Downloads</span><div class="arrow">›</div></div>
   <div class="set-row" onclick="go('detail/Appearance')"><span>🎨</span><span>Appearance</span><div class="arrow">›</div></div>
 </div>
+</div>
+
+<!-- ADD TO PLAYLIST SHEET -->
+<div class="sheet-overlay" id="sheetOverlay" onclick="if(event.target===this) closeSheet()">
+  <div class="sheet">
+    <h3>Add to Playlist</h3>
+    <p id="sheetSongName">Malare • Premam</p>
+    <input id="newPlaylistName" placeholder="New Playlist Name... e.g. My Favourites">
+    <button class="create-btn" onclick="createPlaylistFromSheet()">+ Create New Playlist & Add Song</button>
+    <div class="section-title" style="margin:6px 0 10px">Your Playlists</div>
+    <div id="sheetPlaylists"></div>
+    <button class="small-btn" style="width:100%;padding:10px;margin-top:8px" onclick="closeSheet()">Close</button>
+  </div>
 </div>
 
 <div class="nav">
@@ -200,6 +265,7 @@ const ALBUMS = [
   {name:"Kumbalangi Nights", year:"2019", songs:"11 Songs", md:"Sushin Shyam", singer:"Sithara", cls:"t6", emoji:"💿"}
 ];
 const TRACKS = [
+  {title:"Mazhavillaye", album:"I'M Game - Malayalam", md:"Jakes Bejoy", singer:"Jakes Bejoy, Armaan Malik, Sharfu", actor:"Dulquer Salmaan", cls:"t1"},
   {title:"Malare", album:"Premam", md:"Shaan Rahman", singer:"Vineeth Sreenivasan", actor:"Nivin Pauly", cls:"t1"},
   {title:"Uyire", album:"Gauthamante Radham", md:"Ankit Menon", singer:"Sid Sriram", actor:"Neeraj Madhav", cls:"t2"},
   {title:"Jimikki Kammal", album:"Velipadinte Pusthakam", md:"Shaan Rahman", singer:"Vineeth Sreenivasan", actor:"Mohanlal", cls:"t3"},
@@ -207,26 +273,125 @@ const TRACKS = [
   {title:"Darshana", album:"Hridayam", md:"Hesham Abdul Wahab", singer:"Darshana Rajendran", actor:"Pranav Mohanlal", cls:"t5"},
   {title:"Raabta", album:"Agent Vinod", md:"Pritam", singer:"Arijit Singh", actor:"Saif Ali Khan", cls:"t6"}
 ];
+function setTxt(id,txt){ let el=document.getElementById(id); if(el) el.innerText=txt; }
+let marqueeTimers=[];
+function stopMarquee(){
+  marqueeTimers.forEach(t=>clearTimeout(t)); marqueeTimers=[];
+  document.querySelectorAll('.marquee-inner').forEach(el=>{ el.style.transition='none'; el.style.transform='translateX(0)'; });
+}
+function startMarqueeFor(innerId, textElId, isTitle){
+  let inner=document.getElementById(innerId);
+  let textEl=document.getElementById(textElId);
+  if(!inner||!textEl) return;
+  let text=textEl.innerText;
+  let wrap=inner.parentElement;
+  let tag=isTitle?'h2':'p';
+  inner.innerHTML=`<span class="mq-text"><${tag}>${text}</${tag}></span><span class="mq-gap"></span><span class="mq-text"><${tag}>${text}</${tag}></span>`;
+  let first=inner.querySelector('.mq-text '+tag); if(first) first.id=textElId;
+  inner.style.transition='none'; inner.style.transform='translateX(0)';
+  requestAnimationFrame(()=>{
+    let single=inner.querySelector('.mq-text').offsetWidth + 80;
+    let overflow = inner.querySelector('.mq-text').offsetWidth - wrap.clientWidth;
+    if(overflow <= 8){
+      inner.innerHTML=`<span class="mq-text"><${tag}>${text}</${tag}></span>`;
+      let s=inner.querySelector(tag); if(s) s.id=textElId;
+      return;
+    }
+    let duration = Math.max(2000, single * 28);
+    function loop(){
+      let t1=setTimeout(()=>{
+        inner.style.transition=`transform ${duration}ms linear`;
+        inner.style.transform=`translateX(${-single}px)`;
+        let t2=setTimeout(()=>{
+          inner.style.transition='none';
+          inner.style.transform='translateX(0)';
+          let t3=setTimeout(loop, 1000);
+          marqueeTimers.push(t3);
+        }, duration + 1000);
+        marqueeTimers.push(t2);
+      }, 1000);
+      marqueeTimers.push(t1);
+    }
+    loop();
+  });
+}
+function startAllMarquee(){ stopMarquee(); startMarqueeFor('marqueeTitle','playerTitle',true); startMarqueeFor('marqueeSinger','playerSingerLine',false); }
+function getCurrentSong(){
+  let el=document.getElementById('playerTitle'); return el?el.innerText:'';
+}
+let myPlaylists = JSON.parse(localStorage.getItem('a2z_playlists')||'[]');
+if(myPlaylists.length===0){
+  myPlaylists=[
+    {name:"Late Night Moods", songs:["Malare - From \"Premam\"","Darshana - From \"Hridayam\""]},
+    {name:"Workout Hits", songs:["Kuthanthram - From \"Manjummel Boys\""]},
+    {name:"Chill Vibes", songs:["Uyire - From \"Gauthamante Radham\""]}
+  ];
+  savePlaylists();
+}
+function savePlaylists(){ localStorage.setItem('a2z_playlists', JSON.stringify(myPlaylists)); renderMyPlaylists(); updateAddBtn(); }
+function isSongInAnyPlaylist(song){ return myPlaylists.some(p=>p.songs.includes(song)); }
+function updateAddBtn(){
+  let btn=document.getElementById('addBtn'); if(!btn) return;
+  let song=getCurrentSong();
+  if(isSongInAnyPlaylist(song)){ btn.classList.add('added'); btn.innerHTML='✓'; }
+  else { btn.classList.remove('added'); btn.innerHTML='+'; }
+}
+function openAddSheet(){
+  let song=getCurrentSong();
+  document.getElementById('sheetSongName').innerText=song + (isSongInAnyPlaylist(song) ? ' • ✅ Added' : ' • Not in Playlist');
+  document.getElementById('sheetPlaylists').innerHTML = myPlaylists.length ? myPlaylists.map((p,i)=>{
+    let has=p.songs.includes(song);
+    return `<div class="pl-row" onclick="toggleSongInPlaylist(${i})"><div class="thumb ${TRACKS[i%TRACKS.length].cls}">🎵</div><div style="flex:1"><b>${p.name}</b><small>${p.songs.length} songs • ${has?'✅ Added - Tap to Remove':'Tap to Add'}</small></div>${has?'<div class="tick-mini">✓</div>':'<span style="font-size:22px">+</span>'}</div>`;
+  }).join('') : '<p style="color:#aaa">No playlist yet. Create one above.</p>';
+  document.getElementById('sheetOverlay').classList.add('open');
+}
+function closeSheet(){ document.getElementById('sheetOverlay').classList.remove('open'); updateAddBtn(); }
+function createPlaylistPrompt(){
+  let name=prompt('New Playlist Name:');
+  if(name){ myPlaylists.push({name:name, songs:[]}); savePlaylists(); alert('Playlist Created: '+name); }
+}
+function createPlaylistFromSheet(){
+  let name=document.getElementById('newPlaylistName').value.trim();
+  if(!name){ alert('Playlist peru ezhuthu!'); return; }
+  let song=getCurrentSong();
+  myPlaylists.push({name:name, songs:[song]});
+  document.getElementById('newPlaylistName').value='';
+  savePlaylists(); closeSheet(); alert('Created & Added ✅ - Button ippo Green ✓ aayi');
+}
+function toggleSongInPlaylist(i){
+  let song=getCurrentSong();
+  let idx=myPlaylists[i].songs.indexOf(song);
+  if(idx>=0){ myPlaylists[i].songs.splice(idx,1); alert('Removed from "'+myPlaylists[i].name+'"'); }
+  else { myPlaylists[i].songs.push(song); alert('Added to "'+myPlaylists[i].name+'" ✅'); }
+  savePlaylists(); openAddSheet();
+}
+function renderMyPlaylists(){
+  let el=document.getElementById('myPlaylists'); if(!el) return;
+  document.getElementById('profilePlaylistCount').innerText=myPlaylists.length;
+  el.innerHTML=myPlaylists.map((p,i)=>`<div class="card"><div class="thumb ${TRACKS[i%TRACKS.length].cls}">🎵</div><div style="flex:1"><b>${p.name}</b><br><small>${p.songs.join(', ')||'No songs yet'}</small></div><button class="small-btn blue" onclick="editPlaylist(${i})">Edit</button><button class="small-btn red" onclick="deletePlaylist(${i})">Delete</button></div>`).join('')||'<p style="color:#aaa">No playlists yet</p>';
+}
+function editPlaylist(i){ let n=prompt('Rename Playlist:', myPlaylists[i].name); if(n){ myPlaylists[i].name=n; savePlaylists(); } }
+function deletePlaylist(i){ if(confirm('Delete "'+myPlaylists[i].name+'" ?')){ myPlaylists.splice(i,1); savePlaylists(); } }
 function go(path){ location.hash='/'+path; }
 function showTab(type){
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+type).classList.add('active');
-  document.getElementById('tabInfo').innerText = type==='actor' ? '8 Actors • Tap for Profile' : type==='music' ? '8 Music Directors • Tap for Profile' : '8 Singers • Tap for Profile';
-  document.getElementById('artistGrid').innerHTML = DATA[type].map(a=>`<div class="artist-card" onclick="go('artist/${encodeURIComponent(a.n)}')"><div class="circle ${a.c}">${a.e}</div><b>${a.n}</b><small>${a.s} • Tap ›</small></div>`).join('');
+  document.getElementById('tabInfo').innerText=type==='actor'?'8 Actors • Tap for Profile':type==='music'?'8 Music Directors • Tap for Profile':'8 Singers • Tap for Profile';
+  document.getElementById('artistGrid').innerHTML=DATA[type].map(a=>`<div class="artist-card" onclick="go('artist/${encodeURIComponent(a.n)}')"><div class="circle ${a.c}">${a.e}</div><b>${a.n}</b><small>${a.s} • Tap ›</small></div>`).join('');
 }
 function openArtist(name){
   name=decodeURIComponent(name);
   let all=[...DATA.actor,...DATA.music,...DATA.singer];
-  let info=all.find(x=>x.n===name)||{e:name[0],c:"t1",s:"Artist"};
+  let info=all.find(x=>x.n===name)||{e:name[0],c:"t1"};
   let type=DATA.actor.some(x=>x.n===name)?'actor':DATA.music.some(x=>x.n===name)?'music':'singer';
-  document.getElementById('artistPageTitle').innerText=name+' - Profile';
-  document.getElementById('artistAvatar').innerText=info.e;
+  setTxt('artistPageTitle',name+' - Profile');
+  setTxt('artistAvatar',info.e);
   document.getElementById('artistAvatar').className='big-avatar '+info.c;
-  document.getElementById('artistName').innerText=name;
-  document.getElementById('artistRole').innerText=type==='actor'?'Actor • Malayalam':type==='music'?'Music Director • Malayalam':'Playback Singer • Malayalam';
-  document.getElementById('artistFollowers').innerText=(1+name.length%5).toFixed(1)+'M';
-  document.getElementById('artistAlbumsCount').innerText=4+name.length%8;
-  document.getElementById('artistSongsCount').innerText=40+name.length*3;
+  setTxt('artistName',name);
+  setTxt('artistRole',type==='actor'?'Actor • Malayalam':type==='music'?'Music Director • Malayalam':'Playback Singer • Malayalam');
+  setTxt('artistFollowers',(1+name.length%5).toFixed(1)+'M');
+  setTxt('artistAlbumsCount',4+name.length%8);
+  setTxt('artistSongsCount',40+name.length*3);
   let start=name.length%ALBUMS.length;
   let myAlbums=[ALBUMS[start],ALBUMS[(start+1)%ALBUMS.length],ALBUMS[(start+2)%ALBUMS.length]];
   document.getElementById('artistAlbumsGrid').innerHTML=myAlbums.map(a=>`<div class="album-card" onclick="go('album/${encodeURIComponent(a.name)}')"><div class="cover ${a.cls}">${a.emoji}</div><b>${a.name}</b><small>${a.year} • Tap ›</small></div>`).join('');
@@ -238,11 +403,11 @@ function renderAlbums(){ document.getElementById('albumGrid').innerHTML=ALBUMS.m
 function openAlbum(name){
   name=decodeURIComponent(name);
   let a=ALBUMS.find(x=>x.name===name)||ALBUMS[0];
-  document.getElementById('albumDetailName').innerText=a.name;
-  document.getElementById('albumDetailMeta').innerText=a.year+' • '+a.songs+' • '+a.md;
-  document.getElementById('albumDetailMD').innerText=a.md;
-  document.getElementById('albumDetailSingers').innerText=a.singer;
-  document.getElementById('albumDetailCover').className='player-cover '+a.cls;
+  setTxt('albumDetailName',a.name);
+  setTxt('albumDetailMeta',a.year+' • '+a.songs+' • '+a.md);
+  setTxt('albumDetailMD',a.md);
+  setTxt('albumDetailSingers',a.singer);
+  document.getElementById('albumDetailCover').className='player-cover-big '+a.cls;
   let tracks=TRACKS.filter(t=>t.album===name); if(tracks.length===0) tracks=TRACKS.slice(0,3);
   document.getElementById('albumDetailTracks').innerHTML=tracks.map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">🎵</div><div><b>${t.title}</b><br><small>${t.singer} • ${t.md}</small></div><div class="play-btn">▶</div></div>`).join('');
   showPageOnly('albumdetail');
@@ -252,31 +417,32 @@ let currentTrackIndex=0;
 function openPlayer(title){
   title=decodeURIComponent(title);
   let idx=TRACKS.findIndex(x=>x.title===title);
+  stopMarquee();
+  document.getElementById('marqueeTitle').innerHTML=`<h2 id="playerTitle"></h2>`;
+  document.getElementById('marqueeSinger').innerHTML=`<p id="playerSingerLine"></p>`;
   if(idx===-1){
-    document.getElementById('playerTitle').innerText=title;
-    document.getElementById('playerAlbum').innerText='Premam';
-    document.getElementById('playerMD').innerText='Shaan Rahman';
-    document.getElementById('playerSinger').innerText='Vineeth Sreenivasan';
-    document.getElementById('playerActor').innerText='Nivin Pauly';
-    document.getElementById('playerCover').className='player-cover t1';
+    setTxt('playerTitle',title);
+    setTxt('playerAlbumTop','Premam');
+    setTxt('playerSingerLine','Vineeth Sreenivasan, Shaan Rahman');
+    document.getElementById('playerCover').className='player-cover-big t1';
+    setTxt('playerCoverTitle',title.toUpperCase());
   } else {
     currentTrackIndex=idx; let t=TRACKS[idx];
-    document.getElementById('playerTitle').innerText=t.title;
-    document.getElementById('playerAlbum').innerText=t.album;
-    document.getElementById('playerMD').innerText=t.md;
-    document.getElementById('playerSinger').innerText=t.singer;
-    document.getElementById('playerActor').innerText=t.actor;
-    document.getElementById('playerCover').className='player-cover '+t.cls;
+    setTxt('playerTitle',t.title+' - From "'+t.album+'"');
+    setTxt('playerAlbumTop',t.album);
+    setTxt('playerSingerLine',t.singer);
+    document.getElementById('playerCover').className='player-cover-big '+t.cls;
+    setTxt('playerCoverTitle',t.title.toUpperCase());
   }
-  document.getElementById('progressFill').style.width='20%'; isPlaying=true; document.getElementById('playBtn').innerText='⏸';
-  showPageOnly('player');
+  document.getElementById('progressFill').style.width='12%'; isPlaying=true; document.getElementById('playBtn').innerText='⏸';
+  showPageOnly('player'); updateAddBtn(); startAllMarquee();
 }
 function openDetail(title){
   title=decodeURIComponent(title);
-  document.getElementById('detailTitle').innerText=title;
-  document.getElementById('detailHeading').innerText=title;
-  document.getElementById('detailSub').innerText=title+' - Separate Page';
-  document.getElementById('detailEmoji').innerText='📁';
+  setTxt('detailTitle',title);
+  setTxt('detailHeading',title);
+  setTxt('detailSub',title+' - Separate Page');
+  setTxt('detailEmoji','📁');
   document.getElementById('detailContent').innerHTML=TRACKS.slice(0,3).map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">🎵</div><div><b>${t.title}</b><br><small>${t.album} • ${t.singer}</small></div><div class="play-btn">▶</div></div>`).join('');
   showPageOnly('detail');
 }
@@ -286,12 +452,13 @@ function showPageOnly(name){
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
   let navMap={home:'home',album:'album',track:'track',profile:'profile',artist:'home',albumdetail:'album',player:'track',detail:'profile'};
   document.getElementById('nav-'+(navMap[name]||'home')).classList.add('active');
+  if(name==='player'){ document.body.style.overflow='hidden'; window.scrollTo(0,0); }
+  else { document.body.style.overflow=''; stopMarquee(); }
   window.scrollTo(0,0);
 }
 function router(){
   let hash=location.hash.replace('#/','')||'home';
-  let parts=hash.split('/');
-  let page=parts[0]; let param=parts.slice(1).join('/');
+  let parts=hash.split('/'); let page=parts[0]; let param=parts.slice(1).join('/');
   if(page==='artist'&&param) openArtist(param);
   else if(page==='album'&&param) openAlbum(param);
   else if(page==='player'&&param) openPlayer(param);
@@ -299,13 +466,13 @@ function router(){
   else showPageOnly(page==='albumdetail'?'album':page);
 }
 window.addEventListener('hashchange',router);
-let isPlaying=true, prog=20;
+let isPlaying=true, prog=12;
 function togglePlay(){ isPlaying=!isPlaying; document.getElementById('playBtn').innerText=isPlaying?'⏸':'▶'; }
 function nextTrack(){ currentTrackIndex=(currentTrackIndex+1)%TRACKS.length; go('player/'+encodeURIComponent(TRACKS[currentTrackIndex].title)); }
 function prevTrack(){ currentTrackIndex=(currentTrackIndex-1+TRACKS.length)%TRACKS.length; go('player/'+encodeURIComponent(TRACKS[currentTrackIndex].title)); }
-setInterval(()=>{ if(isPlaying && document.getElementById('page-player').classList.contains('active')){ prog+=1; if(prog>100) prog=0; document.getElementById('progressFill').style.width=prog+'%'; document.getElementById('curTime').innerText='0:'+Math.floor(prog*2.2); } },1000);
+setInterval(()=>{ if(isPlaying && document.getElementById('page-player').classList.contains('active')){ prog+=1; if(prog>100) prog=0; document.getElementById('progressFill').style.width=prog+'%'; let sec=Math.floor(prog*2.64); document.getElementById('curTime').innerText='0:'+(sec<10?'0'+sec:sec); } },1000);
 function doSearch(val){ if(!val){renderTracks();return;} let f=TRACKS.filter(t=>t.title.toLowerCase().includes(val.toLowerCase())); document.getElementById('trackList').innerHTML=f.map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">🎵</div><div><b>${t.title}</b><br><small>${t.album}</small></div><div class="play-btn">▶</div></div>`).join(''); }
-showTab('actor'); renderAlbums(); renderTracks();
+showTab('actor'); renderAlbums(); renderTracks(); renderMyPlaylists(); updateAddBtn();
 if(!location.hash) location.hash='/home'; else router();
 </script>
 </body>
