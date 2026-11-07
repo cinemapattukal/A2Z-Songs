@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Morgan - Profile</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+body{background:#000;color:#fff;display:flex;justify-content:center}
+.phone{width:100%;max-width:430px;min-height:100vh;background:linear-gradient(180deg,#3a0f22 0%,#1a0714 35%,#0a0a0a 70%);padding:18px 18px 100px;position:relative}
+.status{display:flex;justify-content:space-between;font-size:14px;font-weight:600;padding:0 4px}
+.header{display:flex;align-items:center;justify-content:center;position:relative;margin:18px 0 8px}
+.header h1{font-size:20px;font-weight:700}
+.gear{position:absolute;right:4px;font-size:22px;opacity:.9;cursor:pointer}
+.profile-top{text-align:center}
+.avatar{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#ff5a7a,#ff8a5a);margin:6px auto 10px;display:grid;place-items:center;font-size:42px;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.profile-top h2{font-size:26px;font-weight:800}
+.stats{display:flex;justify-content:space-around;text-align:center;margin:20px 6px 0}
+.stats b{font-size:26px;display:block;line-height:1}
+.stats span{font-size:14px;color:#aaa}
+.edit-wrap{text-align:center;margin-top:-2px}
+.edit-btn{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff;border:none;padding:9px 28px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 4px 14px rgba(255,45,85,.4)}
+.playlists{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+.card{background:#1c1c1e;border-radius:14px;padding:12px;display:flex;gap:12px;align-items:center;cursor:pointer}
+.card:hover{background:#26262a}
+.thumb{width:58px;height:58px;border-radius:8px;flex-shrink:0;display:grid;place-items:center;font-size:9px;font-weight:800;text-align:center;line-height:1.2;padding:6px}
+.thumb-1{background:linear-gradient(135deg,#c86bff,#ff5a7a)}
+.thumb-2{background:linear-gradient(135deg,#ff5a3c,#ff2d55)}
+.thumb-3{background:linear-gradient(135deg,#5a8cff,#ff5a9a)}
+.card b{font-size:17px}
+.card small{color:#aaa;font-size:13px}
+.dots{margin-left:auto;font-size:20px;color:#ddd;letter-spacing:1px}
+h3{font-size:24px;margin:28px 0 12px}
+.settings{display:flex;flex-direction:column;gap:10px}
+.set-row{background:#1c1c1e;border-radius:12px;padding:14px 14px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.set-row:hover{background:#26262a}
+.icon{font-size:20px;width:26px;text-align:center}
+.set-row span{font-size:16px;font-weight:600}
+.arrow{margin-left:auto;color:#888;font-size:20px}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#141414;display:flex;justify-content:space-around;padding:12px 0 18px;border-top:1px solid #2a2a2a;z-index:10}
+.nav a{color:#888;text-decoration:none;font-size:11px;text-align:center;display:flex;flex-direction:column;gap:3px;align-items:center}
+.nav a.active{color:#ff2d55}
+.nav .ico{font-size:22px}
+@media(min-width:768px){
+  .phone{max-width:480px;border-left
