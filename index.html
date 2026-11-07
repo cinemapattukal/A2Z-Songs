@@ -335,19 +335,7 @@ h3{font-size:24px;margin:28px 0 12px}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, updatePassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-/* ============ STEP 1: FIREBASE CONFIG - IVDE PASTE CHEYYU ============
-   console.firebase.google.com -> Create Project -> </> Web App -> Config copy cheythu ivde paste cheyyu
-   Example:
-   const firebaseConfig = {
-     apiKey: "AIza...",
-     authDomain: "a2z-songs.firebaseapp.com",
-     projectId: "a2z-songs",
-     storageBucket: "a2z-songs.appspot.com",
-     messagingSenderId: "123...",
-     appId: "1:123:web:abc..."
-   };
-   Firebase-il Authentication -> Sign-in method -> Email/Password -> Enable cheyyanam!
-========================================================================= */
+/* ===== FIREBASE CONFIG - NINGALUDE REAL CONFIG ===== */
 const firebaseConfig = {
   apiKey: "AIzaSyA3QP1DZRM5kTmnSyx2NM_9SnqrxBDR7lc",
   authDomain: "a2z-songs.firebaseapp.com",
@@ -356,7 +344,9 @@ const firebaseConfig = {
   messagingSenderId: "947910937475",
   appId: "1:947910937475:web:589d9417da8373d0e204b6"
 };
-const isFirebaseConfigured = firebaseConfig.apiKey !== "AIzaSyA3QP1DZRM5kTmnSyx2NM_9SnqrxBDR7lc";
+/* FIXED: Ithu thanne aanu bug - munne real key-ne thanne compare cheythu false aakkiyirunnu */
+const isFirebaseConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "PASTE_YOUR_API_KEY_HERE" && firebaseConfig.apiKey.length > 10;
+console.log("Firebase Configured?", isFirebaseConfigured);
 
 let auth = null;
 if(isFirebaseConfigured){
@@ -366,12 +356,9 @@ if(isFirebaseConfigured){
   }catch(e){ console.log("Firebase init error", e); }
 }
 
-/* --- LOCAL FALLBACK - Firebase config paste cheyyunnathu vare testing-nu vendi mathram --- */
-/* Config paste cheythal ithu automatic aayi off aavum, Firebase mathram work cheyyum */
 let localUsers = JSON.parse(localStorage.getItem('a2z_users')||'[]');
 let localCurrent = localStorage.getItem('a2z_current')||'';
 let userProfile = null;
-let authReady = false;
 
 function showLoading(v){ document.getElementById('loading').classList.toggle('show', v); }
 function showAuthError(id, msg){ let el=document.getElementById(id); el.innerText=msg; el.style.display='block'; }
@@ -386,7 +373,6 @@ window.switchAuth = function(mode){
   hideAuthErrors();
 };
 
-/* --- REAL SIGN UP --- */
 window.doSignup = async function(){
   let name=document.getElementById('signupName').value.trim();
   let username=document.getElementById('signupUsername').value.trim().replace(/\s+/g,'_').toLowerCase();
@@ -400,16 +386,12 @@ window.doSignup = async function(){
   document.getElementById('signupBtn').disabled=true;
   try{
     if(isFirebaseConfigured && auth){
-      // REAL FIREBASE SIGN UP
       const cred = await createUserWithEmailAndPassword(auth, email, pass);
       await updateProfile(cred.user, { displayName: name });
-      // Username local-il save cheyyu - Firebase displayName-il name mathram
       localStorage.setItem('a2z_username_'+cred.user.uid, username);
-      // onAuthStateChanged automatic aayi Profile-il ethum - ivde manual-um cheyyunnu
       userProfile = { name:name, username:username, email:email, avatar:"", uid:cred.user.uid };
       localStorage.setItem('a2z_profile_'+cred.user.uid, JSON.stringify(userProfile));
     } else {
-      // FALLBACK - config illaenkil
       if(localUsers.some(u=>u.email===email)) throw new Error("Ee Email already und - Login cheyyu!");
       if(localUsers.some(u=>u.username===username)) throw new Error("Ee Username already eduthu!");
       let nu={name:name, username:username, email:email, password:pass, avatar:""};
@@ -424,11 +406,12 @@ window.doSignup = async function(){
     if(msg.includes('email-already-in-use')) msg='❌ Ee Email already und - Login cheyyu!';
     if(msg.includes('invalid-email')) msg='❌ Correct Email ezhuthu!';
     if(msg.includes('weak-password')) msg='❌ Password min 6 aksharam venam!';
+    if(msg.includes('operation-not-allowed')) msg='❌ Firebase-il Email/Password Enable cheythittilla! Console-il Authentication -> Email/Password ON aakku';
+    if(msg.includes('api-key-not-valid')) msg='❌ API Key thettaanu! Firebase Console-il ninnu puthiya key eduthu maattuka';
     showAuthError('signupError', msg);
   } finally { showLoading(false); document.getElementById('signupBtn').disabled=false; }
 };
 
-/* --- REAL LOGIN --- */
 window.doLogin = async function(){
   let email=document.getElementById('loginEmail').value.trim().toLowerCase();
   let pass=document.getElementById('loginPassword').value.trim();
@@ -439,7 +422,6 @@ window.doLogin = async function(){
   try{
     if(isFirebaseConfigured && auth){
       const cred = await signInWithEmailAndPassword(auth, email, pass);
-      // onAuthStateChanged automatic aayi Profile-il ethum
       let saved = JSON.parse(localStorage.getItem('a2z_profile_'+cred.user.uid)||'null');
       let uname = localStorage.getItem('a2z_username_'+cred.user.uid) || cred.user.email.split('@')[0];
       userProfile = saved || { name: cred.user.displayName || uname, username: uname, email: cred.user.email, avatar: cred.user.photoURL||"", uid: cred.user.uid };
@@ -456,11 +438,11 @@ window.doLogin = async function(){
     if(msg.includes('invalid-credential')||msg.includes('user-not-found')||msg.includes('wrong-password')) msg='❌ Email / Password thettaanu! Sign Up cheythittundo ennu nokku.';
     if(msg.includes('invalid-email')) msg='❌ Correct Email ezhuthu!';
     if(msg.includes('too-many-requests')) msg='❌ Kurachu kazhinju veendum nokku!';
+    if(msg.includes('operation-not-allowed')) msg='❌ Firebase-il Email/Password Enable cheythittilla!';
     showAuthError('loginError', msg);
   } finally { showLoading(false); document.getElementById('loginBtn').disabled=false; }
 };
 
-/* --- REAL LOGOUT --- */
 window.doLogout = async function(){
   if(!confirm('Logout cheyyano?')) return;
   showLoading(true);
@@ -473,16 +455,13 @@ window.doLogout = async function(){
   window.go('profile');
 };
 
-/* --- AUTO LOGIN - App thurakkumbol Firebase thanne nokkum --- */
 if(isFirebaseConfigured && auth){
   onAuthStateChanged(auth, (user)=>{
-    authReady=true;
     if(user){
       let saved = JSON.parse(localStorage.getItem('a2z_profile_'+user.uid)||'null');
       let uname = localStorage.getItem('a2z_username_'+user.uid) || user.email.split('@')[0];
       userProfile = saved || { name: user.displayName || uname, username: uname, email: user.email, avatar: user.photoURL||"", uid: user.uid };
       renderProfile();
-      // Profile page-il aanenkil automatic Profile kaanikku, allenkil Home-il thanne nilkkum
       if(location.hash.includes('profile') || location.hash.includes('auth')){
         window.go('profile');
       }
@@ -492,18 +471,14 @@ if(isFirebaseConfigured && auth){
     }
   });
 } else {
-  // Fallback auto login
   if(localCurrent){
     let u=localUsers.find(x=>x.email===localCurrent);
     if(u) userProfile=u;
   }
-  authReady=true;
 }
 
-/* --- PROFILE RENDER --- */
 window.renderProfile = function(){
   if(!userProfile){
-    // Fallback-il ninnu eduthu nokku
     if(!isFirebaseConfigured && localCurrent){
       let u=localUsers.find(x=>x.email===localCurrent);
       if(u) userProfile=u;
@@ -584,9 +559,6 @@ window.saveProfile = async function(){
     alert('Save failed: '+e.message);
   } finally { showLoading(false); }
 };
-
-/* Expose for other script */
-window._auth = { get userProfile(){ return userProfile; }, setProfile:(p)=>{ userProfile=p; } };
 </script>
 
 <script>
