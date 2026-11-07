@@ -116,6 +116,7 @@ h3{font-size:24px;margin:28px 0 12px}
 .pass-wrap input{padding-right:48px}
 .eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:20px;cursor:pointer}
 .save-btn{width:100%;background:linear-gradient(90deg,#ff2d55,#ff5a7a);border:none;color:#fff;padding:14px;border-radius:12px;font-weight:800;font-size:16px;margin-top:24px;cursor:pointer}
+.save-btn:disabled{opacity:.6}
 .cancel-btn{width:100%;background:#2a2a2a;border:none;color:#fff;padding:13px;border-radius:12px;font-weight:700;font-size:15px;margin-top:10px;cursor:pointer}
 .edit-avatar-wrap{text-align:center;margin:10px 0 6px;position:relative}
 .edit-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#ff5a7a,#ff8a5a);margin:0 auto;display:grid;place-items:center;font-size:44px;overflow:hidden;cursor:pointer}
@@ -123,7 +124,6 @@ h3{font-size:24px;margin:28px 0 12px}
 .change-photo{color:#ff5a7a;font-size:14px;font-weight:700;margin-top:8px;cursor:pointer;display:block;text-align:center}
 .success-msg{background:#1db954;color:#fff;padding:12px;border-radius:10px;text-align:center;font-weight:700;display:none;margin-top:14px}
 .error-msg{background:#ff2d55;color:#fff;padding:12px;border-radius:10px;text-align:center;font-weight:700;display:none;margin-top:14px}
-/* --- AUTH --- */
 .auth-logo{width:90px;height:90px;border-radius:24px;background:linear-gradient(135deg,#ff2d55,#ff8a5a);margin:14px auto;display:grid;place-items:center;font-size:44px}
 .auth-title{text-align:center;font-size:26px;font-weight:800;margin:6px 0}
 .auth-sub{text-align:center;color:#aaa;font-size:14px;margin-bottom:6px}
@@ -132,11 +132,12 @@ h3{font-size:24px;margin:28px 0 12px}
 .auth-tabs button.active{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff}
 .auth-switch{text-align:center;color:#aaa;font-size:14px;margin-top:16px}
 .auth-switch b{color:#ff5a7a;cursor:pointer}
-.demo-box{background:#1c1c1e;border-radius:12px;padding:12px;text-align:center;color:#aaa;font-size:13px;margin-top:14px}
-.demo-box b{color:#fff}
+.loading{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:none;place-items:center;color:#fff;font-weight:700}
+.loading.show{display:grid}
 </style>
 </head>
 <body>
+<div class="loading" id="loading">⏳ Loading...</div>
 <div class="phone">
 
 <!-- HOME -->
@@ -227,7 +228,7 @@ h3{font-size:24px;margin:28px 0 12px}
   <div style="height:30px"></div>
 </div>
 
-<!-- AUTH - LOGIN & SIGN UP -->
+<!-- AUTH - REAL LOGIN & SIGN UP -->
 <div id="page-auth" class="page">
   <div class="header"><h1>Profile</h1></div>
   <div class="auth-logo">🎵</div>
@@ -237,18 +238,16 @@ h3{font-size:24px;margin:28px 0 12px}
     <button id="authTabLogin" class="active" onclick="switchAuth('login')">Login</button>
     <button id="authTabSignup" onclick="switchAuth('signup')">Sign Up</button>
   </div>
-  <!-- LOGIN FORM -->
   <div id="loginForm">
-    <label class="form-label">📧 Email / Username</label>
-    <input class="form-input" id="loginEmail" placeholder="e.g. alex@gmail.com or alex_morgan">
+    <label class="form-label">📧 Email</label>
+    <input class="form-input" id="loginEmail" placeholder="e.g. alex@gmail.com" type="email">
     <label class="form-label">🔒 Password</label>
     <div class="pass-wrap"><input class="form-input" id="loginPassword" type="password" placeholder="Password"><button class="eye-btn" type="button" onclick="let p=document.getElementById('loginPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div>
     <div class="error-msg" id="loginError"></div>
     <div class="success-msg" id="loginSuccess"></div>
-    <button class="save-btn" onclick="doLogin()">Login →</button>
+    <button class="save-btn" id="loginBtn" onclick="doLogin()">Login →</button>
     <div class="auth-switch">Account illa? <b onclick="switchAuth('signup')">Sign Up cheyyu</b></div>
   </div>
-  <!-- SIGN UP FORM -->
   <div id="signupForm" style="display:none">
     <label class="form-label">👤 Full Name</label>
     <input class="form-input" id="signupName" placeholder="e.g. Alex Morgan">
@@ -257,21 +256,20 @@ h3{font-size:24px;margin:28px 0 12px}
     <label class="form-label">📧 Email</label>
     <input class="form-input" id="signupEmail" type="email" placeholder="e.g. alex@gmail.com">
     <label class="form-label">🔒 Password</label>
-    <div class="pass-wrap"><input class="form-input" id="signupPassword" type="password" placeholder="Min 4 letters"><button class="eye-btn" type="button" onclick="let p=document.getElementById('signupPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div>
-    <div class="form-hint">Password min 4 aksharam</div>
+    <div class="pass-wrap"><input class="form-input" id="signupPassword" type="password" placeholder="Min 6 letters"><button class="eye-btn" type="button" onclick="let p=document.getElementById('signupPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div>
+    <div class="form-hint">Password min 6 aksharam - Firebase rule aanu</div>
     <div class="error-msg" id="signupError"></div>
     <div class="success-msg" id="signupSuccess"></div>
-    <button class="save-btn" onclick="doSignup()">✨ Create Account</button>
+    <button class="save-btn" id="signupBtn" onclick="doSignup()">✨ Create Account</button>
     <div class="auth-switch">Already account undu? <b onclick="switchAuth('login')">Login cheyyu</b></div>
   </div>
-  <div class="demo-box">Demo: First time <b>Sign Up</b> cheyyu,<br>pinne athe Email + Password vechu <b>Login</b> cheyyam</div>
   <div style="height:30px"></div>
 </div>
 
-<!-- MY PROFILE - LOGIN CHEYTHAL MATHRAM -->
+<!-- MY PROFILE -->
 <div id="page-profile" class="page">
   <div class="header"><h1>Profile</h1><div class="gear">⚙️</div></div>
-  <div class="profile-top"><div class="avatar" id="profileAvatarWrap"><span id="profileAvatarLetter">👤</span><img id="profileAvatarImg" src="" style="display:none" onerror="this.style.display='none'"></div><h2 id="profileName">Alex Morgan</h2><div class="profile-username" id="profileUsername">@alex_morgan</div><div class="profile-email" id="profileEmail">alex.morgan@gmail.com</div></div>
+  <div class="profile-top"><div class="avatar" id="profileAvatarWrap"><span id="profileAvatarLetter">👤</span><img id="profileAvatarImg" src="" style="display:none" onerror="this.style.display='none'"></div><h2 id="profileName">-</h2><div class="profile-username" id="profileUsername">@-</div><div class="profile-email" id="profileEmail">-</div></div>
   <div class="stats"><div><b>128</b><span>Following</span></div><div><b>1.2k</b><span>Followers</span></div><div><b id="profilePlaylistCount">4</b><span>Playlists</span></div></div>
   <div class="edit-wrap"><button class="edit-btn" onclick="go('editprofile')">Edit Profile</button><button class="logout-btn" onclick="doLogout()">Logout</button></div>
   <h3>🎵 My Playlists</h3>
@@ -298,13 +296,13 @@ h3{font-size:24px;margin:28px 0 12px}
   <label class="form-label">@ Username</label>
   <input class="form-input" id="editUsername" placeholder="e.g. alex_morgan">
   <label class="form-label">📧 Email</label>
-  <input class="form-input" id="editEmail" type="email" placeholder="e.g. alex@gmail.com">
-  <label class="form-label">🔒 Password</label>
+  <input class="form-input" id="editEmail" type="email" placeholder="e.g. alex@gmail.com" disabled style="opacity:.6">
+  <div class="form-hint">Email maattanamengil vere account vechu Login cheyyanam - Firebase rule</div>
+  <label class="form-label">🔒 New Password (optional)</label>
   <div class="pass-wrap">
-    <input class="form-input" id="editPassword" type="password" placeholder="New Password">
+    <input class="form-input" id="editPassword" type="password" placeholder="New Password - khaali vittal maattilla">
     <button class="eye-btn" type="button" onclick="togglePass()">👁️</button>
   </div>
-  <div class="form-hint">Password maattanamennilla - khaali vittal pazhaya password thanne nilkkum</div>
   <div class="success-msg" id="saveMsg">✅ Profile Saved!</div>
   <button class="save-btn" onclick="saveProfile()">💾 Save Changes</button>
   <button class="cancel-btn" onclick="history.back()">Cancel</button>
@@ -333,29 +331,63 @@ h3{font-size:24px;margin:28px 0 12px}
   <button id="nav-profile" onclick="go('profile')"><span class="ico">👤</span>Profile</button>
 </div>
 
-<script>
-/* --- AUTH - LOGIN / SIGNUP --- */
-let allUsers = JSON.parse(localStorage.getItem('a2z_users')||'[]');
-let currentEmail = localStorage.getItem('a2z_current')||'';
-let userProfile = null;
-function getCurrentUser(){
-  if(!currentEmail) return null;
-  return allUsers.find(u=>u.email.toLowerCase()===currentEmail.toLowerCase() || u.username.toLowerCase()===currentEmail.toLowerCase()) || null;
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, updatePassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+/* ============ STEP 1: FIREBASE CONFIG - IVDE PASTE CHEYYU ============
+   console.firebase.google.com -> Create Project -> </> Web App -> Config copy cheythu ivde paste cheyyu
+   Example:
+   const firebaseConfig = {
+     apiKey: "AIza...",
+     authDomain: "a2z-songs.firebaseapp.com",
+     projectId: "a2z-songs",
+     storageBucket: "a2z-songs.appspot.com",
+     messagingSenderId: "123...",
+     appId: "1:123:web:abc..."
+   };
+   Firebase-il Authentication -> Sign-in method -> Email/Password -> Enable cheyyanam!
+========================================================================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyA3QP1DZRM5kTmnSyx2NM_9SnqrxBDR7lc",
+  authDomain: "a2z-songs.firebaseapp.com",
+  projectId: "a2z-songs",
+  storageBucket: "a2z-songs.firebasestorage.app",
+  messagingSenderId: "947910937475",
+  appId: "1:947910937475:web:589d9417da8373d0e204b6"
+};
+const isFirebaseConfigured = firebaseConfig.apiKey !== "AIzaSyA3QP1DZRM5kTmnSyx2NM_9SnqrxBDR7lc";
+
+let auth = null;
+if(isFirebaseConfigured){
+  try{
+    const app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+  }catch(e){ console.log("Firebase init error", e); }
 }
-function isLoggedIn(){ return !!getCurrentUser(); }
-function switchAuth(mode){
+
+/* --- LOCAL FALLBACK - Firebase config paste cheyyunnathu vare testing-nu vendi mathram --- */
+/* Config paste cheythal ithu automatic aayi off aavum, Firebase mathram work cheyyum */
+let localUsers = JSON.parse(localStorage.getItem('a2z_users')||'[]');
+let localCurrent = localStorage.getItem('a2z_current')||'';
+let userProfile = null;
+let authReady = false;
+
+function showLoading(v){ document.getElementById('loading').classList.toggle('show', v); }
+function showAuthError(id, msg){ let el=document.getElementById(id); el.innerText=msg; el.style.display='block'; }
+function hideAuthErrors(){ ['loginError','signupError'].forEach(id=>document.getElementById(id).style.display='none'); ['loginSuccess','signupSuccess'].forEach(id=>document.getElementById(id).style.display='none'); }
+
+window.switchAuth = function(mode){
   document.getElementById('authTabLogin').classList.toggle('active', mode==='login');
   document.getElementById('authTabSignup').classList.toggle('active', mode==='signup');
   document.getElementById('loginForm').style.display = mode==='login' ? 'block' : 'none';
   document.getElementById('signupForm').style.display = mode==='signup' ? 'block' : 'none';
   document.getElementById('authSub').innerText = mode==='login' ? 'Login cheythu ningalude playlists kaanu' : 'Puthiya account undakku - Free aanu!';
-  document.getElementById('loginError').style.display='none';
-  document.getElementById('signupError').style.display='none';
-}
-function showAuthError(id, msg){
-  let el=document.getElementById(id); el.innerText=msg; el.style.display='block';
-}
-function doSignup(){
+  hideAuthErrors();
+};
+
+/* --- REAL SIGN UP --- */
+window.doSignup = async function(){
   let name=document.getElementById('signupName').value.trim();
   let username=document.getElementById('signupUsername').value.trim().replace(/\s+/g,'_').toLowerCase();
   let email=document.getElementById('signupEmail').value.trim().toLowerCase();
@@ -363,51 +395,120 @@ function doSignup(){
   if(!name) return showAuthError('signupError','❌ Name ezhuthu!');
   if(!username) return showAuthError('signupError','❌ Username ezhuthu!');
   if(!email || !email.includes('@')) return showAuthError('signupError','❌ Correct Email ezhuthu!');
-  if(!pass || pass.length<4) return showAuthError('signupError','❌ Password min 4 aksharam venam!');
-  if(allUsers.some(u=>u.email===email)) return showAuthError('signupError','❌ Ee Email already und - Login cheyyu!');
-  if(allUsers.some(u=>u.username===username)) return showAuthError('signupError','❌ Ee Username already eduthu - vere username nokku!');
-  let newUser={name:name, username:username, email:email, password:pass, avatar:""};
-  allUsers.push(newUser);
-  localStorage.setItem('a2z_users', JSON.stringify(allUsers));
-  localStorage.setItem('a2z_current', email);
-  currentEmail=email; userProfile=newUser;
-  renderProfile();
-  let s=document.getElementById('signupSuccess'); s.innerText='✅ Account Created! Welcome, '+name; s.style.display='block';
-  setTimeout(()=>{ go('profile'); }, 700);
-}
-function doLogin(){
-  let ident=document.getElementById('loginEmail').value.trim().toLowerCase();
-  let pass=document.getElementById('loginPassword').value.trim();
-  if(!ident) return showAuthError('loginError','❌ Email / Username ezhuthu!');
-  if(!pass) return showAuthError('loginError','❌ Password ezhuthu!');
-  let user=allUsers.find(u=> (u.email.toLowerCase()===ident || u.username.toLowerCase()===ident) && u.password===pass);
-  if(!user) return showAuthError('loginError','❌ Email / Password thettaanu! Sign Up cheythittundo ennu nokku.');
-  localStorage.setItem('a2z_current', user.email);
-  currentEmail=user.email; userProfile=user;
-  renderProfile();
-  let s=document.getElementById('loginSuccess'); s.innerText='✅ Welcome back, '+user.name+'!'; s.style.display='block';
-  setTimeout(()=>{ go('profile'); }, 600);
-}
-function doLogout(){
-  if(!confirm('Logout cheyyano?')) return;
-  localStorage.removeItem('a2z_current');
-  currentEmail=''; userProfile=null;
-  document.getElementById('loginEmail').value=''; document.getElementById('loginPassword').value='';
-  switchAuth('login');
-  go('profile');
-}
-function openProfilePage(){
-  if(isLoggedIn()){
-    userProfile=getCurrentUser();
+  if(!pass || pass.length<6) return showAuthError('signupError','❌ Password min 6 aksharam venam!');
+  hideAuthErrors(); showLoading(true);
+  document.getElementById('signupBtn').disabled=true;
+  try{
+    if(isFirebaseConfigured && auth){
+      // REAL FIREBASE SIGN UP
+      const cred = await createUserWithEmailAndPassword(auth, email, pass);
+      await updateProfile(cred.user, { displayName: name });
+      // Username local-il save cheyyu - Firebase displayName-il name mathram
+      localStorage.setItem('a2z_username_'+cred.user.uid, username);
+      // onAuthStateChanged automatic aayi Profile-il ethum - ivde manual-um cheyyunnu
+      userProfile = { name:name, username:username, email:email, avatar:"", uid:cred.user.uid };
+      localStorage.setItem('a2z_profile_'+cred.user.uid, JSON.stringify(userProfile));
+    } else {
+      // FALLBACK - config illaenkil
+      if(localUsers.some(u=>u.email===email)) throw new Error("Ee Email already und - Login cheyyu!");
+      if(localUsers.some(u=>u.username===username)) throw new Error("Ee Username already eduthu!");
+      let nu={name:name, username:username, email:email, password:pass, avatar:""};
+      localUsers.push(nu); localStorage.setItem('a2z_users', JSON.stringify(localUsers));
+      localStorage.setItem('a2z_current', email); localCurrent=email; userProfile=nu;
+    }
+    let s=document.getElementById('signupSuccess'); s.innerText='✅ Account Created! Welcome, '+name; s.style.display='block';
     renderProfile();
-    showPageOnly('profile');
-  } else {
-    switchAuth('login');
-    showPageOnly('auth');
+    setTimeout(()=>{ window.go('profile'); }, 700);
+  }catch(e){
+    let msg=e.message||'Sign Up failed';
+    if(msg.includes('email-already-in-use')) msg='❌ Ee Email already und - Login cheyyu!';
+    if(msg.includes('invalid-email')) msg='❌ Correct Email ezhuthu!';
+    if(msg.includes('weak-password')) msg='❌ Password min 6 aksharam venam!';
+    showAuthError('signupError', msg);
+  } finally { showLoading(false); document.getElementById('signupBtn').disabled=false; }
+};
+
+/* --- REAL LOGIN --- */
+window.doLogin = async function(){
+  let email=document.getElementById('loginEmail').value.trim().toLowerCase();
+  let pass=document.getElementById('loginPassword').value.trim();
+  if(!email) return showAuthError('loginError','❌ Email ezhuthu!');
+  if(!pass) return showAuthError('loginError','❌ Password ezhuthu!');
+  hideAuthErrors(); showLoading(true);
+  document.getElementById('loginBtn').disabled=true;
+  try{
+    if(isFirebaseConfigured && auth){
+      const cred = await signInWithEmailAndPassword(auth, email, pass);
+      // onAuthStateChanged automatic aayi Profile-il ethum
+      let saved = JSON.parse(localStorage.getItem('a2z_profile_'+cred.user.uid)||'null');
+      let uname = localStorage.getItem('a2z_username_'+cred.user.uid) || cred.user.email.split('@')[0];
+      userProfile = saved || { name: cred.user.displayName || uname, username: uname, email: cred.user.email, avatar: cred.user.photoURL||"", uid: cred.user.uid };
+    } else {
+      let user=localUsers.find(u=>u.email.toLowerCase()===email && u.password===pass);
+      if(!user) throw new Error("Email / Password thettaanu!");
+      localStorage.setItem('a2z_current', user.email); localCurrent=user.email; userProfile=user;
+    }
+    let s=document.getElementById('loginSuccess'); s.innerText='✅ Welcome back, '+(userProfile?.name||''); s.style.display='block';
+    renderProfile();
+    setTimeout(()=>{ window.go('profile'); }, 600);
+  }catch(e){
+    let msg=e.message||'Login failed';
+    if(msg.includes('invalid-credential')||msg.includes('user-not-found')||msg.includes('wrong-password')) msg='❌ Email / Password thettaanu! Sign Up cheythittundo ennu nokku.';
+    if(msg.includes('invalid-email')) msg='❌ Correct Email ezhuthu!';
+    if(msg.includes('too-many-requests')) msg='❌ Kurachu kazhinju veendum nokku!';
+    showAuthError('loginError', msg);
+  } finally { showLoading(false); document.getElementById('loginBtn').disabled=false; }
+};
+
+/* --- REAL LOGOUT --- */
+window.doLogout = async function(){
+  if(!confirm('Logout cheyyano?')) return;
+  showLoading(true);
+  try{
+    if(isFirebaseConfigured && auth) await signOut(auth);
+    localStorage.removeItem('a2z_current'); localCurrent=''; userProfile=null;
+  }catch(e){}
+  showLoading(false);
+  window.switchAuth('login');
+  window.go('profile');
+};
+
+/* --- AUTO LOGIN - App thurakkumbol Firebase thanne nokkum --- */
+if(isFirebaseConfigured && auth){
+  onAuthStateChanged(auth, (user)=>{
+    authReady=true;
+    if(user){
+      let saved = JSON.parse(localStorage.getItem('a2z_profile_'+user.uid)||'null');
+      let uname = localStorage.getItem('a2z_username_'+user.uid) || user.email.split('@')[0];
+      userProfile = saved || { name: user.displayName || uname, username: uname, email: user.email, avatar: user.photoURL||"", uid: user.uid };
+      renderProfile();
+      // Profile page-il aanenkil automatic Profile kaanikku, allenkil Home-il thanne nilkkum
+      if(location.hash.includes('profile') || location.hash.includes('auth')){
+        window.go('profile');
+      }
+    } else {
+      userProfile=null;
+      renderProfile();
+    }
+  });
+} else {
+  // Fallback auto login
+  if(localCurrent){
+    let u=localUsers.find(x=>x.email===localCurrent);
+    if(u) userProfile=u;
   }
+  authReady=true;
 }
-function renderProfile(){
-  userProfile=getCurrentUser();
+
+/* --- PROFILE RENDER --- */
+window.renderProfile = function(){
+  if(!userProfile){
+    // Fallback-il ninnu eduthu nokku
+    if(!isFirebaseConfigured && localCurrent){
+      let u=localUsers.find(x=>x.email===localCurrent);
+      if(u) userProfile=u;
+    }
+  }
   if(!userProfile){
     document.getElementById('homeGreeting').innerText='Good Evening, Guest 👋';
     return;
@@ -420,26 +521,34 @@ function renderProfile(){
   let pImg=document.getElementById('profileAvatarImg');
   if(userProfile.avatar){ pImg.src=userProfile.avatar; pImg.style.display='block'; document.getElementById('profileAvatarLetter').style.display='none'; }
   else { pImg.style.display='none'; document.getElementById('profileAvatarLetter').style.display='block'; }
-}
-function openEditProfile(){
-  if(!isLoggedIn()){ openProfilePage(); return; }
-  userProfile=getCurrentUser();
+};
+window.isLoggedIn = function(){ return !!userProfile; };
+window.openProfilePage = function(){
+  if(window.isLoggedIn()){
+    renderProfile();
+    showPageOnly('profile');
+  } else {
+    window.switchAuth('login');
+    showPageOnly('auth');
+  }
+};
+window.openEditProfile = function(){
+  if(!window.isLoggedIn()){ window.openProfilePage(); return; }
   document.getElementById('editName').value=userProfile.name;
   document.getElementById('editUsername').value=userProfile.username;
   document.getElementById('editEmail').value=userProfile.email;
   document.getElementById('editPassword').value='';
-  document.getElementById('editPassword').placeholder='Current password hidden • New password ezhuthu';
   document.getElementById('saveMsg').style.display='none';
   let eImg=document.getElementById('editAvatarImg');
   if(userProfile.avatar){ eImg.src=userProfile.avatar; eImg.style.display='block'; document.getElementById('editAvatarLetter').style.display='none'; }
   else { eImg.style.display='none'; document.getElementById('editAvatarLetter').style.display='block'; }
   showPageOnly('editprofile');
-}
-function togglePass(){
+};
+window.togglePass = function(){
   let p=document.getElementById('editPassword');
   p.type = p.type==='password' ? 'text' : 'password';
-}
-function previewAvatar(input){
+};
+window.previewAvatar = function(input){
   if(!input.files||!input.files[0]) return;
   let reader=new FileReader();
   reader.onload=function(e){
@@ -449,30 +558,38 @@ function previewAvatar(input){
     document.getElementById('editAvatarLetter').style.display='none';
   };
   reader.readAsDataURL(input.files[0]);
-}
-function saveProfile(){
+};
+window.saveProfile = async function(){
   let name=document.getElementById('editName').value.trim();
   let username=document.getElementById('editUsername').value.trim().replace(/\s+/g,'_').toLowerCase();
-  let email=document.getElementById('editEmail').value.trim().toLowerCase();
   let pass=document.getElementById('editPassword').value.trim();
   if(!name){ alert('Name ezhuthu!'); return; }
   if(!username){ alert('Username ezhuthu!'); return; }
-  if(!email || !email.includes('@')){ alert('Correct Email ezhuthu!'); return; }
-  let idx=allUsers.findIndex(u=>u.email===userProfile.email);
-  if(allUsers.some((u,i)=>i!==idx && u.email===email)){ alert('Ee Email vere aalkkullathaanu!'); return; }
-  if(allUsers.some((u,i)=>i!==idx && u.username===username)){ alert('Ee Username vere aalkkullathaanu!'); return; }
-  userProfile.name=name; userProfile.username=username; userProfile.email=email;
-  if(pass) userProfile.password=pass;
-  allUsers[idx]=userProfile;
-  localStorage.setItem('a2z_users', JSON.stringify(allUsers));
-  localStorage.setItem('a2z_current', email);
-  currentEmail=email;
-  renderProfile();
-  let m=document.getElementById('saveMsg');
-  m.style.display='block';
-  m.innerText='✅ Profile Saved! - '+name;
-  setTimeout(()=>{ go('profile'); }, 800);
-}
+  userProfile.name=name; userProfile.username=username;
+  showLoading(true);
+  try{
+    if(isFirebaseConfigured && auth && auth.currentUser){
+      await updateProfile(auth.currentUser, { displayName: name });
+      localStorage.setItem('a2z_username_'+auth.currentUser.uid, username);
+      localStorage.setItem('a2z_profile_'+auth.currentUser.uid, JSON.stringify(userProfile));
+      if(pass) await updatePassword(auth.currentUser, pass);
+    } else {
+      let idx=localUsers.findIndex(u=>u.email===userProfile.email);
+      if(idx>=0){ localUsers[idx]=userProfile; if(pass) localUsers[idx].password=pass; localStorage.setItem('a2z_users', JSON.stringify(localUsers)); }
+    }
+    renderProfile();
+    let m=document.getElementById('saveMsg'); m.style.display='block'; m.innerText='✅ Profile Saved! - '+name;
+    setTimeout(()=>{ window.go('profile'); }, 800);
+  }catch(e){
+    alert('Save failed: '+e.message);
+  } finally { showLoading(false); }
+};
+
+/* Expose for other script */
+window._auth = { get userProfile(){ return userProfile; }, setProfile:(p)=>{ userProfile=p; } };
+</script>
+
+<script>
 const IMG = {
   "Mohanlal":"https://www.pmindia.gov.in/wp-content/uploads/2023/12/Mohanlal-Actor.jpg",
   "Mammootty":"https://image.tmdb.org/t/p/original/nBuirwu4WlDfTURe0rS3EpuLXyd.jpg",
@@ -761,8 +878,8 @@ function router(){
   else if(page==='album'&&param) openAlbum(param);
   else if(page==='player'&&param) openPlayer(param);
   else if(page==='detail'&&param) openDetail(param);
-  else if(page==='editprofile') openEditProfile();
-  else if(page==='profile') openProfilePage();
+  else if(page==='editprofile') { if(window.openEditProfile) window.openEditProfile(); }
+  else if(page==='profile') { if(window.openProfilePage) window.openProfilePage(); else showPageOnly('auth'); }
   else if(page==='auth') showPageOnly('auth');
   else showPageOnly(page==='albumdetail'?'album':page);
 }
@@ -773,7 +890,8 @@ function nextTrack(){ currentTrackIndex=(currentTrackIndex+1)%TRACKS.length; go(
 function prevTrack(){ currentTrackIndex=(currentTrackIndex-1+TRACKS.length)%TRACKS.length; go('player/'+encodeURIComponent(TRACKS[currentTrackIndex].title)); }
 setInterval(()=>{ if(isPlaying && document.getElementById('page-player').classList.contains('active')){ prog+=1; if(prog>100) prog=0; document.getElementById('progressFill').style.width=prog+'%'; let sec=Math.floor(prog*2.64); document.getElementById('curTime').innerText='0:'+(sec<10?'0'+sec:sec); } },1000);
 function doSearch(val){ if(!val){renderTracks();return;} let f=TRACKS.filter(t=>t.title.toLowerCase().includes(val.toLowerCase())); document.getElementById('trackList').innerHTML=f.map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">${t.img?`<img src="${t.img}" onerror="this.style.display='none'">`:'🎵'}</div><div><b>${t.title}</b><br><small>${t.album}</small></div><div class="play-btn">▶</div></div>`).join(''); }
-renderProfile(); showTab('actor'); renderAlbums(); renderTracks(); renderMyPlaylists(); updateAddBtn();
+showTab('actor'); renderAlbums(); renderTracks(); renderMyPlaylists(); updateAddBtn();
+if(window.renderProfile) window.renderProfile();
 if(!location.hash) location.hash='/home'; else router();
 </script>
 </body>
