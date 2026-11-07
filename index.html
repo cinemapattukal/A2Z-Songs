@@ -3,44 +3,137 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alex Morgan - Profile</title>
+<title>A2Z Songs - Alex Morgan</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 body{background:#000;color:#fff;display:flex;justify-content:center}
-.phone{width:100%;max-width:430px;min-height:100vh;background:linear-gradient(180deg,#3a0f22 0%,#1a0714 35%,#0a0a0a 70%);padding:18px 18px 100px;position:relative}
-.status{display:flex;justify-content:space-between;font-size:14px;font-weight:600;padding:0 4px}
-.header{display:flex;align-items:center;justify-content:center;position:relative;margin:18px 0 8px}
+.phone{width:100%;max-width:430px;min-height:100vh;background:linear-gradient(180deg,#3a0f22 0%,#1a0714 35%,#0a0a0a 70%);padding:18px 18px 110px;position:relative}
+.page{display:none}
+.page.active{display:block}
+.header{display:flex;align-items:center;justify-content:center;position:relative;margin:10px 0 16px}
 .header h1{font-size:20px;font-weight:700}
-.gear{position:absolute;right:4px;font-size:22px;opacity:.9;cursor:pointer}
+.gear{position:absolute;right:4px;font-size:22px}
+.search-box{background:#1c1c1e;border-radius:12px;padding:13px 14px;display:flex;gap:10px;color:#aaa;margin-bottom:16px}
+.search-box input{background:none;border:none;outline:none;color:#fff;font-size:15px;width:100%}
+.hero{background:linear-gradient(135deg,#ff2d55,#ff8a5a);border-radius:16px;padding:20px}
+.hero small{opacity:.9}
+.hero h2{font-size:26px;margin:6px 0}
+.hero button{background:#fff;color:#000;border:none;padding:9px 18px;border-radius:20px;font-weight:700;margin-top:10px}
+.section-title{font-size:20px;font-weight:800;margin:22px 0 12px}
+.song-row,.card{background:#1c1c1e;border-radius:14px;padding:12px;display:flex;gap:12px;align-items:center;margin-bottom:10px;cursor:pointer}
+.thumb{width:56px;height:56px;border-radius:10px;flex-shrink:0;display:grid;place-items:center;font-size:24px;font-weight:800}
+.t1{background:linear-gradient(135deg,#c86bff,#ff5a7a)} .t2{background:linear-gradient(135deg,#ff5a3c,#ff2d55)} .t3{background:linear-gradient(135deg,#5a8cff,#ff5a9a)} .t4{background:linear-gradient(135deg,#00d2ff,#3a7bd5)} .t5{background:linear-gradient(135deg,#f9d423,#ff4e50)} .t6{background:linear-gradient(135deg,#11998e,#38ef7d)}
+.song-row b,.card b{font-size:16px} .song-row small,.card small{color:#aaa;font-size:13px}
+.play-btn{margin-left:auto;width:36px;height:36px;border-radius:50%;background:#ff2d55;display:grid;place-items:center}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-card{border-radius:14px;padding:18px 14px;min-height:90px;display:flex;align-items:flex-end;font-weight:800;font-size:17px;cursor:pointer}
+.chip{display:inline-block;background:#1c1c1e;padding:8px 14px;border-radius:20px;margin:0 6px 8px 0;font-size:14px;cursor:pointer}
+.chip.active{background:#ff2d55}
 .profile-top{text-align:center}
-.avatar{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#ff5a7a,#ff8a5a);margin:6px auto 10px;display:grid;place-items:center;font-size:42px;overflow:hidden}
-.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#ff5a7a,#ff8a5a);margin:6px auto 10px;display:grid;place-items:center;font-size:42px}
 .profile-top h2{font-size:26px;font-weight:800}
 .stats{display:flex;justify-content:space-around;text-align:center;margin:20px 6px 0}
-.stats b{font-size:26px;display:block;line-height:1}
-.stats span{font-size:14px;color:#aaa}
-.edit-wrap{text-align:center;margin-top:-2px}
-.edit-btn{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff;border:none;padding:9px 28px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 4px 14px rgba(255,45,85,.4)}
-.playlists{display:flex;flex-direction:column;gap:10px;margin-top:22px}
-.card{background:#1c1c1e;border-radius:14px;padding:12px;display:flex;gap:12px;align-items:center;cursor:pointer}
-.card:hover{background:#26262a}
-.thumb{width:58px;height:58px;border-radius:8px;flex-shrink:0;display:grid;place-items:center;font-size:9px;font-weight:800;text-align:center;line-height:1.2;padding:6px}
-.thumb-1{background:linear-gradient(135deg,#c86bff,#ff5a7a)}
-.thumb-2{background:linear-gradient(135deg,#ff5a3c,#ff2d55)}
-.thumb-3{background:linear-gradient(135deg,#5a8cff,#ff5a9a)}
-.card b{font-size:17px}
-.card small{color:#aaa;font-size:13px}
-.dots{margin-left:auto;font-size:20px;color:#ddd;letter-spacing:1px}
+.stats b{font-size:26px;display:block} .stats span{font-size:14px;color:#aaa}
+.edit-wrap{text-align:center;margin-top:10px}
+.edit-btn{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff;border:none;padding:9px 28px;border-radius:8px;font-weight:700;font-size:15px}
+.dots{margin-left:auto;font-size:20px;color:#ddd}
 h3{font-size:24px;margin:28px 0 12px}
-.settings{display:flex;flex-direction:column;gap:10px}
-.set-row{background:#1c1c1e;border-radius:12px;padding:14px 14px;display:flex;align-items:center;gap:12px;cursor:pointer}
-.set-row:hover{background:#26262a}
-.icon{font-size:20px;width:26px;text-align:center}
-.set-row span{font-size:16px;font-weight:600}
-.arrow{margin-left:auto;color:#888;font-size:20px}
+.set-row{background:#1c1c1e;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.set-row span{font-size:16px;font-weight:600} .arrow{margin-left:auto;color:#888}
 .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#141414;display:flex;justify-content:space-around;padding:12px 0 18px;border-top:1px solid #2a2a2a;z-index:10}
-.nav a{color:#888;text-decoration:none;font-size:11px;text-align:center;display:flex;flex-direction:column;gap:3px;align-items:center}
-.nav a.active{color:#ff2d55}
+.nav button{background:none;border:none;color:#888;font-size:11px;text-align:center;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer}
+.nav button.active{color:#ff2d55}
 .nav .ico{font-size:22px}
-@media(min-width:768px){
-  .phone{max-width:480px;border-left
+</style>
+</head>
+<body>
+<div class="phone">
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="header"><h1>Good Evening, Alex 👋</h1></div>
+  <div class="hero"><small>🔥 TRENDING NOW</small><h2>A2Z Songs</h2><p>Best Malayalam & Hindi Hits</p><button onclick="showPage('browse')">▶ Play All</button></div>
+  <div class="section-title">Recently Played</div>
+  <div class="song-row"><div class="thumb t1">🎵</div><div><b>Malare</b><br><small>Premam • Vineeth Sreenivasan</small></div><div class="play-btn">▶</div></div>
+  <div class="song-row"><div class="thumb t2">🎧</div><div><b>Uyire</b><br><small>Gauthamante Radham</small></div><div class="play-btn">▶</div></div>
+  <div class="song-row"><div class="thumb t3">🎶</div><div><b>Jimikki Kammal</b><br><small>Velipadinte Pusthakam</small></div><div class="play-btn">▶</div></div>
+</div>
+
+<!-- BROWSE -->
+<div id="page-browse" class="page">
+  <div class="header"><h1>Browse</h1></div>
+  <div class="section-title">Genres</div>
+  <div class="grid">
+    <div class="grid-card t1" onclick="showPage('search')">Melody</div>
+    <div class="grid-card t2" onclick="showPage('search')">Mass Hits</div>
+    <div class="grid-card t3" onclick="showPage('search')">Romantic</div>
+    <div class="grid-card t4" onclick="showPage('search')">Devotional</div>
+    <div class="grid-card t5" onclick="showPage('search')">90s Hits</div>
+    <div class="grid-card t6" onclick="showPage('search')">New Releases</div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div id="page-search" class="page">
+  <div class="header"><h1>Search</h1></div>
+  <div class="search-box">🔍 <input id="searchInput" placeholder="Search songs, artists..." oninput="doSearch(this.value)"></div>
+  <div id="searchResult">
+    <span class="chip active">All</span><span class="chip">Malayalam</span><span class="chip">Hindi</span><span class="chip">Tamil</span>
+    <div class="section-title">Top Results</div>
+    <div class="song-row"><div class="thumb t1">🎵</div><div><b>Malare</b><br><small>Premam</small></div><div class="play-btn">▶</div></div>
+    <div class="song-row"><div class="thumb t4">🎵</div><div><b>Raabta</b><br><small>Agent Vinod</small></div><div class="play-btn">▶</div></div>
+  </div>
+</div>
+
+<!-- LIBRARY -->
+<div id="page-library" class="page">
+  <div class="header"><h1>Your Library</h1></div>
+  <div class="card"><div class="thumb t2">❤️</div><div><b>Liked Songs</b><br><small>124 songs</small></div></div>
+  <div class="card"><div class="thumb t1">Late Night Moods</div><div><b>Late Night Moods</b><br><small>32 songs • 1h 58m</small></div></div>
+  <div class="card"><div class="thumb t2"></div><div><b>Workout Hits</b><br><small>24 songs • 1h 12m</small></div></div>
+  <div class="card"><div class="thumb t3"></div><div><b>Chill Vibes</b><br><small>18 songs • 54m</small></div></div>
+</div>
+
+<!-- PROFILE -->
+<div id="page-profile" class="page">
+  <div class="header"><h1>Profile</h1><div class="gear">⚙️</div></div>
+  <div class="profile-top"><div class="avatar">👤</div><h2>Alex Morgan</h2></div>
+  <div class="stats"><div><b>128</b><span>Following</span></div><div><b>1.2k</b><span>Followers</span></div><div><b>46</b><span>Playlists</span></div></div>
+  <div class="edit-wrap"><button class="edit-btn">Edit Profile</button></div>
+  <div style="margin-top:22px;display:flex;flex-direction:column;gap:10px">
+    <div class="card"><div class="thumb t1">Late Night Moods</div><div><b>Late Night Moods</b><br><small>32 songs • 1h 58m</small></div><div class="dots">•••</div></div>
+    <div class="card"><div class="thumb t2"></div><div><b>Workout Hits</b><br><small>24 songs • 1h 12m</small></div><div class="dots">•••</div></div>
+    <div class="card"><div class="thumb t3"></div><div><b>Chill Vibes</b><br><small>18 songs • 54m</small></div><div class="dots">•••</div></div>
+  </div>
+  <h3>Settings</h3>
+  <div class="set-row"><span>⚙️</span><span>Account</span><div class="arrow">›</div></div>
+  <div class="set-row"><span>🔔</span><span>Notifications</span><div class="arrow">›</div></div>
+  <div class="set-row"><span>⬇️</span><span>Downloads</span><div class="arrow">›</div></div>
+  <div class="set-row"><span>🎨</span><span>Appearance</span><div class="arrow">›</div></div>
+</div>
+
+</div>
+
+<div class="nav">
+  <button id="nav-home" class="active" onclick="showPage('home')"><span class="ico">🏠</span>Home</button>
+  <button id="nav-browse" onclick="showPage('browse')"><span class="ico">🧭</span>Browse</button>
+  <button id="nav-search" onclick="showPage('search')"><span class="ico">🔍</span>Search</button>
+  <button id="nav-library" onclick="showPage('library')"><span class="ico">📚</span>Library</button>
+  <button id="nav-profile" onclick="showPage('profile')"><span class="ico">👤</span>Profile</button>
+</div>
+
+<script>
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('nav-'+name).classList.add('active');
+  window.scrollTo(0,0);
+}
+function doSearch(val){
+  if(!val){return;}
+  document.getElementById('searchResult').innerHTML='<div class="section-title">Searching for "'+val+'"</div><div class="song-row"><div class="thumb t1">🎵</div><div><b>'+val+'</b><br><small>Top Result</small></div><div class="play-btn">▶</div></div>';
+}
+</script>
+</body>
+</html>
