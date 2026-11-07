@@ -12,7 +12,6 @@ body{background:#000;color:#fff;display:flex;justify-content:center}
 .header{display:flex;align-items:center;justify-content:center;position:relative;margin:10px 0 16px}
 .header h1{font-size:20px;font-weight:700}.gear{position:absolute;right:4px;font-size:22px}
 .back{position:absolute;left:4px;font-size:22px;cursor:pointer;background:#1c1c1e;width:36px;height:36px;border-radius:50%;display:grid;place-items:center}
-.url-box{background:#1c1c1e;border-radius:10px;padding:10px 12px;font-size:12px;color:#ff8a5a;margin-bottom:12px;word-break:break-all}
 .search-box{background:#1c1c1e;border-radius:12px;padding:13px 14px;display:flex;gap:10px;color:#aaa;margin-bottom:16px}
 .search-box input{background:none;border:none;outline:none;color:#fff;font-size:15px;width:100%}
 .hero{background:linear-gradient(135deg,#ff2d55,#ff8a5a);border-radius:16px;padding:20px}
@@ -62,7 +61,6 @@ h3{font-size:24px;margin:28px 0 12px}
 .nav button{background:none;border:none;color:#888;font-size:11px;text-align:center;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer}
 .nav button.active{color:#ff2d55}.nav .ico{font-size:22px}
 .detail-hero{background:#1c1c1e;border-radius:16px;padding:20px;text-align:center;margin-bottom:14px}
-.share-btn{background:#1c1c1e;border:1px solid #333;color:#fff;padding:8px 14px;border-radius:20px;font-size:12px;cursor:pointer;margin-top:8px}
 </style>
 </head>
 <body>
@@ -71,7 +69,6 @@ h3{font-size:24px;margin:28px 0 12px}
 <!-- HOME -->
 <div id="page-home" class="page active">
   <div class="header"><h1>Good Evening, Alex 👋</h1></div>
-  <div class="url-box">🔗 URL: <span id="url-home"></span></div>
   <div class="hero"><small>🔥 TRENDING NOW</small><h2>A2Z Songs</h2><p>Best Malayalam & Hindi Hits</p><button onclick="go('album')">▶ Play All</button></div>
   <div class="tabs">
     <button id="tab-actor" class="active" onclick="showTab('actor')">🎬 Actor</button>
@@ -85,7 +82,6 @@ h3{font-size:24px;margin:28px 0 12px}
 <!-- ALBUM LIST -->
 <div id="page-album" class="page">
   <div class="header"><h1>Album</h1></div>
-  <div class="url-box">🔗 URL: <span id="url-album"></span></div>
   <div class="section-title">Top Albums</div>
   <div class="album-grid" id="albumGrid"></div>
 </div>
@@ -93,7 +89,6 @@ h3{font-size:24px;margin:28px 0 12px}
 <!-- TRACK LIST -->
 <div id="page-track" class="page">
   <div class="header"><h1>Track</h1></div>
-  <div class="url-box">🔗 URL: <span id="url-track"></span></div>
   <div class="search-box">🔍 <input id="trackInput" placeholder="Search tracks..." oninput="doSearch(this.value)"></div>
   <div id="trackList"></div>
 </div>
@@ -101,7 +96,6 @@ h3{font-size:24px;margin:28px 0 12px}
 <!-- ARTIST PROFILE -->
 <div id="page-artist" class="page">
   <div class="header"><div class="back" onclick="history.back()">‹</div><h1 id="artistPageTitle">Artist Profile</h1></div>
-  <div class="url-box">🔗 Share this URL: <span id="url-artist"></span><br><button class="share-btn" onclick="copyURL()">📋 Copy Link</button></div>
   <div style="text-align:center"><div class="big-avatar t1" id="artistAvatar">M</div><h2 id="artistName">Mohanlal</h2><p style="color:#aaa" id="artistRole">Actor • Malayalam</p><button class="follow-btn">+ Follow</button></div>
   <div class="stats"><div><b id="artistFollowers">1.2M</b><span>Followers</span></div><div><b id="artistAlbumsCount">12</b><span>Albums</span></div><div><b id="artistSongsCount">86</b><span>Songs</span></div></div>
   <div class="section-title">Albums</div><div class="album-grid" id="artistAlbumsGrid"></div>
@@ -111,7 +105,6 @@ h3{font-size:24px;margin:28px 0 12px}
 <!-- ALBUM DETAIL -->
 <div id="page-albumdetail" class="page">
   <div class="header"><div class="back" onclick="history.back()">‹</div><h1>Album Details</h1></div>
-  <div class="url-box">🔗 Share this URL: <span id="url-albumdetail"></span><br><button class="share-btn" onclick="copyURL()">📋 Copy Link</button></div>
   <div style="text-align:center"><div class="player-cover t2" style="width:160px;height:160px" id="albumDetailCover">💿</div><h2 id="albumDetailName">Premam</h2><p style="color:#aaa" id="albumDetailMeta">2015 • 12 Songs</p><button class="follow-btn" onclick="go('track')">▶ Play All</button></div>
   <div class="section-title">Tracks in this Album</div><div id="albumDetailTracks"></div>
   <div class="credit-box"><div><span>Music Director</span><b id="albumDetailMD" style="cursor:pointer;color:#ff5a7a" onclick="go('artist/'+this.innerText)">Shaan Rahman</b></div><div><span>Singers</span><b id="albumDetailSingers">Vineeth Sreenivasan</b></div></div>
@@ -120,7 +113,6 @@ h3{font-size:24px;margin:28px 0 12px}
 <!-- PLAYER -->
 <div id="page-player" class="page">
   <div class="header"><div class="back" onclick="history.back()">‹</div><h1>Now Playing</h1></div>
-  <div class="url-box">🔗 Share this URL: <span id="url-player"></span><br><button class="share-btn" onclick="copyURL()">📋 Copy Link</button></div>
   <div class="player-cover t1" id="playerCover">🎵</div>
   <div class="player-title"><h2 id="playerTitle">Malare</h2><p id="playerAlbum" style="cursor:pointer;color:#ff5a7a" onclick="go('album/'+this.innerText)">Premam</p></div>
   <div class="credit-box">
@@ -136,7 +128,6 @@ h3{font-size:24px;margin:28px 0 12px}
 <!-- GENERIC DETAIL -->
 <div id="page-detail" class="page">
   <div class="header"><div class="back" onclick="history.back()">‹</div><h1 id="detailTitle">Details</h1></div>
-  <div class="url-box">🔗 URL: <span id="url-detail"></span></div>
   <div class="detail-hero"><div style="font-size:50px" id="detailEmoji">📁</div><h2 id="detailHeading">Title</h2><p style="color:#aaa" id="detailSub">Description</p></div>
   <div id="detailContent"></div>
 </div>
@@ -144,7 +135,6 @@ h3{font-size:24px;margin:28px 0 12px}
 <!-- MY PROFILE -->
 <div id="page-profile" class="page">
   <div class="header"><h1>Profile</h1><div class="gear">⚙️</div></div>
-  <div class="url-box">🔗 URL: <span id="url-profile"></span></div>
   <div class="profile-top"><div class="avatar">👤</div><h2>Alex Morgan</h2></div>
   <div class="stats"><div><b>128</b><span>Following</span></div><div><b>1.2k</b><span>Followers</span></div><div><b>46</b><span>Playlists</span></div></div>
   <div class="edit-wrap"><button class="edit-btn" onclick="go('detail/Edit Profile')">Edit Profile</button></div>
@@ -217,16 +207,11 @@ const TRACKS = [
   {title:"Darshana", album:"Hridayam", md:"Hesham Abdul Wahab", singer:"Darshana Rajendran", actor:"Pranav Mohanlal", cls:"t5"},
   {title:"Raabta", album:"Agent Vinod", md:"Pritam", singer:"Arijit Singh", actor:"Saif Ali Khan", cls:"t6"}
 ];
-function updateURLLabels(){
-  let u=location.href;
-  document.querySelectorAll('[id^="url-"]').forEach(el=>el.innerText=u);
-}
 function go(path){ location.hash='/'+path; }
-function copyURL(){ navigator.clipboard.writeText(location.href); alert('Link Copied! '+location.href); }
 function showTab(type){
   document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+type).classList.add('active');
-  document.getElementById('tabInfo').innerText = type==='actor' ? '8 Actors • Ellarkkum Separate URL' : type==='music' ? '8 Music Directors • Ellarkkum Separate URL' : '8 Singers • Ellarkkum Separate URL';
+  document.getElementById('tabInfo').innerText = type==='actor' ? '8 Actors • Tap for Profile' : type==='music' ? '8 Music Directors • Tap for Profile' : '8 Singers • Tap for Profile';
   document.getElementById('artistGrid').innerHTML = DATA[type].map(a=>`<div class="artist-card" onclick="go('artist/${encodeURIComponent(a.n)}')"><div class="circle ${a.c}">${a.e}</div><b>${a.n}</b><small>${a.s} • Tap ›</small></div>`).join('');
 }
 function openArtist(name){
@@ -290,7 +275,7 @@ function openDetail(title){
   title=decodeURIComponent(title);
   document.getElementById('detailTitle').innerText=title;
   document.getElementById('detailHeading').innerText=title;
-  document.getElementById('detailSub').innerText=title+' - Separate Page • URL: #/detail/'+title;
+  document.getElementById('detailSub').innerText=title+' - Separate Page';
   document.getElementById('detailEmoji').innerText='📁';
   document.getElementById('detailContent').innerHTML=TRACKS.slice(0,3).map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">🎵</div><div><b>${t.title}</b><br><small>${t.album} • ${t.singer}</small></div><div class="play-btn">▶</div></div>`).join('');
   showPageOnly('detail');
@@ -301,7 +286,7 @@ function showPageOnly(name){
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
   let navMap={home:'home',album:'album',track:'track',profile:'profile',artist:'home',albumdetail:'album',player:'track',detail:'profile'};
   document.getElementById('nav-'+(navMap[name]||'home')).classList.add('active');
-  window.scrollTo(0,0); updateURLLabels();
+  window.scrollTo(0,0);
 }
 function router(){
   let hash=location.hash.replace('#/','')||'home';
