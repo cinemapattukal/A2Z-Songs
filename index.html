@@ -343,7 +343,7 @@ const firebaseConfig = {
   messagingSenderId: "947910937475",
   appId: "1:947910937475:web:589d9417da8373d0e204b6"
 };
-const isFirebaseConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "AIzaSyA3QP1DZRM5kTmnSyx2NM_9SnqrxBDR7lc" && firebaseConfig.apiKey.length > 10;
+const isFirebaseConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.apiKey.length > 10);
 
 let auth = null;
 if(isFirebaseConfigured){
@@ -378,71 +378,82 @@ window.switchAuth = function(mode){
 };
 
 window.doSignup = async function(){
-  let name=document.getElementById('signupName').value.trim();
-  let username=document.getElementById('signupUsername').value.trim().replace(/\s+/g,'_').toLowerCase();
-  let email=document.getElementById('signupEmail').value.trim().toLowerCase();
-  let pass=document.getElementById('signupPassword').value.trim();
+  const name=document.getElementById('signupName').value.trim();
+  const username=document.getElementById('signupUsername').value.trim().replace(/\s+/g,'_').toLowerCase();
+  const email=document.getElementById('signupEmail').value.trim().toLowerCase();
+  const pass=document.getElementById('signupPassword').value; // Do not trim passwords.
   if(!name) return showAuthError('signupError','❌ Name ezhuthu!');
   if(!username) return showAuthError('signupError','❌ Username ezhuthu!');
-  if(!email || !email.includes('@')) return showAuthError('signupError','❌ Correct Email ezhuthu!');
-  if(!pass || pass.length<6) return showAuthError('signupError','❌ Password min 6 aksharam venam!');
+  if(!/^[a-z0-9_]{3,20}$/.test(username)) return showAuthError('signupError','❌ Username 3–20 characters: letters, numbers, underscore.');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showAuthError('signupError','❌ Correct Email ezhuthu!');
+  if(pass.length<6) return showAuthError('signupError','❌ Password min 6 aksharam venam!');
   hideAuthErrors(); showLoading(true);
-  document.getElementById('signupBtn').disabled=true;
+  const btn=document.getElementById('signupBtn'); btn.disabled=true;
   try{
     if(isFirebaseConfigured && auth){
-      const cred = await createUserWithEmailAndPassword(auth, email, pass);
-      await updateProfile(cred.user, { displayName: name });
-      localStorage.setItem('a2z_username_'+cred.user.uid, username);
-      userProfile = { name:name, username:username, email:email, avatar:"", uid:cred.user.uid };
-      localStorage.setItem('a2z_profile_'+cred.user.uid, JSON.stringify(userProfile));
-    } else {
-      if(localUsers.some(u=>u.email===email)) throw new Error("Ee Email already und - Login cheyyu!");
-      if(localUsers.some(u=>u.username===username)) throw new Error("Ee Username already eduthu!");
-      let nu={name:name, username:username, email:email, password:pass, avatar:""};
-      localUsers.push(nu); localStorage.setItem('a2z_users', JSON.stringify(localUsers));
-      localStorage.setItem('a2z_current', email); localCurrent=email; userProfile=nu;
+      const cred=await createUserWithEmailAndPassword(auth,email,pass);
+      await updateProfile(cred.user,{displayName:name});
+      localStorage.setItem('a2z_username_'+cred.user.uid,username);
+      userProfile={name,username,email,avatar:'',uid:cred.user.uid};
+      localStorage.setItem('a2z_profile_'+cred.user.uid,JSON.stringify(userProfile));
+    }else{
+      if(localUsers.some(u=>u.email.toLowerCase()===email)) throw new Error('Ee Email already und - Login cheyyu!');
+      if(localUsers.some(u=>u.username.toLowerCase()===username)) throw new Error('Ee Username already eduthu!');
+      const nu={name,username,email,password:pass,avatar:''};
+      localUsers.push(nu); localStorage.setItem('a2z_users',JSON.stringify(localUsers));
+      localStorage.setItem('a2z_current',email); localCurrent=email; userProfile=nu;
     }
-    let s=document.getElementById('signupSuccess'); s.innerText='✅ Account Created! Welcome, '+name; s.style.display='block';
     renderProfile();
-    setTimeout(()=>{ window.openProfilePage(); }, 400);
+    const success=document.getElementById('signupSuccess');
+    success.innerText='✅ Account Created! Welcome, '+name; success.style.display='block';
+    setTimeout(()=>window.openProfilePage(),500);
   }catch(e){
-    let msg=e.message||'Sign Up failed';
-    if(msg.includes('email-already-in-use')) msg='❌ Ee Email already und - Login cheyyu!';
-    if(msg.includes('invalid-email')) msg='❌ Correct Email ezhuthu!';
-    if(msg.includes('weak-password')) msg='❌ Password min 6 aksharam venam!';
-    if(msg.includes('operation-not-allowed')) msg='❌ Firebase-il Email/Password Enable cheythittilla! Console-il Authentication -> Email/Password ON aakku';
-    showAuthError('signupError', msg);
-  } finally { showLoading(false); document.getElementById('signupBtn').disabled=false; }
+    const code=e.code||'', raw=e.message||'Sign Up failed';
+    let msg=raw;
+    if(code==='auth/email-already-in-use'||raw.includes('email-already-in-use')) msg='❌ Ee Email already und - Login cheyyu!';
+    else if(code==='auth/invalid-email'||raw.includes('invalid-email')) msg='❌ Correct Email ezhuthu!';
+    else if(code==='auth/weak-password'||raw.includes('weak-password')) msg='❌ Password min 6 aksharam venam!';
+    else if(code==='auth/operation-not-allowed'||raw.includes('operation-not-allowed')) msg='❌ Firebase Console → Authentication → Sign-in method → Email/Password enable cheyyuka.';
+    else if(code==='auth/network-request-failed') msg='❌ Internet connection check cheythu veendum try cheyyuka.';
+    showAuthError('signupError',msg);
+  }finally{showLoading(false);btn.disabled=false;}
 };
 
 window.doLogin = async function(){
-  let email=document.getElementById('loginEmail').value.trim().toLowerCase();
-  let pass=document.getElementById('loginPassword').value.trim();
-  if(!email) return showAuthError('loginError','❌ Email ezhuthu!');
+  const email=document.getElementById('loginEmail').value.trim().toLowerCase();
+  const pass=document.getElementById('loginPassword').value; // Do not trim passwords.
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showAuthError('loginError','❌ Correct Email ezhuthu!');
   if(!pass) return showAuthError('loginError','❌ Password ezhuthu!');
   hideAuthErrors(); showLoading(true);
-  document.getElementById('loginBtn').disabled=true;
+  const btn=document.getElementById('loginBtn'); btn.disabled=true;
   try{
     if(isFirebaseConfigured && auth){
-      const cred = await signInWithEmailAndPassword(auth, email, pass);
-      userProfile = buildProfileFromFirebase(cred.user);
-    } else {
-      let user=localUsers.find(u=>u.email.toLowerCase()===email && u.password===pass);
-      if(!user) throw new Error("Email / Password thettaanu!");
-      localStorage.setItem('a2z_current', user.email); localCurrent=user.email; userProfile=user;
+      const cred=await signInWithEmailAndPassword(auth,email,pass);
+      userProfile=buildProfileFromFirebase(cred.user);
+    }else{
+      const user=localUsers.find(u=>u.email.toLowerCase()===email && u.password===pass);
+      if(!user) throw new Error('Email / Password thettaanu!');
+      localStorage.setItem('a2z_current',user.email); localCurrent=user.email; userProfile=user;
     }
-    let s=document.getElementById('loginSuccess'); s.innerText='✅ Welcome back, '+(userProfile?.name||''); s.style.display='block';
     renderProfile();
-    setTimeout(()=>{ window.openProfilePage(); }, 400);
+    const success=document.getElementById('loginSuccess');
+    success.innerText='✅ Welcome back, '+(userProfile?.name||''); success.style.display='block';
+    setTimeout(()=>window.openProfilePage(),500);
   }catch(e){
-    let msg=e.message||'Login failed';
-    if(msg.includes('invalid-credential')||msg.includes('user-not-found')||msg.includes('wrong-password')) msg='❌ Email / Password thettaanu! Sign Up cheythittundo ennu nokku.';
-    if(msg.includes('invalid-email')) msg='❌ Correct Email ezhuthu!';
-    if(msg.includes('too-many-requests')) msg='❌ Kurachu kazhinju veendum nokku!';
-    if(msg.includes('operation-not-allowed')) msg='❌ Firebase-il Email/Password Enable cheythittilla!';
-    showAuthError('loginError', msg);
-  } finally { showLoading(false); document.getElementById('loginBtn').disabled=false; }
+    const code=e.code||'', raw=e.message||'Login failed';
+    let msg=raw;
+    if(['auth/invalid-credential','auth/user-not-found','auth/wrong-password','auth/invalid-login-credentials'].includes(code)||raw.includes('invalid-credential')||raw.includes('wrong-password')) msg='❌ Email / Password thettaanu! Sign Up cheythittundo ennu nokku.';
+    else if(code==='auth/invalid-email'||raw.includes('invalid-email')) msg='❌ Correct Email ezhuthu!';
+    else if(code==='auth/too-many-requests'||raw.includes('too-many-requests')) msg='❌ Kurachu kazhinju veendum nokku!';
+    else if(code==='auth/operation-not-allowed'||raw.includes('operation-not-allowed')) msg='❌ Firebase-il Email/Password Sign-in enable cheyyuka.';
+    else if(code==='auth/network-request-failed') msg='❌ Internet connection check cheythu veendum try cheyyuka.';
+    showAuthError('loginError',msg);
+  }finally{showLoading(false);btn.disabled=false;}
 };
+
+// Enter key submits the currently visible authentication form.
+['loginEmail','loginPassword'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter') window.doLogin();}));
+['signupName','signupUsername','signupEmail','signupPassword'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter') window.doSignup();}));
 
 window.doLogout = async function(){
   if(!confirm('Logout cheyyano?')) return;
@@ -480,31 +491,42 @@ if(isFirebaseConfigured && auth){
 }
 
 window.renderProfile = function(){
-  if(!userProfile && isFirebaseConfigured && auth && auth.currentUser){
-    userProfile = buildProfileFromFirebase(auth.currentUser);
+  if(isFirebaseConfigured && auth && auth.currentUser){
+    userProfile=buildProfileFromFirebase(auth.currentUser);
   }
-  if(!userProfile){
-    if(!isFirebaseConfigured && localCurrent){
-      let u=localUsers.find(x=>x.email===localCurrent);
-      if(u) userProfile=u;
-    }
+  if(!userProfile && !isFirebaseConfigured && localCurrent){
+    userProfile=localUsers.find(u=>u.email===localCurrent)||null;
   }
   if(!userProfile){
     document.getElementById('homeGreeting').innerText='Good Evening, Guest 👋';
+    document.getElementById('profileName').innerText='-';
+    document.getElementById('profileUsername').innerText='@-';
+    document.getElementById('profileEmail').innerText='-';
+    document.getElementById('profileAvatarImg').style.display='none';
+    document.getElementById('profileAvatarLetter').style.display='block';
+    document.title='A2Z Songs';
     return;
   }
-  document.getElementById('profileName').innerText=userProfile.name;
-  document.getElementById('profileUsername').innerText='@'+userProfile.username;
-  document.getElementById('profileEmail').innerText=userProfile.email;
-  document.getElementById('homeGreeting').innerText='Good Evening, '+userProfile.name.split(' ')[0]+' 👋';
-  document.title='A2Z Songs - '+userProfile.name;
-  let pImg=document.getElementById('profileAvatarImg');
-  if(userProfile.avatar){ pImg.src=userProfile.avatar; pImg.style.display='block'; document.getElementById('profileAvatarLetter').style.display='none'; }
-  else { pImg.style.display='none'; document.getElementById('profileAvatarLetter').style.display='block'; }
+  const name=userProfile.name||userProfile.displayName||userProfile.email?.split('@')[0]||'User';
+  const username=userProfile.username||userProfile.email?.split('@')[0]||'user';
+  userProfile.name=name; userProfile.username=username;
+  document.getElementById('profileName').innerText=name;
+  document.getElementById('profileUsername').innerText='@'+username;
+  document.getElementById('profileEmail').innerText=userProfile.email||'';
+  document.getElementById('homeGreeting').innerText='Good Evening, '+name.split(' ')[0]+' 👋';
+  document.title='A2Z Songs - '+name;
+  const pImg=document.getElementById('profileAvatarImg');
+  const letter=document.getElementById('profileAvatarLetter');
+  if(userProfile.avatar){
+    pImg.src=userProfile.avatar; pImg.style.display='block'; letter.style.display='none';
+    pImg.onerror=()=>{pImg.style.display='none';letter.style.display='block';};
+  }else{
+    pImg.removeAttribute('src'); pImg.style.display='none'; letter.style.display='block';
+  }
 };
+
 window.isLoggedIn = function(){
-  if(isFirebaseConfigured && auth && auth.currentUser) return true;
-  return !!userProfile;
+  return Boolean((isFirebaseConfigured && auth && auth.currentUser) || userProfile || (!isFirebaseConfigured && localCurrent));
 };
 window.openProfilePage = function(){
   if(isFirebaseConfigured && auth && auth.currentUser){
@@ -528,7 +550,7 @@ window.openEditProfile = function(){
   document.getElementById('saveMsg').style.display='none';
   let eImg=document.getElementById('editAvatarImg');
   if(userProfile.avatar){ eImg.src=userProfile.avatar; eImg.style.display='block'; document.getElementById('editAvatarLetter').style.display='none'; }
-  else { eImg.style.display='none'; document.getElementById('editAvatarLetter').style.display='block'; }
+  else { eImg.removeAttribute('src'); eImg.style.display='none'; document.getElementById('editAvatarLetter').style.display='block'; }
   showPageOnly('editprofile');
 };
 window.togglePass = function(){
