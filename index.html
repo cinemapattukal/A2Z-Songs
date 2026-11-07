@@ -240,9 +240,9 @@ h3{font-size:24px;margin:28px 0 12px}
   </div>
   <div id="loginForm">
     <label class="form-label">📧 Email</label>
-    <input class="form-input" id="loginEmail" placeholder="e.g. alex@gmail.com" type="email">
+    <input class="form-input" id="loginEmail" placeholder="e.g. alex@gmail.com" type="email" autocomplete="email">
     <label class="form-label">🔒 Password</label>
-    <div class="pass-wrap"><input class="form-input" id="loginPassword" type="password" placeholder="Password"><button class="eye-btn" type="button" onclick="let p=document.getElementById('loginPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div>
+    <div class="pass-wrap"><input class="form-input" id="loginPassword" type="password" placeholder="Password" autocomplete="current-password"><button class="eye-btn" type="button" onclick="let p=document.getElementById('loginPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div>
     <div class="error-msg" id="loginError"></div>
     <div class="success-msg" id="loginSuccess"></div>
     <button class="save-btn" id="loginBtn" onclick="doLogin()">Login →</button>
@@ -250,13 +250,13 @@ h3{font-size:24px;margin:28px 0 12px}
   </div>
   <div id="signupForm" style="display:none">
     <label class="form-label">👤 Full Name</label>
-    <input class="form-input" id="signupName" placeholder="e.g. Alex Morgan">
+    <input class="form-input" id="signupName" placeholder="e.g. Alex Morgan" autocomplete="name">
     <label class="form-label">@ Username</label>
-    <input class="form-input" id="signupUsername" placeholder="e.g. alex_morgan">
+    <input class="form-input" id="signupUsername" placeholder="e.g. alex_morgan" autocomplete="username">
     <label class="form-label">📧 Email</label>
-    <input class="form-input" id="signupEmail" type="email" placeholder="e.g. alex@gmail.com">
+    <input class="form-input" id="signupEmail" type="email" placeholder="e.g. alex@gmail.com" autocomplete="email">
     <label class="form-label">🔒 Password</label>
-    <div class="pass-wrap"><input class="form-input" id="signupPassword" type="password" placeholder="Min 6 letters"><button class="eye-btn" type="button" onclick="let p=document.getElementById('signupPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div>
+    <div class="pass-wrap"><input class="form-input" id="signupPassword" type="password" placeholder="Min 6 letters" autocomplete="new-password"><button class="eye-btn" type="button" onclick="let p=document.getElementById('signupPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div>
     <div class="form-hint">Password min 6 aksharam - Firebase rule aanu</div>
     <div class="error-msg" id="signupError"></div>
     <div class="success-msg" id="signupSuccess"></div>
@@ -335,7 +335,6 @@ h3{font-size:24px;margin:28px 0 12px}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, updatePassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-/* ===== FIREBASE CONFIG - NINGALUDE REAL CONFIG ===== */
 const firebaseConfig = {
   apiKey: "AIzaSyA3QP1DZRM5kTmnSyx2NM_9SnqrxBDR7lc",
   authDomain: "a2z-songs.firebaseapp.com",
@@ -344,16 +343,12 @@ const firebaseConfig = {
   messagingSenderId: "947910937475",
   appId: "1:947910937475:web:589d9417da8373d0e204b6"
 };
-/* FIXED: Ithu thanne aanu bug - munne real key-ne thanne compare cheythu false aakkiyirunnu */
-const isFirebaseConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "PASTE_YOUR_API_KEY_HERE" && firebaseConfig.apiKey.length > 10;
-console.log("Firebase Configured?", isFirebaseConfigured);
+const isFirebaseConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "AIzaSyA3QP1DZRM5kTmnSyx2NM_9SnqrxBDR7lc" && firebaseConfig.apiKey.length > 10;
 
 let auth = null;
 if(isFirebaseConfigured){
-  try{
-    const app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-  }catch(e){ console.log("Firebase init error", e); }
+  try{ const app = initializeApp(firebaseConfig); auth = getAuth(app); }
+  catch(e){ console.log("Firebase init error", e); }
 }
 
 let localUsers = JSON.parse(localStorage.getItem('a2z_users')||'[]');
@@ -363,6 +358,15 @@ let userProfile = null;
 function showLoading(v){ document.getElementById('loading').classList.toggle('show', v); }
 function showAuthError(id, msg){ let el=document.getElementById(id); el.innerText=msg; el.style.display='block'; }
 function hideAuthErrors(){ ['loginError','signupError'].forEach(id=>document.getElementById(id).style.display='none'); ['loginSuccess','signupSuccess'].forEach(id=>document.getElementById(id).style.display='none'); }
+
+function buildProfileFromFirebase(user){
+  if(!user) return null;
+  let saved = null;
+  try{ saved = JSON.parse(localStorage.getItem('a2z_profile_'+user.uid)||'null'); }catch(e){}
+  let uname = localStorage.getItem('a2z_username_'+user.uid) || (saved && saved.username) || user.email.split('@')[0];
+  let name = (saved && saved.name) || user.displayName || uname;
+  return { name:name, username:uname, email:user.email, avatar:(saved && saved.avatar) || user.photoURL || "", uid:user.uid };
+}
 
 window.switchAuth = function(mode){
   document.getElementById('authTabLogin').classList.toggle('active', mode==='login');
@@ -400,14 +404,13 @@ window.doSignup = async function(){
     }
     let s=document.getElementById('signupSuccess'); s.innerText='✅ Account Created! Welcome, '+name; s.style.display='block';
     renderProfile();
-    setTimeout(()=>{ window.go('profile'); }, 700);
+    setTimeout(()=>{ window.openProfilePage(); }, 400);
   }catch(e){
     let msg=e.message||'Sign Up failed';
     if(msg.includes('email-already-in-use')) msg='❌ Ee Email already und - Login cheyyu!';
     if(msg.includes('invalid-email')) msg='❌ Correct Email ezhuthu!';
     if(msg.includes('weak-password')) msg='❌ Password min 6 aksharam venam!';
     if(msg.includes('operation-not-allowed')) msg='❌ Firebase-il Email/Password Enable cheythittilla! Console-il Authentication -> Email/Password ON aakku';
-    if(msg.includes('api-key-not-valid')) msg='❌ API Key thettaanu! Firebase Console-il ninnu puthiya key eduthu maattuka';
     showAuthError('signupError', msg);
   } finally { showLoading(false); document.getElementById('signupBtn').disabled=false; }
 };
@@ -422,9 +425,7 @@ window.doLogin = async function(){
   try{
     if(isFirebaseConfigured && auth){
       const cred = await signInWithEmailAndPassword(auth, email, pass);
-      let saved = JSON.parse(localStorage.getItem('a2z_profile_'+cred.user.uid)||'null');
-      let uname = localStorage.getItem('a2z_username_'+cred.user.uid) || cred.user.email.split('@')[0];
-      userProfile = saved || { name: cred.user.displayName || uname, username: uname, email: cred.user.email, avatar: cred.user.photoURL||"", uid: cred.user.uid };
+      userProfile = buildProfileFromFirebase(cred.user);
     } else {
       let user=localUsers.find(u=>u.email.toLowerCase()===email && u.password===pass);
       if(!user) throw new Error("Email / Password thettaanu!");
@@ -432,7 +433,7 @@ window.doLogin = async function(){
     }
     let s=document.getElementById('loginSuccess'); s.innerText='✅ Welcome back, '+(userProfile?.name||''); s.style.display='block';
     renderProfile();
-    setTimeout(()=>{ window.go('profile'); }, 600);
+    setTimeout(()=>{ window.openProfilePage(); }, 400);
   }catch(e){
     let msg=e.message||'Login failed';
     if(msg.includes('invalid-credential')||msg.includes('user-not-found')||msg.includes('wrong-password')) msg='❌ Email / Password thettaanu! Sign Up cheythittundo ennu nokku.';
@@ -452,22 +453,23 @@ window.doLogout = async function(){
   }catch(e){}
   showLoading(false);
   window.switchAuth('login');
-  window.go('profile');
+  window.openProfilePage();
 };
 
 if(isFirebaseConfigured && auth){
   onAuthStateChanged(auth, (user)=>{
     if(user){
-      let saved = JSON.parse(localStorage.getItem('a2z_profile_'+user.uid)||'null');
-      let uname = localStorage.getItem('a2z_username_'+user.uid) || user.email.split('@')[0];
-      userProfile = saved || { name: user.displayName || uname, username: uname, email: user.email, avatar: user.photoURL||"", uid: user.uid };
+      userProfile = buildProfileFromFirebase(user);
       renderProfile();
       if(location.hash.includes('profile') || location.hash.includes('auth')){
-        window.go('profile');
+        setTimeout(()=>{ if(window.isLoggedIn()) showPageOnly('profile'); }, 100);
       }
     } else {
-      userProfile=null;
-      renderProfile();
+      if(!auth.currentUser){
+        setTimeout(()=>{
+          if(!auth.currentUser){ userProfile=null; renderProfile(); }
+        }, 500);
+      }
     }
   });
 } else {
@@ -478,6 +480,9 @@ if(isFirebaseConfigured && auth){
 }
 
 window.renderProfile = function(){
+  if(!userProfile && isFirebaseConfigured && auth && auth.currentUser){
+    userProfile = buildProfileFromFirebase(auth.currentUser);
+  }
   if(!userProfile){
     if(!isFirebaseConfigured && localCurrent){
       let u=localUsers.find(x=>x.email===localCurrent);
@@ -497,8 +502,14 @@ window.renderProfile = function(){
   if(userProfile.avatar){ pImg.src=userProfile.avatar; pImg.style.display='block'; document.getElementById('profileAvatarLetter').style.display='none'; }
   else { pImg.style.display='none'; document.getElementById('profileAvatarLetter').style.display='block'; }
 };
-window.isLoggedIn = function(){ return !!userProfile; };
+window.isLoggedIn = function(){
+  if(isFirebaseConfigured && auth && auth.currentUser) return true;
+  return !!userProfile;
+};
 window.openProfilePage = function(){
+  if(isFirebaseConfigured && auth && auth.currentUser){
+    userProfile = buildProfileFromFirebase(auth.currentUser);
+  }
   if(window.isLoggedIn()){
     renderProfile();
     showPageOnly('profile');
@@ -509,6 +520,7 @@ window.openProfilePage = function(){
 };
 window.openEditProfile = function(){
   if(!window.isLoggedIn()){ window.openProfilePage(); return; }
+  if(isFirebaseConfigured && auth && auth.currentUser) userProfile = buildProfileFromFirebase(auth.currentUser);
   document.getElementById('editName').value=userProfile.name;
   document.getElementById('editUsername').value=userProfile.username;
   document.getElementById('editEmail').value=userProfile.email;
@@ -554,7 +566,7 @@ window.saveProfile = async function(){
     }
     renderProfile();
     let m=document.getElementById('saveMsg'); m.style.display='block'; m.innerText='✅ Profile Saved! - '+name;
-    setTimeout(()=>{ window.go('profile'); }, 800);
+    setTimeout(()=>{ window.openProfilePage(); }, 800);
   }catch(e){
     alert('Save failed: '+e.message);
   } finally { showLoading(false); }
