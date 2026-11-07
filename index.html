@@ -6,899 +6,138 @@
 <title>A2Z Songs</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-html{overflow-y:auto}
-body{background:#000;color:#fff;display:flex;justify-content:center;overflow-y:auto}
-body.player-locked, html.player-locked{overflow:hidden !important;height:100dvh !important;position:fixed;width:100%;top:0;left:0}
+html{overflow-y:auto}body{background:#000;color:#fff;display:flex;justify-content:center;overflow-y:auto}
+body.player-locked,html.player-locked{overflow:hidden!important;height:100dvh!important;position:fixed;width:100%;top:0;left:0}
 .phone{width:100%;max-width:430px;min-height:100vh;background:linear-gradient(180deg,#3a0f22 0%,#1a0714 35%,#0a0a0a 70%);padding:18px 18px 110px;position:relative}
 body.player-locked .phone{height:100dvh;min-height:0;overflow:hidden;padding-bottom:0}
 .page{display:none}.page.active{display:block}
-.header{display:flex;align-items:center;justify-content:center;position:relative;margin:10px 0 16px}
-.header h1{font-size:20px;font-weight:700}.gear{position:absolute;right:4px;font-size:22px}
+.header{display:flex;align-items:center;justify-content:center;position:relative;margin:10px 0 16px}.header h1{font-size:20px;font-weight:700}.gear{position:absolute;right:4px;font-size:22px}
 .back{position:absolute;left:4px;font-size:22px;cursor:pointer;background:#1c1c1e;width:36px;height:36px;border-radius:50%;display:grid;place-items:center}
-.search-box{background:#1c1c1e;border-radius:12px;padding:13px 14px;display:flex;gap:10px;color:#aaa;margin-bottom:16px}
-.search-box input{background:none;border:none;outline:none;color:#fff;font-size:15px;width:100%}
-.hero{background:linear-gradient(135deg,#ff2d55,#ff8a5a);border-radius:16px;padding:20px}
-.hero small{opacity:.9}.hero h2{font-size:26px;margin:6px 0}
-.hero button{background:#fff;color:#000;border:none;padding:9px 18px;border-radius:20px;font-weight:700;margin-top:10px}
+.search-box{background:#1c1c1e;border-radius:12px;padding:13px 14px;display:flex;gap:10px;color:#aaa;margin-bottom:16px}.search-box input{background:none;border:none;outline:none;color:#fff;font-size:15px;width:100%}
+.hero{background:linear-gradient(135deg,#ff2d55,#ff8a5a);border-radius:16px;padding:20px}.hero small{opacity:.9}.hero h2{font-size:26px;margin:6px 0}.hero button{background:#fff;color:#000;border:none;padding:9px 18px;border-radius:20px;font-weight:700;margin-top:10px}
 .section-title{font-size:20px;font-weight:800;margin:22px 0 12px}
-.tabs{display:flex;background:#1c1c1e;border-radius:14px;padding:5px;gap:5px;margin:16px 0 4px}
-.tabs button{flex:1;border:none;padding:11px 0;border-radius:10px;background:transparent;color:#aaa;font-size:15px;font-weight:700;cursor:pointer}
-.tabs button.active{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff}
+.tabs{display:flex;background:#1c1c1e;border-radius:14px;padding:5px;gap:5px;margin:16px 0 4px}.tabs button{flex:1;border:none;padding:11px 0;border-radius:10px;background:transparent;color:#aaa;font-size:15px;font-weight:700;cursor:pointer}.tabs button.active{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff}
 .tab-info{color:#aaa;font-size:13px;margin:6px 2px 12px}
-.artist-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.artist-card{background:#1c1c1e;border-radius:14px;padding:14px;text-align:center;cursor:pointer}
-.artist-card .circle{width:68px;height:68px;border-radius:50%;margin:0 auto 10px;display:grid;place-items:center;font-size:30px;font-weight:800;color:#fff;overflow:hidden;padding:0}
-.artist-card .circle img{width:100%;height:100%;object-fit:cover;display:block}
-.artist-card b{font-size:15px;display:block}.artist-card small{color:#aaa;font-size:12px}
+.artist-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.artist-card{background:#1c1c1e;border-radius:14px;padding:14px;text-align:center;cursor:pointer}.artist-card .circle{width:68px;height:68px;border-radius:50%;margin:0 auto 10px;display:grid;place-items:center;font-size:30px;font-weight:800;color:#fff;overflow:hidden}.artist-card .circle img{width:100%;height:100%;object-fit:cover;display:block}.artist-card b{font-size:15px;display:block}.artist-card small{color:#aaa;font-size:12px}
 .song-row,.card{background:#1c1c1e;border-radius:14px;padding:12px;display:flex;gap:12px;align-items:center;margin-bottom:10px;cursor:pointer}
-.thumb{width:56px;height:56px;border-radius:10px;flex-shrink:0;display:grid;place-items:center;font-size:24px;font-weight:800;overflow:hidden;padding:0}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.t1{background:linear-gradient(135deg,#c86bff,#ff5a7a)} .t2{background:linear-gradient(135deg,#ff5a3c,#ff2d55)} .t3{background:linear-gradient(135deg,#5a8cff,#ff5a9a)} .t4{background:linear-gradient(135deg,#00d2ff,#3a7bd5)} .t5{background:linear-gradient(135deg,#f9d423,#ff4e50)} .t6{background:linear-gradient(135deg,#11998e,#38ef7d)}
-.song-row b,.card b{font-size:16px} .song-row small,.card small{color:#aaa;font-size:13px}
+.thumb{width:56px;height:56px;border-radius:10px;flex-shrink:0;display:grid;place-items:center;font-size:24px;font-weight:800;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.t1{background:linear-gradient(135deg,#c86bff,#ff5a7a)}.t2{background:linear-gradient(135deg,#ff5a3c,#ff2d55)}.t3{background:linear-gradient(135deg,#5a8cff,#ff5a9a)}.t4{background:linear-gradient(135deg,#00d2ff,#3a7bd5)}.t5{background:linear-gradient(135deg,#f9d423,#ff4e50)}.t6{background:linear-gradient(135deg,#11998e,#38ef7d)}
+.song-row b,.card b{font-size:16px}.song-row small,.card small{color:#aaa;font-size:13px}
 .play-btn{margin-left:auto;width:36px;height:36px;border-radius:50%;background:#ff2d55;display:grid;place-items:center;flex-shrink:0}
-.album-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.album-card{background:#1c1c1e;border-radius:14px;padding:14px;cursor:pointer}
-.album-card .cover{height:110px;border-radius:10px;display:grid;place-items:center;font-size:42px;margin-bottom:10px;overflow:hidden;padding:0}
-.album-card .cover img{width:100%;height:100%;object-fit:cover;display:block}
-.album-card b{font-size:15px;display:block}.album-card small{color:#aaa;font-size:12px}
-.big-avatar{width:110px;height:110px;border-radius:50%;margin:10px auto;display:grid;place-items:center;font-size:48px;font-weight:800;overflow:hidden;padding:0}
-.big-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.album-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.album-card{background:#1c1c1e;border-radius:14px;padding:14px;cursor:pointer}.album-card .cover{height:110px;border-radius:10px;display:grid;place-items:center;font-size:42px;margin-bottom:10px;overflow:hidden}.album-card .cover img{width:100%;height:100%;object-fit:cover;display:block}.album-card b{font-size:15px;display:block}.album-card small{color:#aaa;font-size:12px}
+.big-avatar{width:110px;height:110px;border-radius:50%;margin:10px auto;display:grid;place-items:center;font-size:48px;font-weight:800;overflow:hidden}.big-avatar img{width:100%;height:100%;object-fit:cover;display:block}
 .follow-btn{background:linear-gradient(90deg,#ff2d55,#ff5a7a);border:none;color:#fff;padding:10px 30px;border-radius:20px;font-weight:700;margin:10px auto;display:block}
-.profile-top{text-align:center}
-.avatar{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#ff5a7a,#ff8a5a);margin:6px auto 10px;display:grid;place-items:center;font-size:42px;overflow:hidden}
-.avatar img{width:100%;height:100%;object-fit:cover;display:block}
-.profile-top h2{font-size:26px;font-weight:800}
-.profile-username{color:#aaa;font-size:15px;margin-top:4px}
-.profile-email{color:#888;font-size:13px;margin-top:2px}
-.stats{display:flex;justify-content:space-around;text-align:center;margin:20px 6px 0}
-.stats b{font-size:26px;display:block} .stats span{font-size:14px;color:#aaa}
-.edit-wrap{text-align:center;margin-top:10px}
-.edit-btn{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff;border:none;padding:9px 28px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer}
-.logout-btn{background:#2a2a2a;color:#ff5a7a;border:1px solid #444;padding:9px 22px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;margin-left:8px}
-.dots{margin-left:auto;font-size:20px;color:#ddd}
-h3{font-size:24px;margin:28px 0 12px}
-.set-row{background:#1c1c1e;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer}
-.set-row span{font-size:16px;font-weight:600} .arrow{margin-left:auto;color:#888}
-.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#141414;display:flex;justify-content:space-around;padding:12px 0 18px;border-top:1px solid #2a2a2a;z-index:10}
-.nav button{background:none;border:none;color:#888;font-size:11px;text-align:center;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer}
-.nav button.active{color:#ff2d55}.nav .ico{font-size:22px}
+.profile-top{text-align:center}.avatar{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#ff5a7a,#ff8a5a);margin:6px auto 10px;display:grid;place-items:center;font-size:42px;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.profile-top h2{font-size:26px;font-weight:800}.profile-username{color:#aaa;font-size:15px;margin-top:4px}.profile-email{color:#888;font-size:13px;margin-top:2px}
+.stats{display:flex;justify-content:space-around;text-align:center;margin:20px 6px 0}.stats b{font-size:26px;display:block}.stats span{font-size:14px;color:#aaa}
+.edit-wrap{text-align:center;margin-top:10px}.edit-btn{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff;border:none;padding:9px 28px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer}.logout-btn{background:#2a2a2a;color:#ff5a7a;border:1px solid #444;padding:9px 22px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;margin-left:8px}
+h3{font-size:24px;margin:28px 0 12px}.set-row{background:#1c1c1e;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer}.set-row span{font-size:16px;font-weight:600}.arrow{margin-left:auto;color:#888}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#141414;display:flex;justify-content:space-around;padding:12px 0 18px;border-top:1px solid #2a2a2a;z-index:10}.nav button{background:none;border:none;color:#888;font-size:11px;text-align:center;display:flex;flex-direction:column;gap:3px;align-items:center;cursor:pointer}.nav button.active{color:#ff2d55}.nav .ico{font-size:22px}
 .detail-hero{background:#1c1c1e;border-radius:16px;padding:20px;text-align:center;margin-bottom:14px}
-#page-player{overflow:hidden;background:transparent}
-.player-page{background:transparent !important;background-image:none !important;box-shadow:none !important;border:none !important;border-radius:0 !important;margin:-18px -18px 0;padding:14px 18px 8px;height:calc(100dvh - 74px);min-height:560px;max-height:760px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
-.player-top{display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0;background:transparent;border:none;box-shadow:none}
-.player-top .back2{font-size:24px;cursor:pointer;line-height:1}
-.player-top-center{text-align:center;flex:1;padding:0 10px;overflow:hidden;background:transparent}
-.player-top-center small{color:#ddd;font-size:12px}
-.player-top-center h3{font-size:15px;margin:3px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.player-dots{font-size:26px;letter-spacing:2px;cursor:pointer;line-height:1}
-.player-cover-big{width:100%;flex:1;min-height:0;max-height:360px;border-radius:16px;margin:12px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;position:relative;background:#222}
-.player-cover-big img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.player-cover-big .cover-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.55));display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:18px}
-.player-cover-big .big-emoji{font-size:64px}
-.player-cover-big .cover-title{font-size:32px;font-weight:900;letter-spacing:1px;line-height:1;text-shadow:0 4px 20px rgba(0,0,0,.8);position:relative;z-index:2}
-.player-cover-big .cover-sub{font-size:12px;letter-spacing:4px;margin-top:6px;opacity:.9;position:relative;z-index:2}
-.player-song-row{display:flex;align-items:center;gap:12px;flex-shrink:0}
-.player-song-row .txt{flex:1;min-width:0}
-.marquee{overflow:hidden;white-space:nowrap;width:100%;position:relative}
-.marquee-inner{display:flex;white-space:nowrap;will-change:transform;width:max-content;align-items:center}
-.mq-text{white-space:nowrap}
-.mq-gap{width:80px;flex-shrink:0}
-.marquee h2{font-size:20px;display:inline-block}
-.marquee p{color:#bbb;font-size:14px;margin-top:2px;display:inline-block}
-.add-btn{width:36px;height:36px;border:1.5px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:300;line-height:1;cursor:pointer;flex-shrink:0;background:rgba(255,255,255,.08);transition:all .2s}
-.add-btn.added{background:#1db954;border-color:#1db954;color:#000;font-size:17px;font-weight:800}
-.credit-box{background:#1c1c1e;border-radius:14px;padding:14px;margin:18px 0;display:flex;flex-direction:column;gap:8px}
-.credit-box div{display:flex;justify-content:space-between}.credit-box span{color:#aaa}.credit-box b{text-align:right}
-.progress-wrap{margin:14px 0 4px;flex-shrink:0}
-.progress-track{height:4px;background:#5a5a5a;border-radius:10px;position:relative}
-.progress-fill{height:100%;background:#fff;border-radius:10px;width:12%;position:relative}
-.progress-dot{position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:14px;height:14px;background:#fff;border-radius:50%}
-.time-row{display:flex;justify-content:space-between;color:#ccc;font-size:13px;margin-top:6px}
-.controls-new{display:flex;justify-content:center;align-items:center;gap:44px;margin:14px 0 4px;flex-shrink:0}
-.ctrl-prev,.ctrl-next{font-size:34px;cursor:pointer;color:#fff}
-.ctrl-play{width:68px;height:68px;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:30px;color:#000;cursor:pointer}
-.sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:none;align-items:flex-end;justify-content:center}
-.sheet-overlay.open{display:flex}
-.sheet{width:100%;max-width:430px;background:#1e1e1e;border-radius:20px 20px 0 0;padding:18px;max-height:75vh;overflow:auto}
-.sheet h3{margin:0 0 4px}.sheet p{color:#aaa;font-size:13px;margin-bottom:14px}
-.sheet input{width:100%;background:#2a2a2a;border:1px solid #333;border-radius:10px;padding:12px;color:#fff;outline:none;font-size:15px}
+#page-player{overflow:hidden;background:transparent}.player-page{margin:-18px -18px 0;padding:14px 18px 8px;height:calc(100dvh - 74px);min-height:560px;max-height:760px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.player-top{display:flex;justify-content:space-between;align-items:flex-start;flex-shrink:0}.player-top .back2{font-size:24px;cursor:pointer;line-height:1}.player-top-center{text-align:center;flex:1;padding:0 10px;overflow:hidden}.player-top-center small{color:#ddd;font-size:12px}.player-top-center h3{font-size:15px;margin:3px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.player-dots{font-size:26px;letter-spacing:2px;cursor:pointer;line-height:1}
+.player-cover-big{width:100%;flex:1;min-height:0;max-height:360px;border-radius:16px;margin:12px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;position:relative;background:#222}.player-cover-big img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}.player-cover-big .cover-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.55));display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:18px}.player-cover-big .cover-title{font-size:32px;font-weight:900;letter-spacing:1px;line-height:1;text-shadow:0 4px 20px rgba(0,0,0,.8);position:relative;z-index:2}.player-cover-big .cover-sub{font-size:12px;letter-spacing:4px;margin-top:6px;opacity:.9;position:relative;z-index:2}
+.player-song-row{display:flex;align-items:center;gap:12px;flex-shrink:0}.player-song-row .txt{flex:1;min-width:0}
+.marquee{overflow:hidden;white-space:nowrap;width:100%}.marquee-inner{display:flex;white-space:nowrap;width:max-content;align-items:center}.mq-text{white-space:nowrap}.mq-gap{width:80px;flex-shrink:0}.marquee h2{font-size:20px;display:inline-block}.marquee p{color:#bbb;font-size:14px;margin-top:2px;display:inline-block}
+.add-btn{width:36px;height:36px;border:1.5px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:22px;cursor:pointer;flex-shrink:0;background:rgba(255,255,255,.08)}.add-btn.added{background:#1db954;border-color:#1db954;color:#000;font-size:17px;font-weight:800}
+.credit-box{background:#1c1c1e;border-radius:14px;padding:14px;margin:18px 0;display:flex;flex-direction:column;gap:8px}.credit-box div{display:flex;justify-content:space-between}.credit-box span{color:#aaa}.credit-box b{text-align:right}
+.progress-wrap{margin:14px 0 4px;flex-shrink:0}.progress-track{height:4px;background:#5a5a5a;border-radius:10px;position:relative}.progress-fill{height:100%;background:#fff;border-radius:10px;width:12%;position:relative}.progress-dot{position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:14px;height:14px;background:#fff;border-radius:50%}.time-row{display:flex;justify-content:space-between;color:#ccc;font-size:13px;margin-top:6px}
+.controls-new{display:flex;justify-content:center;align-items:center;gap:44px;margin:14px 0 4px;flex-shrink:0}.ctrl-prev,.ctrl-next{font-size:34px;cursor:pointer;color:#fff}.ctrl-play{width:68px;height:68px;background:#fff;border-radius:50%;display:grid;place-items:center;font-size:30px;color:#000;cursor:pointer}
+.sheet-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:none;align-items:flex-end;justify-content:center}.sheet-overlay.open{display:flex}.sheet{width:100%;max-width:430px;background:#1e1e1e;border-radius:20px 20px 0 0;padding:18px;max-height:75vh;overflow:auto}.sheet h3{margin:0 0 4px}.sheet p{color:#aaa;font-size:13px;margin-bottom:14px}.sheet input{width:100%;background:#2a2a2a;border:1px solid #333;border-radius:10px;padding:12px;color:#fff;outline:none;font-size:15px}
 .create-btn{width:100%;background:linear-gradient(90deg,#ff2d55,#ff5a7a);border:none;color:#fff;padding:12px;border-radius:10px;font-weight:700;margin:10px 0 16px;cursor:pointer}
-.pl-row{background:#2a2a2a;border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center;margin-bottom:8px;cursor:pointer}
-.pl-row b{flex:1}.pl-row small{color:#aaa;display:block}
-.small-btn{background:#333;border:none;color:#fff;padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}
-.small-btn.red{background:#ff2d55}.small-btn.blue{background:#3a7bd5}
-.tick-mini{width:32px;height:32px;background:#1db954;border-radius:50%;display:grid;place-items:center;color:#000;font-weight:800}
-.form-label{font-size:14px;font-weight:700;color:#ddd;margin:18px 0 8px;display:block}
-.form-input{width:100%;background:#1c1c1e;border:1px solid #333;border-radius:12px;padding:14px;color:#fff;outline:none;font-size:15px}
-.form-input:focus{border-color:#ff2d55}
-.form-hint{font-size:12px;color:#888;margin-top:6px}
-.pass-wrap{position:relative}
-.pass-wrap input{padding-right:48px}
-.eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:20px;cursor:pointer}
-.save-btn{width:100%;background:linear-gradient(90deg,#ff2d55,#ff5a7a);border:none;color:#fff;padding:14px;border-radius:12px;font-weight:800;font-size:16px;margin-top:24px;cursor:pointer}
-.save-btn:disabled{opacity:.6}
-.cancel-btn{width:100%;background:#2a2a2a;border:none;color:#fff;padding:13px;border-radius:12px;font-weight:700;font-size:15px;margin-top:10px;cursor:pointer}
-.edit-avatar-wrap{text-align:center;margin:10px 0 6px;position:relative}
-.edit-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#ff5a7a,#ff8a5a);margin:0 auto;display:grid;place-items:center;font-size:44px;overflow:hidden;cursor:pointer}
-.edit-avatar img{width:100%;height:100%;object-fit:cover}
-.change-photo{color:#ff5a7a;font-size:14px;font-weight:700;margin-top:8px;cursor:pointer;display:block;text-align:center}
-.success-msg{background:#1db954;color:#fff;padding:12px;border-radius:10px;text-align:center;font-weight:700;display:none;margin-top:14px}
-.error-msg{background:#ff2d55;color:#fff;padding:12px;border-radius:10px;text-align:center;font-weight:700;display:none;margin-top:14px}
-.auth-logo{width:90px;height:90px;border-radius:24px;background:linear-gradient(135deg,#ff2d55,#ff8a5a);margin:14px auto;display:grid;place-items:center;font-size:44px}
-.auth-title{text-align:center;font-size:26px;font-weight:800;margin:6px 0}
-.auth-sub{text-align:center;color:#aaa;font-size:14px;margin-bottom:6px}
-.auth-tabs{display:flex;background:#1c1c1e;border-radius:14px;padding:5px;gap:5px;margin:18px 0}
-.auth-tabs button{flex:1;border:none;padding:12px 0;border-radius:10px;background:transparent;color:#aaa;font-size:15px;font-weight:700;cursor:pointer}
-.auth-tabs button.active{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff}
-.auth-switch{text-align:center;color:#aaa;font-size:14px;margin-top:16px}
-.auth-switch b{color:#ff5a7a;cursor:pointer}
-.loading{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:none;place-items:center;color:#fff;font-weight:700}
-.loading.show{display:grid}
+.pl-row{background:#2a2a2a;border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center;margin-bottom:8px;cursor:pointer}.pl-row b{flex:1}.pl-row small{color:#aaa;display:block}
+.small-btn{background:#333;border:none;color:#fff;padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}.small-btn.red{background:#ff2d55}.small-btn.blue{background:#3a7bd5}.tick-mini{width:32px;height:32px;background:#1db954;border-radius:50%;display:grid;place-items:center;color:#000;font-weight:800}
+.form-label{font-size:14px;font-weight:700;color:#ddd;margin:18px 0 8px;display:block}.form-input{width:100%;background:#1c1c1e;border:1px solid #333;border-radius:12px;padding:14px;color:#fff;outline:none;font-size:15px}.form-input:focus{border-color:#ff2d55}.form-hint{font-size:12px;color:#888;margin-top:6px}.pass-wrap{position:relative}.pass-wrap input{padding-right:48px}.eye-btn{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:20px;cursor:pointer}
+.save-btn{width:100%;background:linear-gradient(90deg,#ff2d55,#ff5a7a);border:none;color:#fff;padding:14px;border-radius:12px;font-weight:800;font-size:16px;margin-top:24px;cursor:pointer}.save-btn:disabled{opacity:.6}.cancel-btn{width:100%;background:#2a2a2a;border:none;color:#fff;padding:13px;border-radius:12px;font-weight:700;font-size:15px;margin-top:10px;cursor:pointer}
+.edit-avatar-wrap{text-align:center;margin:10px 0 6px}.edit-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#ff5a7a,#ff8a5a);margin:0 auto;display:grid;place-items:center;font-size:44px;overflow:hidden;cursor:pointer}.edit-avatar img{width:100%;height:100%;object-fit:cover}.change-photo{color:#ff5a7a;font-size:14px;font-weight:700;margin-top:8px;cursor:pointer;display:block;text-align:center}
+.success-msg{background:#1db954;color:#fff;padding:12px;border-radius:10px;text-align:center;font-weight:700;display:none;margin-top:14px}.error-msg{background:#ff2d55;color:#fff;padding:12px;border-radius:10px;text-align:center;font-weight:700;display:none;margin-top:14px}
+.auth-logo{width:90px;height:90px;border-radius:24px;background:linear-gradient(135deg,#ff2d55,#ff8a5a);margin:14px auto;display:grid;place-items:center;font-size:44px}.auth-title{text-align:center;font-size:26px;font-weight:800;margin:6px 0}.auth-sub{text-align:center;color:#aaa;font-size:14px;margin-bottom:6px}.auth-tabs{display:flex;background:#1c1c1e;border-radius:14px;padding:5px;gap:5px;margin:18px 0}.auth-tabs button{flex:1;border:none;padding:12px 0;border-radius:10px;background:transparent;color:#aaa;font-size:15px;font-weight:700;cursor:pointer}.auth-tabs button.active{background:linear-gradient(90deg,#ff2d55,#ff5a7a);color:#fff}.auth-switch{text-align:center;color:#aaa;font-size:14px;margin-top:16px}.auth-switch b{color:#ff5a7a;cursor:pointer}
+.loading{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:none;place-items:center;color:#fff;font-weight:700}.loading.show{display:grid}
 </style>
 </head>
 <body>
 <div class="loading" id="loading">⏳ Loading...</div>
 <div class="phone">
-
-<!-- HOME -->
-<div id="page-home" class="page active">
-  <div class="header"><h1 id="homeGreeting">Good Evening, Guest 👋</h1></div>
-  <div class="hero"><small>🔥 TRENDING NOW</small><h2>A2Z Songs</h2><p>Best Malayalam & Hindi Hits</p><button onclick="go('album')">▶ Play All</button></div>
-  <div class="tabs">
-    <button id="tab-actor" class="active" onclick="showTab('actor')">🎬 Actor</button>
-    <button id="tab-music" onclick="showTab('music')">🎼 Music</button>
-    <button id="tab-singer" onclick="showTab('singer')">🎤 Singer</button>
-  </div>
-  <div class="tab-info" id="tabInfo">Malayalam Actors • Tap for Profile</div>
-  <div class="artist-grid" id="artistGrid"></div>
-  <div style="height:30px"></div>
+<div id="page-home" class="page active"><div class="header"><h1 id="homeGreeting">Good Evening, Guest 👋</h1></div><div class="hero"><small>🔥 TRENDING NOW</small><h2>A2Z Songs</h2><p>Best Malayalam & Hindi Hits</p><button onclick="go('album')">▶ Play All</button></div><div class="tabs"><button id="tab-actor" class="active" onclick="showTab('actor')">🎬 Actor</button><button id="tab-music" onclick="showTab('music')">🎼 Music</button><button id="tab-singer" onclick="showTab('singer')">🎤 Singer</button></div><div class="tab-info" id="tabInfo">Malayalam Actors • Tap for Profile</div><div class="artist-grid" id="artistGrid"></div><div style="height:30px"></div></div>
+<div id="page-album" class="page"><div class="header"><h1>Album</h1></div><div class="section-title">Top Albums</div><div class="album-grid" id="albumGrid"></div><div style="height:30px"></div></div>
+<div id="page-track" class="page"><div class="header"><h1>Track</h1></div><div class="search-box">🔍 <input id="trackInput" placeholder="Search tracks..." oninput="doSearch(this.value)"></div><div id="trackList"></div><div style="height:30px"></div></div>
+<div id="page-artist" class="page"><div class="header"><div class="back" onclick="history.back()">‹</div><h1 id="artistPageTitle">Artist Profile</h1></div><div style="text-align:center"><div class="big-avatar t1" id="artistAvatarWrap"><img id="artistAvatarImg" src="" alt="" onerror="this.style.display='none'"><span id="artistAvatarLetter">M</span></div><h2 id="artistName">Mohanlal</h2><p style="color:#aaa" id="artistRole">Actor • Malayalam</p><button class="follow-btn">+ Follow</button></div><div class="stats"><div><b id="artistFollowers">1.2M</b><span>Followers</span></div><div><b id="artistAlbumsCount">12</b><span>Albums</span></div><div><b id="artistSongsCount">86</b><span>Songs</span></div></div><div class="section-title">Albums</div><div class="album-grid" id="artistAlbumsGrid"></div><div class="section-title">Top Tracks</div><div id="artistTracks"></div><div style="height:30px"></div></div>
+<div id="page-albumdetail" class="page"><div class="header"><div class="back" onclick="history.back()">‹</div><h1>Album Details</h1></div><div style="text-align:center"><div class="player-cover-big t2" style="width:160px;height:160px;flex:none" id="albumDetailCoverWrap"><img id="albumDetailCoverImg" src="" alt="" onerror="this.style.display='none'"><div class="cover-overlay"><span style="font-size:50px">💿</span></div></div><h2 id="albumDetailName">Premam</h2><p style="color:#aaa" id="albumDetailMeta">2015 • 12 Songs</p><button class="follow-btn" onclick="go('track')">▶ Play All</button></div><div class="section-title">Tracks in this Album</div><div id="albumDetailTracks"></div><div class="credit-box"><div><span>Music Director</span><b id="albumDetailMD" style="cursor:pointer;color:#ff5a7a" onclick="go('artist/'+this.innerText)">Shaan Rahman</b></div><div><span>Singers</span><b id="albumDetailSingers">Vineeth Sreenivasan</b></div></div><div style="height:30px"></div></div>
+<div id="page-player" class="page"><div class="player-page"><div class="player-top"><div class="back2" onclick="history.back()">⌄</div><div class="player-top-center"><small>Playing from Album</small><h3 id="playerAlbumTop">Velipadinte Pusthakam</h3></div><div class="player-dots" onclick="openAddSheet()">⋮</div></div><div class="player-cover-big t3" id="playerCover"><img id="playerCoverImg" src="https://m.media-amazon.com/images/M/MV5BN2E0NWJhNWItNTM3Yi00MzNiLWFlNDktZDdjZTQwM2FlNTNlXkEyXkFqcGc@._V1_SL1024_.jpg" alt="" onerror="this.style.display='none'"><div class="cover-overlay"><div class="cover-title" id="playerCoverTitle">JIMIKKI KAMMAL</div><div class="cover-sub" id="playerCoverSub">MALAYALAM</div></div></div><div class="player-song-row"><div class="txt"><div class="marquee"><div class="marquee-inner" id="marqueeTitle"><h2 id="playerTitle">Jimikki Kammal - From "Velipadinte Pusthakam"</h2></div></div><div class="marquee"><div class="marquee-inner" id="marqueeSinger"><p id="playerSingerLine">Vineeth Sreenivasan, Shaan Rahman</p></div></div></div><div class="add-btn" id="addBtn" onclick="openAddSheet()">+</div></div><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="progressFill"><div class="progress-dot"></div></div></div><div class="time-row"><span id="curTime">0:09</span><span>4:24</span></div></div><div class="controls-new"><div class="ctrl-prev" onclick="prevTrack()">⏮</div><div class="ctrl-play" id="playBtn" onclick="togglePlay()">⏸</div><div class="ctrl-next" onclick="nextTrack()">⏭</div></div></div></div>
+<div id="page-detail" class="page"><div class="header"><div class="back" onclick="history.back()">‹</div><h1 id="detailTitle">Details</h1></div><div class="detail-hero"><div style="font-size:50px" id="detailEmoji">📁</div><h2 id="detailHeading">Title</h2><p style="color:#aaa" id="detailSub">Description</p></div><div id="detailContent"></div><div style="height:30px"></div></div>
+<div id="page-auth" class="page"><div class="header"><h1>Profile</h1></div><div class="auth-logo">🎵</div><h2 class="auth-title">Welcome to A2Z Songs</h2><p class="auth-sub" id="authSub">Login cheythu ningalude playlists kaanu</p><div class="auth-tabs"><button id="authTabLogin" class="active" onclick="switchAuth('login')">Login</button><button id="authTabSignup" onclick="switchAuth('signup')">Sign Up</button></div><div id="loginForm"><label class="form-label">📧 Email</label><input class="form-input" id="loginEmail" placeholder="e.g. alex@gmail.com" type="email" autocomplete="email"><label class="form-label">🔒 Password</label><div class="pass-wrap"><input class="form-input" id="loginPassword" type="password" placeholder="Password" autocomplete="current-password"><button class="eye-btn" type="button" onclick="let p=document.getElementById('loginPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div><div class="error-msg" id="loginError"></div><div class="success-msg" id="loginSuccess"></div><button class="save-btn" id="loginBtn" onclick="doLogin()">Login →</button><div class="auth-switch">Account illa? <b onclick="switchAuth('signup')">Sign Up cheyyu</b></div></div><div id="signupForm" style="display:none"><label class="form-label">👤 Full Name</label><input class="form-input" id="signupName" placeholder="e.g. Alex Morgan" autocomplete="name"><label class="form-label">@ Username</label><input class="form-input" id="signupUsername" placeholder="e.g. alex_morgan" autocomplete="username"><label class="form-label">📧 Email</label><input class="form-input" id="signupEmail" type="email" placeholder="e.g. alex@gmail.com" autocomplete="email"><label class="form-label">🔒 Password</label><div class="pass-wrap"><input class="form-input" id="signupPassword" type="password" placeholder="Min 6 letters" autocomplete="new-password"><button class="eye-btn" type="button" onclick="let p=document.getElementById('signupPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div><div class="form-hint">Password min 6 aksharam - Firebase rule aanu</div><div class="error-msg" id="signupError"></div><div class="success-msg" id="signupSuccess"></div><button class="save-btn" id="signupBtn" onclick="doSignup()">✨ Create Account</button><div class="auth-switch">Already account undu? <b onclick="switchAuth('login')">Login cheyyu</b></div></div><div style="height:30px"></div></div>
+<div id="page-profile" class="page"><div class="header"><h1>Profile</h1><div class="gear">⚙️</div></div><div class="profile-top"><div class="avatar" id="profileAvatarWrap"><span id="profileAvatarLetter">👤</span><img id="profileAvatarImg" src="" style="display:none" onerror="this.style.display='none'"></div><h2 id="profileName">-</h2><div class="profile-username" id="profileUsername">@-</div><div class="profile-email" id="profileEmail">-</div></div><div class="stats"><div><b>128</b><span>Following</span></div><div><b>1.2k</b><span>Followers</span></div><div><b id="profilePlaylistCount">4</b><span>Playlists</span></div></div><div class="edit-wrap"><button class="edit-btn" onclick="go('editprofile')">Edit Profile</button><button class="logout-btn" onclick="doLogout()">Logout</button></div><h3>🎵 My Playlists</h3><button class="follow-btn" style="margin:0 0 12px" onclick="createPlaylistPrompt()">+ New Playlist</button><div id="myPlaylists"></div><h3>Settings</h3><div class="set-row" onclick="go('detail/Account')"><span>⚙️</span><span>Account</span><div class="arrow">›</div></div><div class="set-row" onclick="go('detail/Notifications')"><span>🔔</span><span>Notifications</span><div class="arrow">›</div></div><div class="set-row" onclick="go('detail/Downloads')"><span>⬇️</span><span>Downloads</span><div class="arrow">›</div></div><div class="set-row" onclick="go('detail/Appearance')"><span>🎨</span><span>Appearance</span><div class="arrow">›</div></div><div style="height:30px"></div></div>
+<div id="page-editprofile" class="page"><div class="header"><div class="back" onclick="history.back()">‹</div><h1>Edit Profile</h1></div><div class="edit-avatar-wrap"><div class="edit-avatar" onclick="document.getElementById('avatarFile').click()"><span id="editAvatarLetter">👤</span><img id="editAvatarImg" src="" style="display:none"></div><span class="change-photo" onclick="document.getElementById('avatarFile').click()">Change Photo</span><input type="file" id="avatarFile" accept="image/*" style="display:none" onchange="previewAvatar(this)"></div><label class="form-label">👤 Full Name</label><input class="form-input" id="editName"><label class="form-label">@ Username</label><input class="form-input" id="editUsername"><label class="form-label">📧 Email</label><input class="form-input" id="editEmail" type="email" disabled style="opacity:.6"><div class="form-hint">Email maattanamengil vere account vechu Login cheyyanam</div><label class="form-label">🔒 New Password (optional)</label><div class="pass-wrap"><input class="form-input" id="editPassword" type="password" placeholder="New Password - khaali vittal maattilla"><button class="eye-btn" type="button" onclick="togglePass()">👁️</button></div><div class="success-msg" id="saveMsg">✅ Profile Saved!</div><button class="save-btn" onclick="saveProfile()">💾 Save Changes</button><button class="cancel-btn" onclick="history.back()">Cancel</button><div style="height:30px"></div></div>
 </div>
-
-<!-- ALBUM LIST -->
-<div id="page-album" class="page">
-  <div class="header"><h1>Album</h1></div>
-  <div class="section-title">Top Albums</div>
-  <div class="album-grid" id="albumGrid"></div>
-  <div style="height:30px"></div>
-</div>
-
-<!-- TRACK LIST -->
-<div id="page-track" class="page">
-  <div class="header"><h1>Track</h1></div>
-  <div class="search-box">🔍 <input id="trackInput" placeholder="Search tracks..." oninput="doSearch(this.value)"></div>
-  <div id="trackList"></div>
-  <div style="height:30px"></div>
-</div>
-
-<!-- ARTIST PROFILE -->
-<div id="page-artist" class="page">
-  <div class="header"><div class="back" onclick="history.back()">‹</div><h1 id="artistPageTitle">Artist Profile</h1></div>
-  <div style="text-align:center"><div class="big-avatar t1" id="artistAvatarWrap"><img id="artistAvatarImg" src="" alt="" onerror="this.style.display='none'"><span id="artistAvatarLetter">M</span></div><h2 id="artistName">Mohanlal</h2><p style="color:#aaa" id="artistRole">Actor • Malayalam</p><button class="follow-btn">+ Follow</button></div>
-  <div class="stats"><div><b id="artistFollowers">1.2M</b><span>Followers</span></div><div><b id="artistAlbumsCount">12</b><span>Albums</span></div><div><b id="artistSongsCount">86</b><span>Songs</span></div></div>
-  <div class="section-title">Albums</div><div class="album-grid" id="artistAlbumsGrid"></div>
-  <div class="section-title">Top Tracks</div><div id="artistTracks"></div>
-  <div style="height:30px"></div>
-</div>
-
-<!-- ALBUM DETAIL -->
-<div id="page-albumdetail" class="page">
-  <div class="header"><div class="back" onclick="history.back()">‹</div><h1>Album Details</h1></div>
-  <div style="text-align:center"><div class="player-cover-big t2" style="width:160px;height:160px;flex:none;aspect-ratio:auto" id="albumDetailCoverWrap"><img id="albumDetailCoverImg" src="" alt="" onerror="this.style.display='none'"><div class="cover-overlay"><span class="big-emoji">💿</span></div></div><h2 id="albumDetailName">Premam</h2><p style="color:#aaa" id="albumDetailMeta">2015 • 12 Songs</p><button class="follow-btn" onclick="go('track')">▶ Play All</button></div>
-  <div class="section-title">Tracks in this Album</div><div id="albumDetailTracks"></div>
-  <div class="credit-box"><div><span>Music Director</span><b id="albumDetailMD" style="cursor:pointer;color:#ff5a7a" onclick="go('artist/'+this.innerText)">Shaan Rahman</b></div><div><span>Singers</span><b id="albumDetailSingers">Vineeth Sreenivasan</b></div></div>
-  <div style="height:30px"></div>
-</div>
-
-<!-- MUSIC PLAYER -->
-<div id="page-player" class="page">
-  <div class="player-page">
-    <div class="player-top">
-      <div class="back2" onclick="history.back()">⌄</div>
-      <div class="player-top-center"><small>Playing from Album</small><h3 id="playerAlbumTop">Velipadinte Pusthakam</h3></div>
-      <div class="player-dots" onclick="openAddSheet()">⋮</div>
-    </div>
-    <div class="player-cover-big t3" id="playerCover">
-      <img id="playerCoverImg" src="https://m.media-amazon.com/images/M/MV5BN2E0NWJhNWItNTM3Yi00MzNiLWFlNDktZDdjZTQwM2FlNTNlXkEyXkFqcGc@._V1_SL1024_.jpg" alt="" onerror="this.style.display='none'">
-      <div class="cover-overlay"><div class="cover-title" id="playerCoverTitle">JIMIKKI KAMMAL</div><div class="cover-sub" id="playerCoverSub">MALAYALAM</div></div>
-    </div>
-    <div class="player-song-row">
-      <div class="txt">
-        <div class="marquee"><div class="marquee-inner" id="marqueeTitle"><h2 id="playerTitle">Jimikki Kammal - From "Velipadinte Pusthakam"</h2></div></div>
-        <div class="marquee"><div class="marquee-inner" id="marqueeSinger"><p id="playerSingerLine">Vineeth Sreenivasan, Shaan Rahman</p></div></div>
-      </div>
-      <div class="add-btn" id="addBtn" onclick="openAddSheet()">+</div>
-    </div>
-    <div class="progress-wrap">
-      <div class="progress-track"><div class="progress-fill" id="progressFill"><div class="progress-dot"></div></div></div>
-      <div class="time-row"><span id="curTime">0:09</span><span>4:24</span></div>
-    </div>
-    <div class="controls-new">
-      <div class="ctrl-prev" onclick="prevTrack()">⏮</div>
-      <div class="ctrl-play" id="playBtn" onclick="togglePlay()">⏸</div>
-      <div class="ctrl-next" onclick="nextTrack()">⏭</div>
-    </div>
-  </div>
-</div>
-
-<!-- GENERIC DETAIL -->
-<div id="page-detail" class="page">
-  <div class="header"><div class="back" onclick="history.back()">‹</div><h1 id="detailTitle">Details</h1></div>
-  <div class="detail-hero"><div style="font-size:50px" id="detailEmoji">📁</div><h2 id="detailHeading">Title</h2><p style="color:#aaa" id="detailSub">Description</p></div>
-  <div id="detailContent"></div>
-  <div style="height:30px"></div>
-</div>
-
-<!-- AUTH - REAL LOGIN & SIGN UP -->
-<div id="page-auth" class="page">
-  <div class="header"><h1>Profile</h1></div>
-  <div class="auth-logo">🎵</div>
-  <h2 class="auth-title">Welcome to A2Z Songs</h2>
-  <p class="auth-sub" id="authSub">Login cheythu ningalude playlists kaanu</p>
-  <div class="auth-tabs">
-    <button id="authTabLogin" class="active" onclick="switchAuth('login')">Login</button>
-    <button id="authTabSignup" onclick="switchAuth('signup')">Sign Up</button>
-  </div>
-  <div id="loginForm">
-    <label class="form-label">📧 Email</label>
-    <input class="form-input" id="loginEmail" placeholder="e.g. alex@gmail.com" type="email" autocomplete="email">
-    <label class="form-label">🔒 Password</label>
-    <div class="pass-wrap"><input class="form-input" id="loginPassword" type="password" placeholder="Password" autocomplete="current-password"><button class="eye-btn" type="button" onclick="let p=document.getElementById('loginPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div>
-    <div class="error-msg" id="loginError"></div>
-    <div class="success-msg" id="loginSuccess"></div>
-    <button class="save-btn" id="loginBtn" onclick="doLogin()">Login →</button>
-    <div class="auth-switch">Account illa? <b onclick="switchAuth('signup')">Sign Up cheyyu</b></div>
-  </div>
-  <div id="signupForm" style="display:none">
-    <label class="form-label">👤 Full Name</label>
-    <input class="form-input" id="signupName" placeholder="e.g. Alex Morgan" autocomplete="name">
-    <label class="form-label">@ Username</label>
-    <input class="form-input" id="signupUsername" placeholder="e.g. alex_morgan" autocomplete="username">
-    <label class="form-label">📧 Email</label>
-    <input class="form-input" id="signupEmail" type="email" placeholder="e.g. alex@gmail.com" autocomplete="email">
-    <label class="form-label">🔒 Password</label>
-    <div class="pass-wrap"><input class="form-input" id="signupPassword" type="password" placeholder="Min 6 letters" autocomplete="new-password"><button class="eye-btn" type="button" onclick="let p=document.getElementById('signupPassword');p.type=p.type==='password'?'text':'password'">👁️</button></div>
-    <div class="form-hint">Password min 6 aksharam - Firebase rule aanu</div>
-    <div class="error-msg" id="signupError"></div>
-    <div class="success-msg" id="signupSuccess"></div>
-    <button class="save-btn" id="signupBtn" onclick="doSignup()">✨ Create Account</button>
-    <div class="auth-switch">Already account undu? <b onclick="switchAuth('login')">Login cheyyu</b></div>
-  </div>
-  <div style="height:30px"></div>
-</div>
-
-<!-- MY PROFILE -->
-<div id="page-profile" class="page">
-  <div class="header"><h1>Profile</h1><div class="gear">⚙️</div></div>
-  <div class="profile-top"><div class="avatar" id="profileAvatarWrap"><span id="profileAvatarLetter">👤</span><img id="profileAvatarImg" src="" style="display:none" onerror="this.style.display='none'"></div><h2 id="profileName">-</h2><div class="profile-username" id="profileUsername">@-</div><div class="profile-email" id="profileEmail">-</div></div>
-  <div class="stats"><div><b>128</b><span>Following</span></div><div><b>1.2k</b><span>Followers</span></div><div><b id="profilePlaylistCount">4</b><span>Playlists</span></div></div>
-  <div class="edit-wrap"><button class="edit-btn" onclick="go('editprofile')">Edit Profile</button><button class="logout-btn" onclick="doLogout()">Logout</button></div>
-  <h3>🎵 My Playlists</h3>
-  <button class="follow-btn" style="margin:0 0 12px" onclick="createPlaylistPrompt()">+ New Playlist</button>
-  <div id="myPlaylists"></div>
-  <h3>Settings</h3>
-  <div class="set-row" onclick="go('detail/Account')"><span>⚙️</span><span>Account</span><div class="arrow">›</div></div>
-  <div class="set-row" onclick="go('detail/Notifications')"><span>🔔</span><span>Notifications</span><div class="arrow">›</div></div>
-  <div class="set-row" onclick="go('detail/Downloads')"><span>⬇️</span><span>Downloads</span><div class="arrow">›</div></div>
-  <div class="set-row" onclick="go('detail/Appearance')"><span>🎨</span><span>Appearance</span><div class="arrow">›</div></div>
-  <div style="height:30px"></div>
-</div>
-
-<!-- EDIT PROFILE -->
-<div id="page-editprofile" class="page">
-  <div class="header"><div class="back" onclick="history.back()">‹</div><h1>Edit Profile</h1></div>
-  <div class="edit-avatar-wrap">
-    <div class="edit-avatar" id="editAvatarBox" onclick="document.getElementById('avatarFile').click()"><span id="editAvatarLetter">👤</span><img id="editAvatarImg" src="" style="display:none"></div>
-    <span class="change-photo" onclick="document.getElementById('avatarFile').click()">Change Photo</span>
-    <input type="file" id="avatarFile" accept="image/*" style="display:none" onchange="previewAvatar(this)">
-  </div>
-  <label class="form-label">👤 Full Name</label>
-  <input class="form-input" id="editName" placeholder="e.g. Alex Morgan">
-  <label class="form-label">@ Username</label>
-  <input class="form-input" id="editUsername" placeholder="e.g. alex_morgan">
-  <label class="form-label">📧 Email</label>
-  <input class="form-input" id="editEmail" type="email" placeholder="e.g. alex@gmail.com" disabled style="opacity:.6">
-  <div class="form-hint">Email maattanamengil vere account vechu Login cheyyanam - Firebase rule</div>
-  <label class="form-label">🔒 New Password (optional)</label>
-  <div class="pass-wrap">
-    <input class="form-input" id="editPassword" type="password" placeholder="New Password - khaali vittal maattilla">
-    <button class="eye-btn" type="button" onclick="togglePass()">👁️</button>
-  </div>
-  <div class="success-msg" id="saveMsg">✅ Profile Saved!</div>
-  <button class="save-btn" onclick="saveProfile()">💾 Save Changes</button>
-  <button class="cancel-btn" onclick="history.back()">Cancel</button>
-  <div style="height:30px"></div>
-</div>
-
-</div>
-
-<!-- ADD TO PLAYLIST SHEET -->
-<div class="sheet-overlay" id="sheetOverlay" onclick="if(event.target===this) closeSheet()">
-  <div class="sheet">
-    <h3>Add to Playlist</h3>
-    <p id="sheetSongName">Malare • Premam</p>
-    <input id="newPlaylistName" placeholder="New Playlist Name... e.g. My Favourites">
-    <button class="create-btn" onclick="createPlaylistFromSheet()">+ Create New Playlist & Add Song</button>
-    <div class="section-title" style="margin:6px 0 10px">Your Playlists</div>
-    <div id="sheetPlaylists"></div>
-    <button class="small-btn" style="width:100%;padding:10px;margin-top:8px" onclick="closeSheet()">Close</button>
-  </div>
-</div>
-
-<div class="nav">
-  <button id="nav-home" class="active" onclick="go('home')"><span class="ico">🏠</span>Home</button>
-  <button id="nav-album" onclick="go('album')"><span class="ico">💿</span>Album</button>
-  <button id="nav-track" onclick="go('track')"><span class="ico">🎵</span>Track</button>
-  <button id="nav-profile" onclick="go('profile')"><span class="ico">👤</span>Profile</button>
-</div>
+<div class="sheet-overlay" id="sheetOverlay" onclick="if(event.target===this) closeSheet()"><div class="sheet"><h3>Add to Playlist</h3><p id="sheetSongName">Malare • Premam</p><input id="newPlaylistName" placeholder="New Playlist Name..."><button class="create-btn" onclick="createPlaylistFromSheet()">+ Create New Playlist & Add Song</button><div class="section-title" style="margin:6px 0 10px">Your Playlists</div><div id="sheetPlaylists"></div><button class="small-btn" style="width:100%;padding:10px;margin-top:8px" onclick="closeSheet()">Close</button></div></div>
+<div class="nav"><button id="nav-home" class="active" onclick="go('home')"><span class="ico">🏠</span>Home</button><button id="nav-album" onclick="go('album')"><span class="ico">💿</span>Album</button><button id="nav-track" onclick="go('track')"><span class="ico">🎵</span>Track</button><button id="nav-profile" onclick="go('profile')"><span class="ico">👤</span>Profile</button></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, updatePassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA3QP1DZRM5kTmnSyx2NM_9SnqrxBDR7lc",
-  authDomain: "a2z-songs.firebaseapp.com",
-  projectId: "a2z-songs",
-  storageBucket: "a2z-songs.firebasestorage.app",
-  messagingSenderId: "947910937475",
-  appId: "1:947910937475:web:589d9417da8373d0e204b6"
-};
-const isFirebaseConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.authDomain && firebaseConfig.projectId && firebaseConfig.apiKey.length > 10);
-
-let auth = null;
-if(isFirebaseConfigured){
-  try{ const app = initializeApp(firebaseConfig); auth = getAuth(app); }
-  catch(e){ console.log("Firebase init error", e); }
-}
-
-let localUsers = JSON.parse(localStorage.getItem('a2z_users')||'[]');
-let localCurrent = localStorage.getItem('a2z_current')||'';
-let userProfile = null;
-
-function showLoading(v){ document.getElementById('loading').classList.toggle('show', v); }
-function showAuthError(id, msg){ let el=document.getElementById(id); el.innerText=msg; el.style.display='block'; }
+const firebaseConfig = { apiKey: "AIzaSyA3QP1DZRM5kTmnSyx2NM_9SnqrxBDR7lc", authDomain: "a2z-songs.firebaseapp.com", projectId: "a2z-songs", storageBucket: "a2z-songs.firebasestorage.app", messagingSenderId: "947910937475", appId: "1:947910937475:web:589d9417da8373d0e204b6" };
+const isFirebaseConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.apiKey.length > 10);
+let auth = null; if(isFirebaseConfigured){ try{ const app = initializeApp(firebaseConfig); auth = getAuth(app); }catch(e){ console.log(e); } }
+// *** REFRESH FIX: auth ready aavunnathu vare Profile thirumanikkaruthu ***
+window.__A2Z_AUTH_READY = false; window.__A2Z_AUTH_PENDING_PROFILE = false;
+let localUsers = JSON.parse(localStorage.getItem('a2z_users')||'[]'); let localCurrent = localStorage.getItem('a2z_current')||''; let userProfile = null;
+function showLoading(v){ document.getElementById('loading').classList.toggle('show', v); if(v) document.getElementById('loading').innerText='⏳ Checking login...'; }
+function showAuthError(id,msg){ let el=document.getElementById(id); el.innerText=msg; el.style.display='block'; }
 function hideAuthErrors(){ ['loginError','signupError'].forEach(id=>document.getElementById(id).style.display='none'); ['loginSuccess','signupSuccess'].forEach(id=>document.getElementById(id).style.display='none'); }
-
-function buildProfileFromFirebase(user){
-  if(!user) return null;
-  let saved = null;
-  try{ saved = JSON.parse(localStorage.getItem('a2z_profile_'+user.uid)||'null'); }catch(e){}
-  let uname = localStorage.getItem('a2z_username_'+user.uid) || (saved && saved.username) || user.email.split('@')[0];
-  let name = (saved && saved.name) || user.displayName || uname;
-  return { name:name, username:uname, email:user.email, avatar:(saved && saved.avatar) || user.photoURL || "", uid:user.uid };
-}
-
-window.switchAuth = function(mode){
-  document.getElementById('authTabLogin').classList.toggle('active', mode==='login');
-  document.getElementById('authTabSignup').classList.toggle('active', mode==='signup');
-  document.getElementById('loginForm').style.display = mode==='login' ? 'block' : 'none';
-  document.getElementById('signupForm').style.display = mode==='signup' ? 'block' : 'none';
-  document.getElementById('authSub').innerText = mode==='login' ? 'Login cheythu ningalude playlists kaanu' : 'Puthiya account undakku - Free aanu!';
-  hideAuthErrors();
-};
-
-window.doSignup = async function(){
-  const name=document.getElementById('signupName').value.trim();
-  const username=document.getElementById('signupUsername').value.trim().replace(/\s+/g,'_').toLowerCase();
-  const email=document.getElementById('signupEmail').value.trim().toLowerCase();
-  const pass=document.getElementById('signupPassword').value; // Do not trim passwords.
-  if(!name) return showAuthError('signupError','❌ Name ezhuthu!');
-  if(!username) return showAuthError('signupError','❌ Username ezhuthu!');
-  if(!/^[a-z0-9_]{3,20}$/.test(username)) return showAuthError('signupError','❌ Username 3–20 characters: letters, numbers, underscore.');
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showAuthError('signupError','❌ Correct Email ezhuthu!');
-  if(pass.length<6) return showAuthError('signupError','❌ Password min 6 aksharam venam!');
-  hideAuthErrors(); showLoading(true);
-  const btn=document.getElementById('signupBtn'); btn.disabled=true;
-  try{
-    if(isFirebaseConfigured && auth){
-      const cred=await createUserWithEmailAndPassword(auth,email,pass);
-      await updateProfile(cred.user,{displayName:name});
-      localStorage.setItem('a2z_username_'+cred.user.uid,username);
-      userProfile={name,username,email,avatar:'',uid:cred.user.uid};
-      localStorage.setItem('a2z_profile_'+cred.user.uid,JSON.stringify(userProfile));
-    }else{
-      if(localUsers.some(u=>u.email.toLowerCase()===email)) throw new Error('Ee Email already und - Login cheyyu!');
-      if(localUsers.some(u=>u.username.toLowerCase()===username)) throw new Error('Ee Username already eduthu!');
-      const nu={name,username,email,password:pass,avatar:''};
-      localUsers.push(nu); localStorage.setItem('a2z_users',JSON.stringify(localUsers));
-      localStorage.setItem('a2z_current',email); localCurrent=email; userProfile=nu;
-    }
-    renderProfile();
-    const success=document.getElementById('signupSuccess');
-    success.innerText='✅ Account Created! Welcome, '+name; success.style.display='block';
-    setTimeout(()=>window.openProfilePage(),500);
-  }catch(e){
-    const code=e.code||'', raw=e.message||'Sign Up failed';
-    let msg=raw;
-    if(code==='auth/email-already-in-use'||raw.includes('email-already-in-use')) msg='❌ Ee Email already und - Login cheyyu!';
-    else if(code==='auth/invalid-email'||raw.includes('invalid-email')) msg='❌ Correct Email ezhuthu!';
-    else if(code==='auth/weak-password'||raw.includes('weak-password')) msg='❌ Password min 6 aksharam venam!';
-    else if(code==='auth/operation-not-allowed'||raw.includes('operation-not-allowed')) msg='❌ Firebase Console → Authentication → Sign-in method → Email/Password enable cheyyuka.';
-    else if(code==='auth/network-request-failed') msg='❌ Internet connection check cheythu veendum try cheyyuka.';
-    showAuthError('signupError',msg);
-  }finally{showLoading(false);btn.disabled=false;}
-};
-
-window.doLogin = async function(){
-  const email=document.getElementById('loginEmail').value.trim().toLowerCase();
-  const pass=document.getElementById('loginPassword').value; // Do not trim passwords.
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showAuthError('loginError','❌ Correct Email ezhuthu!');
-  if(!pass) return showAuthError('loginError','❌ Password ezhuthu!');
-  hideAuthErrors(); showLoading(true);
-  const btn=document.getElementById('loginBtn'); btn.disabled=true;
-  try{
-    if(isFirebaseConfigured && auth){
-      const cred=await signInWithEmailAndPassword(auth,email,pass);
-      userProfile=buildProfileFromFirebase(cred.user);
-    }else{
-      const user=localUsers.find(u=>u.email.toLowerCase()===email && u.password===pass);
-      if(!user) throw new Error('Email / Password thettaanu!');
-      localStorage.setItem('a2z_current',user.email); localCurrent=user.email; userProfile=user;
-    }
-    renderProfile();
-    const success=document.getElementById('loginSuccess');
-    success.innerText='✅ Welcome back, '+(userProfile?.name||''); success.style.display='block';
-    setTimeout(()=>window.openProfilePage(),500);
-  }catch(e){
-    const code=e.code||'', raw=e.message||'Login failed';
-    let msg=raw;
-    if(['auth/invalid-credential','auth/user-not-found','auth/wrong-password','auth/invalid-login-credentials'].includes(code)||raw.includes('invalid-credential')||raw.includes('wrong-password')) msg='❌ Email / Password thettaanu! Sign Up cheythittundo ennu nokku.';
-    else if(code==='auth/invalid-email'||raw.includes('invalid-email')) msg='❌ Correct Email ezhuthu!';
-    else if(code==='auth/too-many-requests'||raw.includes('too-many-requests')) msg='❌ Kurachu kazhinju veendum nokku!';
-    else if(code==='auth/operation-not-allowed'||raw.includes('operation-not-allowed')) msg='❌ Firebase-il Email/Password Sign-in enable cheyyuka.';
-    else if(code==='auth/network-request-failed') msg='❌ Internet connection check cheythu veendum try cheyyuka.';
-    showAuthError('loginError',msg);
-  }finally{showLoading(false);btn.disabled=false;}
-};
-
-// Enter key submits the currently visible authentication form.
-['loginEmail','loginPassword'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter') window.doLogin();}));
-['signupName','signupUsername','signupEmail','signupPassword'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter') window.doSignup();}));
-
-window.doLogout = async function(){
-  if(!confirm('Logout cheyyano?')) return;
-  showLoading(true);
-  try{
-    if(isFirebaseConfigured && auth) await signOut(auth);
-    localStorage.removeItem('a2z_current'); localCurrent=''; userProfile=null;
-  }catch(e){}
-  showLoading(false);
-  window.switchAuth('login');
-  window.openProfilePage();
-};
-
-if(isFirebaseConfigured && auth){
-  onAuthStateChanged(auth, (user)=>{
-    if(user){
-      userProfile = buildProfileFromFirebase(user);
-      renderProfile();
-      if(location.hash.includes('profile') || location.hash.includes('auth')){
-        setTimeout(()=>{ if(window.isLoggedIn()) showPageOnly('profile'); }, 100);
-      }
-    } else {
-      if(!auth.currentUser){
-        setTimeout(()=>{
-          if(!auth.currentUser){ userProfile=null; renderProfile(); }
-        }, 500);
-      }
-    }
-  });
-} else {
-  if(localCurrent){
-    let u=localUsers.find(x=>x.email===localCurrent);
-    if(u) userProfile=u;
-  }
-}
-
-window.renderProfile = function(){
-  if(isFirebaseConfigured && auth && auth.currentUser){
-    userProfile=buildProfileFromFirebase(auth.currentUser);
-  }
-  if(!userProfile && !isFirebaseConfigured && localCurrent){
-    userProfile=localUsers.find(u=>u.email===localCurrent)||null;
-  }
-  if(!userProfile){
-    document.getElementById('homeGreeting').innerText='Good Evening, Guest 👋';
-    document.getElementById('profileName').innerText='-';
-    document.getElementById('profileUsername').innerText='@-';
-    document.getElementById('profileEmail').innerText='-';
-    document.getElementById('profileAvatarImg').style.display='none';
-    document.getElementById('profileAvatarLetter').style.display='block';
-    document.title='A2Z Songs';
-    return;
-  }
-  const name=userProfile.name||userProfile.displayName||userProfile.email?.split('@')[0]||'User';
-  const username=userProfile.username||userProfile.email?.split('@')[0]||'user';
-  userProfile.name=name; userProfile.username=username;
-  document.getElementById('profileName').innerText=name;
-  document.getElementById('profileUsername').innerText='@'+username;
-  document.getElementById('profileEmail').innerText=userProfile.email||'';
-  document.getElementById('homeGreeting').innerText='Good Evening, '+name.split(' ')[0]+' 👋';
-  document.title='A2Z Songs - '+name;
-  const pImg=document.getElementById('profileAvatarImg');
-  const letter=document.getElementById('profileAvatarLetter');
-  if(userProfile.avatar){
-    pImg.src=userProfile.avatar; pImg.style.display='block'; letter.style.display='none';
-    pImg.onerror=()=>{pImg.style.display='none';letter.style.display='block';};
-  }else{
-    pImg.removeAttribute('src'); pImg.style.display='none'; letter.style.display='block';
-  }
-};
-
-window.isLoggedIn = function(){
-  return Boolean((isFirebaseConfigured && auth && auth.currentUser) || userProfile || (!isFirebaseConfigured && localCurrent));
-};
-window.openProfilePage = function(){
-  if(isFirebaseConfigured && auth && auth.currentUser){
-    userProfile = buildProfileFromFirebase(auth.currentUser);
-  }
-  if(window.isLoggedIn()){
-    renderProfile();
-    showPageOnly('profile');
-  } else {
-    window.switchAuth('login');
-    showPageOnly('auth');
-  }
-};
-window.openEditProfile = function(){
-  if(!window.isLoggedIn()){ window.openProfilePage(); return; }
-  if(isFirebaseConfigured && auth && auth.currentUser) userProfile = buildProfileFromFirebase(auth.currentUser);
-  document.getElementById('editName').value=userProfile.name;
-  document.getElementById('editUsername').value=userProfile.username;
-  document.getElementById('editEmail').value=userProfile.email;
-  document.getElementById('editPassword').value='';
-  document.getElementById('saveMsg').style.display='none';
-  let eImg=document.getElementById('editAvatarImg');
-  if(userProfile.avatar){ eImg.src=userProfile.avatar; eImg.style.display='block'; document.getElementById('editAvatarLetter').style.display='none'; }
-  else { eImg.removeAttribute('src'); eImg.style.display='none'; document.getElementById('editAvatarLetter').style.display='block'; }
-  showPageOnly('editprofile');
-};
-window.togglePass = function(){
-  let p=document.getElementById('editPassword');
-  p.type = p.type==='password' ? 'text' : 'password';
-};
-window.previewAvatar = function(input){
-  if(!input.files||!input.files[0]) return;
-  let reader=new FileReader();
-  reader.onload=function(e){
-    userProfile.avatar=e.target.result;
-    document.getElementById('editAvatarImg').src=userProfile.avatar;
-    document.getElementById('editAvatarImg').style.display='block';
-    document.getElementById('editAvatarLetter').style.display='none';
-  };
-  reader.readAsDataURL(input.files[0]);
-};
-window.saveProfile = async function(){
-  let name=document.getElementById('editName').value.trim();
-  let username=document.getElementById('editUsername').value.trim().replace(/\s+/g,'_').toLowerCase();
-  let pass=document.getElementById('editPassword').value.trim();
-  if(!name){ alert('Name ezhuthu!'); return; }
-  if(!username){ alert('Username ezhuthu!'); return; }
-  userProfile.name=name; userProfile.username=username;
-  showLoading(true);
-  try{
-    if(isFirebaseConfigured && auth && auth.currentUser){
-      await updateProfile(auth.currentUser, { displayName: name });
-      localStorage.setItem('a2z_username_'+auth.currentUser.uid, username);
-      localStorage.setItem('a2z_profile_'+auth.currentUser.uid, JSON.stringify(userProfile));
-      if(pass) await updatePassword(auth.currentUser, pass);
-    } else {
-      let idx=localUsers.findIndex(u=>u.email===userProfile.email);
-      if(idx>=0){ localUsers[idx]=userProfile; if(pass) localUsers[idx].password=pass; localStorage.setItem('a2z_users', JSON.stringify(localUsers)); }
-    }
-    renderProfile();
-    let m=document.getElementById('saveMsg'); m.style.display='block'; m.innerText='✅ Profile Saved! - '+name;
-    setTimeout(()=>{ window.openProfilePage(); }, 800);
-  }catch(e){
-    alert('Save failed: '+e.message);
-  } finally { showLoading(false); }
-};
+function buildProfileFromFirebase(user){ if(!user) return null; let saved=null; try{ saved=JSON.parse(localStorage.getItem('a2z_profile_'+user.uid)||'null'); }catch(e){} let uname=localStorage.getItem('a2z_username_'+user.uid)||(saved&&saved.username)||user.email.split('@')[0]; let name=(saved&&saved.name)||user.displayName||uname; return {name,username:uname,email:user.email,avatar:(saved&&saved.avatar)||user.photoURL||"",uid:user.uid}; }
+window.switchAuth=function(mode){ document.getElementById('authTabLogin').classList.toggle('active',mode==='login'); document.getElementById('authTabSignup').classList.toggle('active',mode==='signup'); document.getElementById('loginForm').style.display=mode==='login'?'block':'none'; document.getElementById('signupForm').style.display=mode==='signup'?'block':'none'; document.getElementById('authSub').innerText=mode==='login'?'Login cheythu ningalude playlists kaanu':'Puthiya account undakku - Free aanu!'; hideAuthErrors(); };
+window.doSignup=async function(){ const name=document.getElementById('signupName').value.trim(); const username=document.getElementById('signupUsername').value.trim().replace(/\s+/g,'_').toLowerCase(); const email=document.getElementById('signupEmail').value.trim().toLowerCase(); const pass=document.getElementById('signupPassword').value; if(!name) return showAuthError('signupError','❌ Name ezhuthu!'); if(!username) return showAuthError('signupError','❌ Username ezhuthu!'); if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showAuthError('signupError','❌ Correct Email ezhuthu!'); if(pass.length<6) return showAuthError('signupError','❌ Password min 6 aksharam venam!'); hideAuthErrors(); showLoading(true); const btn=document.getElementById('signupBtn'); btn.disabled=true; try{ if(isFirebaseConfigured&&auth){ const cred=await createUserWithEmailAndPassword(auth,email,pass); await updateProfile(cred.user,{displayName:name}); localStorage.setItem('a2z_username_'+cred.user.uid,username); userProfile={name,username,email,avatar:'',uid:cred.user.uid}; localStorage.setItem('a2z_profile_'+cred.user.uid,JSON.stringify(userProfile)); } else { if(localUsers.some(u=>u.email.toLowerCase()===email)) throw new Error('Ee Email already und'); const nu={name,username,email,password:pass,avatar:''}; localUsers.push(nu); localStorage.setItem('a2z_users',JSON.stringify(localUsers)); localStorage.setItem('a2z_current',email); localCurrent=email; userProfile=nu; } renderProfile(); const s=document.getElementById('signupSuccess'); s.innerText='✅ Account Created! Welcome, '+name; s.style.display='block'; setTimeout(()=>window.openProfilePage(),500); }catch(e){ let m=e.message||''; if(e.code==='auth/email-already-in-use') m='❌ Ee Email already und - Login cheyyu!'; else if(e.code==='auth/operation-not-allowed') m='❌ Firebase-il Email/Password Enable cheyyuka.'; showAuthError('signupError',m); } finally{ showLoading(false); btn.disabled=false; } };
+window.doLogin=async function(){ const email=document.getElementById('loginEmail').value.trim().toLowerCase(); const pass=document.getElementById('loginPassword').value; if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showAuthError('loginError','❌ Correct Email ezhuthu!'); if(!pass) return showAuthError('loginError','❌ Password ezhuthu!'); hideAuthErrors(); showLoading(true); const btn=document.getElementById('loginBtn'); btn.disabled=true; try{ if(isFirebaseConfigured&&auth){ const cred=await signInWithEmailAndPassword(auth,email,pass); userProfile=buildProfileFromFirebase(cred.user); } else { const u=localUsers.find(x=>x.email.toLowerCase()===email&&x.password===pass); if(!u) throw new Error('Email / Password thettaanu!'); localStorage.setItem('a2z_current',u.email); localCurrent=u.email; userProfile=u; } renderProfile(); const s=document.getElementById('loginSuccess'); s.innerText='✅ Welcome back, '+(userProfile?.name||''); s.style.display='block'; setTimeout(()=>window.openProfilePage(),500); }catch(e){ let m=e.message||''; if(['auth/invalid-credential','auth/user-not-found','auth/wrong-password'].includes(e.code)) m='❌ Email / Password thettaanu!'; showAuthError('loginError',m); } finally{ showLoading(false); btn.disabled=false; } };
+['loginEmail','loginPassword'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter') window.doLogin();})); ['signupName','signupUsername','signupEmail','signupPassword'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter') window.doSignup();}));
+window.doLogout=async function(){ if(!confirm('Logout cheyyano?')) return; showLoading(true); try{ if(isFirebaseConfigured&&auth) await signOut(auth); localStorage.removeItem('a2z_current'); localCurrent=''; userProfile=null; }catch(e){} showLoading(false); window.switchAuth('login'); window.openProfilePage(); };
+if(isFirebaseConfigured&&auth){ onAuthStateChanged(auth,(user)=>{ window.__A2Z_AUTH_READY=true; document.getElementById('loading').classList.remove('show'); if(user){ userProfile=buildProfileFromFirebase(user); renderProfile(); if(window.__A2Z_AUTH_PENDING_PROFILE){ window.__A2Z_AUTH_PENDING_PROFILE=false; setTimeout(()=>window.openProfilePage(),50); return; } if(location.hash.includes('profile')||location.hash.includes('auth')){ setTimeout(()=>{ if(window.isLoggedIn()) showPageOnly('profile'); },100); } } else { if(window.__A2Z_AUTH_PENDING_PROFILE){ window.__A2Z_AUTH_PENDING_PROFILE=false; setTimeout(()=>window.openProfilePage(),50); } else { setTimeout(()=>{ if(!auth.currentUser){ userProfile=null; renderProfile(); } },300); } } }); } else { window.__A2Z_AUTH_READY=true; if(localCurrent){ let u=localUsers.find(x=>x.email===localCurrent); if(u) userProfile=u; } }
+window.renderProfile=function(){ if(isFirebaseConfigured&&auth&&auth.currentUser) userProfile=buildProfileFromFirebase(auth.currentUser); if(!userProfile&&!isFirebaseConfigured&&localCurrent) userProfile=localUsers.find(u=>u.email===localCurrent)||null; if(!userProfile){ document.getElementById('homeGreeting').innerText='Good Evening, Guest 👋'; document.getElementById('profileName').innerText='-'; document.getElementById('profileUsername').innerText='@-'; document.getElementById('profileEmail').innerText='-'; return; } document.getElementById('profileName').innerText=userProfile.name; document.getElementById('profileUsername').innerText='@'+userProfile.username; document.getElementById('profileEmail').innerText=userProfile.email; document.getElementById('homeGreeting').innerText='Good Evening, '+userProfile.name.split(' ')[0]+' 👋'; document.title='A2Z Songs - '+userProfile.name; let pImg=document.getElementById('profileAvatarImg'); if(userProfile.avatar){ pImg.src=userProfile.avatar; pImg.style.display='block'; document.getElementById('profileAvatarLetter').style.display='none'; } else { pImg.style.display='none'; document.getElementById('profileAvatarLetter').style.display='block'; } };
+window.isLoggedIn=function(){ return Boolean((isFirebaseConfigured&&auth&&auth.currentUser)||userProfile||(!isFirebaseConfigured&&localCurrent)); };
+window.openProfilePage=function(){ if(window.__A2Z_AUTH_READY===false){ window.__A2Z_AUTH_PENDING_PROFILE=true; showLoading(true); return; } if(isFirebaseConfigured&&auth&&auth.currentUser) userProfile=buildProfileFromFirebase(auth.currentUser); if(window.isLoggedIn()){ renderProfile(); showPageOnly('profile'); } else { window.switchAuth('login'); showPageOnly('auth'); } };
+window.openEditProfile=function(){ if(!window.isLoggedIn()){ window.openProfilePage(); return; } if(isFirebaseConfigured&&auth&&auth.currentUser) userProfile=buildProfileFromFirebase(auth.currentUser); document.getElementById('editName').value=userProfile.name; document.getElementById('editUsername').value=userProfile.username; document.getElementById('editEmail').value=userProfile.email; document.getElementById('editPassword').value=''; document.getElementById('saveMsg').style.display='none'; let eImg=document.getElementById('editAvatarImg'); if(userProfile.avatar){ eImg.src=userProfile.avatar; eImg.style.display='block'; document.getElementById('editAvatarLetter').style.display='none'; } else { eImg.style.display='none'; document.getElementById('editAvatarLetter').style.display='block'; } showPageOnly('editprofile'); };
+window.togglePass=function(){ let p=document.getElementById('editPassword'); p.type=p.type==='password'?'text':'password'; };
+window.previewAvatar=function(input){ if(!input.files||!input.files[0]) return; let r=new FileReader(); r.onload=function(e){ userProfile.avatar=e.target.result; document.getElementById('editAvatarImg').src=userProfile.avatar; document.getElementById('editAvatarImg').style.display='block'; document.getElementById('editAvatarLetter').style.display='none'; }; r.readAsDataURL(input.files[0]); };
+window.saveProfile=async function(){ let name=document.getElementById('editName').value.trim(); let username=document.getElementById('editUsername').value.trim().replace(/\s+/g,'_').toLowerCase(); let pass=document.getElementById('editPassword').value; if(!name) return alert('Name ezhuthu!'); if(!username) return alert('Username ezhuthu!'); userProfile.name=name; userProfile.username=username; showLoading(true); try{ if(isFirebaseConfigured&&auth&&auth.currentUser){ await updateProfile(auth.currentUser,{displayName:name}); localStorage.setItem('a2z_username_'+auth.currentUser.uid,username); localStorage.setItem('a2z_profile_'+auth.currentUser.uid,JSON.stringify(userProfile)); if(pass) await updatePassword(auth.currentUser,pass); } else { let idx=localUsers.findIndex(u=>u.email===userProfile.email); if(idx>=0){ localUsers[idx]=userProfile; if(pass) localUsers[idx].password=pass; localStorage.setItem('a2z_users',JSON.stringify(localUsers)); } } renderProfile(); let m=document.getElementById('saveMsg'); m.style.display='block'; m.innerText='✅ Profile Saved! - '+name; setTimeout(()=>window.openProfilePage(),800); }catch(e){ alert('Save failed: '+e.message); } finally{ showLoading(false); } };
 </script>
-
 <script>
-const IMG = {
-  "Mohanlal":"https://www.pmindia.gov.in/wp-content/uploads/2023/12/Mohanlal-Actor.jpg",
-  "Mammootty":"https://image.tmdb.org/t/p/original/nBuirwu4WlDfTURe0rS3EpuLXyd.jpg",
-  "Fahadh Faasil":"https://www.themoviedb.org/t/p/w600_and_h900_bestv2/72ZaGOCFleKSa1QcHDImN2dOWSy.jpg",
-  "Dulquer Salmaan":"https://www.jagranimages.com/images/newimg/14082023/14_08_2023-dulquer_salmaan_23501441.jpg",
-  "Nivin Pauly":"https://image.tmdb.org/t/p/w780/A3n49VllH3mrEmrXV7NZJO5EKAA.jpg",
-  "Prithviraj":"https://www.pinkvilla.com/images/2023-09/708126773_prithviraj-sukumaran-p.jpg",
-  "Tovino Thomas":"https://www.thestatesman.com/wp-content/uploads/2023/09/Tovino-Thomas.jpg",
-  "Kunchacko Boban":"https://movieworldmedia.in/wp-content/uploads/2023/08/Kunchacko_Boban_Actor.jpg",
-  "A R Rahman":"https://images.indianexpress.com/2021/04/ARRahman.jpg",
-  "Vidyasagar":"https://img-mm.manoramaonline.com/content/dam/mm/mo/premium/entertainment/images/2024/3/17/vidyasagar-2.jpg?w=315&h=164",
-  "M Jayachandran":"https://mjayachandran.com/wp-content/uploads/2025/01/hm2.png",
-  "Gopi Sundar":"https://cdn.platinumlist.net/upload/artist/gopi_sundar_2424-full1711633243.jpeg",
-  "Shaan Rahman":"https://media.cinemaexpress.com/cinemaexpress%2F2025-03-27%2Fbglgjuo9%2FShaanRahman.jpg?w=1200&ar=40%3A21&auto=format%2Ccompress&ogImage=true&mode=crop&enlarge=true&overlay=false&overlay_position=bottom&overlay_width=100",
-  "Bijibal":"https://www.gethucinema.com/wp-content/uploads/2024/08/Bijibal-1-cYF1nl969-820x1024.jpg",
-  "Sushin Shyam":"https://www.kairalinewsonline.com/wp-content/uploads/2024/10/sushin-1.jpg",
-  "Justin Varghese":"https://c.saavncdn.com/artists/Justin_Varghese_001_20220925060920_500x500.jpg",
-  "K J Yesudas":"https://upload.wikimedia.org/wikipedia/commons/e/e6/Yesudas_K.J.jpg",
-  "K S Chithra":"https://cdn.platinumlist.net/upload/artist/ks_chithra_292-mobile1752819406.jpeg",
-  "Shreya Ghoshal":"https://ticketstarter.nl/media/cache/resolve/artist_overview/media/artist/Shreya%20Ghoshal.jpg",
-  "Vijay Yesudas":"http://filmistreet.com/wp-content/uploads/vijay-yesudas.jpg",
-  "Sid Sriram":"https://www.gethucinema.com/wp-content/uploads/2024/08/Sid-Sriram-24-I2Ij2T7281-1228x1536.jpg",
-  "Shilpa Rao":"https://curlytales.com/wp-content/uploads/2021/08/Shilpa-Rao.jpg",
-  "Sithara Krishnakumar":"https://www.madhyamam.com/h-upload/2022/06/19/1618104-sithara-krishnakumar.jpg",
-  "K S Harisankar":"https://image.tmdb.org/t/p/w300/6v8Om9nh2ujDTiPVmKGpwYNJMmg.jpg"
-};
-function imgTag(name, cls){
-  let src=IMG[name]||"";
-  if(!src) return name ? name[0] : "🎵";
-  return `<img src="${src}" alt="${name}" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='${name? name[0] : '🎵'}'">`;
-}
-const DATA = {
-  actor: [
-    {n:"Mohanlal", s:"120+ Films", e:"M", c:"t2"},
-    {n:"Mammootty", s:"130+ Films", e:"M", c:"t4"},
-    {n:"Fahadh Faasil", s:"45+ Films", e:"F", c:"t1"},
-    {n:"Dulquer Salmaan", s:"35+ Films", e:"D", c:"t3"},
-    {n:"Nivin Pauly", s:"30+ Films", e:"N", c:"t5"},
-    {n:"Prithviraj", s:"100+ Films", e:"P", c:"t6"},
-    {n:"Tovino Thomas", s:"50+ Films", e:"T", c:"t2"},
-    {n:"Kunchacko Boban", s:"90+ Films", e:"K", c:"t4"}
-  ],
-  music: [
-    {n:"A R Rahman", s:"Music Director", e:"AR", c:"t1"},
-    {n:"Vidyasagar", s:"Music Director", e:"V", c:"t2"},
-    {n:"M Jayachandran", s:"Music Director", e:"MJ", c:"t3"},
-    {n:"Gopi Sundar", s:"Music Director", e:"GS", c:"t4"},
-    {n:"Shaan Rahman", s:"Music Director", e:"SR", c:"t5"},
-    {n:"Bijibal", s:"Music Director", e:"B", c:"t6"},
-    {n:"Sushin Shyam", s:"Music Director", e:"SS", c:"t1"},
-    {n:"Justin Varghese", s:"Music Director", e:"JV", c:"t2"}
-  ],
-  singer: [
-    {n:"K J Yesudas", s:"Playback Singer", e:"Y", c:"t3"},
-    {n:"K S Chithra", s:"Playback Singer", e:"C", c:"t1"},
-    {n:"Shreya Ghoshal", s:"Playback Singer", e:"S", c:"t2"},
-    {n:"Vijay Yesudas", s:"Playback Singer", e:"V", c:"t4"},
-    {n:"Sid Sriram", s:"Playback Singer", e:"SS", c:"t5"},
-    {n:"Shilpa Rao", s:"Playback Singer", e:"SR", c:"t6"},
-    {n:"Sithara Krishnakumar", s:"Playback Singer", e:"SK", c:"t3"},
-    {n:"K S Harisankar", s:"Playback Singer", e:"H", c:"t1"}
-  ]
-};
-const ALBUMS = [
-  {name:"Premam", year:"2015", songs:"12 Songs", md:"Shaan Rahman", singer:"Vineeth Sreenivasan", cls:"t1", img:"https://images.justwatch.com/poster/142131582/s592/premam"},
-  {name:"Hridayam", year:"2022", songs:"15 Songs", md:"Hesham Abdul Wahab", singer:"Darshana Rajendran", cls:"t2", img:"https://images.moviebuff.com/a33d91c8-87cc-4708-9ad9-2ad85f835137?w=500"},
-  {name:"Manjummel Boys", year:"2024", songs:"8 Songs", md:"Sushin Shyam", singer:"Sushin Shyam", cls:"t3", img:"https://kurulusas.com/wp-content/uploads/2024/05/Manjummel.Boys_.2024-683x1024.jpg"},
-  {name:"Romancham", year:"2023", songs:"10 Songs", md:"Sushin Shyam", singer:"Sushin Shyam", cls:"t4", img:"https://media-cache.cinematerial.com/p/500x/5red2vng/romancham-indian-movie-poster.jpg?v=1680898075"},
-  {name:"Premalu", year:"2024", songs:"9 Songs", md:"Vishnu Vijay", singer:"Kapil Kapilan", cls:"t5", img:"https://orunewculture.in/wp-content/uploads/2024/12/GF_yqe-WcAAylsj.webp"},
-  {name:"Kumbalangi Nights", year:"2019", songs:"11 Songs", md:"Sushin Shyam", singer:"Sithara", cls:"t6", img:"https://cdn.wallpapersafari.com/70/0/E0T2Gr.jpg"},
-  {name:"Velipadinte Pusthakam", year:"2017", songs:"10 Songs", md:"Shaan Rahman", singer:"Vineeth Sreenivasan", cls:"t3", img:"https://m.media-amazon.com/images/M/MV5BN2E0NWJhNWItNTM3Yi00MzNiLWFlNDktZDdjZTQwM2FlNTNlXkEyXkFqcGc@._V1_SL1024_.jpg"},
-  {name:"I'M Game - Malayalam", year:"2026", songs:"8 Songs", md:"Jakes Bejoy", singer:"Armaan Malik", cls:"t1", img:"https://poster.gsc.com.my/2026/260903_I'mTheGameMalayalam_big.jpg"}
-];
-const TRACKS = [
-  {title:"Mazhavillaye", album:"I'M Game - Malayalam", md:"Jakes Bejoy", singer:"Jakes Bejoy, Armaan Malik, Sharfu", actor:"Dulquer Salmaan", cls:"t1", img:"https://poster.gsc.com.my/2026/260903_I'mTheGameMalayalam_big.jpg"},
-  {title:"Malare", album:"Premam", md:"Shaan Rahman", singer:"Vineeth Sreenivasan", actor:"Nivin Pauly", cls:"t1", img:"https://images.justwatch.com/poster/142131582/s592/premam"},
-  {title:"Uyire", album:"Gauthamante Radham", md:"Ankit Menon", singer:"Sid Sriram", actor:"Neeraj Madhav", cls:"t2", img:"https://images.justwatch.com/poster/142131582/s592/premam"},
-  {title:"Jimikki Kammal", album:"Velipadinte Pusthakam", md:"Shaan Rahman", singer:"Vineeth Sreenivasan", actor:"Mohanlal", cls:"t3", img:"https://m.media-amazon.com/images/M/MV5BN2E0NWJhNWItNTM3Yi00MzNiLWFlNDktZDdjZTQwM2FlNTNlXkEyXkFqcGc@._V1_SL1024_.jpg"},
-  {title:"Kuthanthram", album:"Manjummel Boys", md:"Sushin Shyam", singer:"Sushin Shyam", actor:"Soubin Shahir", cls:"t4", img:"https://kurulusas.com/wp-content/uploads/2024/05/Manjummel.Boys_.2024-683x1024.jpg"},
-  {title:"Darshana", album:"Hridayam", md:"Hesham Abdul Wahab", singer:"Darshana Rajendran", actor:"Pranav Mohanlal", cls:"t5", img:"https://images.moviebuff.com/a33d91c8-87cc-4708-9ad9-2ad85f835137?w=500"},
-  {title:"Raabta", album:"Agent Vinod", md:"Pritam", singer:"Arijit Singh", actor:"Saif Ali Khan", cls:"t6", img:"https://upload.wikimedia.org/wikipedia/en/3/3c/Agent_Vinod_poster.jpg"}
-];
-function albumImg(name){ let a=ALBUMS.find(x=>x.name===name); return a?a.img:""; }
-function setTxt(id,txt){ let el=document.getElementById(id); if(el) el.innerText=txt; }
-let marqueeTimers=[];
-function stopMarquee(){
-  marqueeTimers.forEach(t=>clearTimeout(t)); marqueeTimers=[];
-  document.querySelectorAll('.marquee-inner').forEach(el=>{ el.style.transition='none'; el.style.transform='translateX(0)'; });
-}
-function startMarqueeFor(innerId, textElId, isTitle){
-  let inner=document.getElementById(innerId);
-  let textEl=document.getElementById(textElId);
-  if(!inner||!textEl) return;
-  let text=textEl.innerText;
-  let wrap=inner.parentElement;
-  let tag=isTitle?'h2':'p';
-  inner.innerHTML=`<span class="mq-text"><${tag}>${text}</${tag}></span><span class="mq-gap"></span><span class="mq-text"><${tag}>${text}</${tag}></span>`;
-  let first=inner.querySelector('.mq-text '+tag); if(first) first.id=textElId;
-  inner.style.transition='none'; inner.style.transform='translateX(0)';
-  requestAnimationFrame(()=>{
-    let single=inner.querySelector('.mq-text').offsetWidth + 80;
-    let overflow = inner.querySelector('.mq-text').offsetWidth - wrap.clientWidth;
-    if(overflow <= 8){
-      inner.innerHTML=`<span class="mq-text"><${tag}>${text}</${tag}></span>`;
-      let s=inner.querySelector(tag); if(s) s.id=textElId;
-      return;
-    }
-    let duration = Math.max(2000, single * 28);
-    function loop(){
-      let t1=setTimeout(()=>{
-        inner.style.transition=`transform ${duration}ms linear`;
-        inner.style.transform=`translateX(${-single}px)`;
-        let t2=setTimeout(()=>{
-          inner.style.transition='none';
-          inner.style.transform='translateX(0)';
-          let t3=setTimeout(loop, 1000);
-          marqueeTimers.push(t3);
-        }, duration + 1000);
-        marqueeTimers.push(t2);
-      }, 1000);
-      marqueeTimers.push(t1);
-    }
-    loop();
-  });
-}
+const IMG={"Mohanlal":"https://www.pmindia.gov.in/wp-content/uploads/2023/12/Mohanlal-Actor.jpg","Mammootty":"https://image.tmdb.org/t/p/original/nBuirwu4WlDfTURe0rS3EpuLXyd.jpg","Fahadh Faasil":"https://www.themoviedb.org/t/p/w600_and_h900_bestv2/72ZaGOCFleKSa1QcHDImN2dOWSy.jpg","Dulquer Salmaan":"https://www.jagranimages.com/images/newimg/14082023/14_08_2023-dulquer_salmaan_23501441.jpg","Nivin Pauly":"https://image.tmdb.org/t/p/w780/A3n49VllH3mrEmrXV7NZJO5EKAA.jpg","Prithviraj":"https://www.pinkvilla.com/images/2023-09/708126773_prithviraj-sukumaran-p.jpg","Tovino Thomas":"https://www.thestatesman.com/wp-content/uploads/2023/09/Tovino-Thomas.jpg","Kunchacko Boban":"https://movieworldmedia.in/wp-content/uploads/2023/08/Kunchacko_Boban_Actor.jpg","A R Rahman":"https://images.indianexpress.com/2021/04/ARRahman.jpg","Vidyasagar":"https://img-mm.manoramaonline.com/content/dam/mm/mo/premium/entertainment/images/2024/3/17/vidyasagar-2.jpg?w=315&h=164","M Jayachandran":"https://mjayachandran.com/wp-content/uploads/2025/01/hm2.png","Gopi Sundar":"https://cdn.platinumlist.net/upload/artist/gopi_sundar_2424-full1711633243.jpeg","Shaan Rahman":"https://media.cinemaexpress.com/cinemaexpress%2F2025-03-27%2Fbglgjuo9%2FShaanRahman.jpg?w=1200&ar=40%3A21&auto=format%2Ccompress&ogImage=true&mode=crop&enlarge=true&overlay=false&overlay_position=bottom&overlay_width=100","Bijibal":"https://www.gethucinema.com/wp-content/uploads/2024/08/Bijibal-1-cYF1nl969-820x1024.jpg","Sushin Shyam":"https://www.kairalinewsonline.com/wp-content/uploads/2024/10/sushin-1.jpg","Justin Varghese":"https://c.saavncdn.com/artists/Justin_Varghese_001_20220925060920_500x500.jpg","K J Yesudas":"https://upload.wikimedia.org/wikipedia/commons/e/e6/Yesudas_K.J.jpg","K S Chithra":"https://cdn.platinumlist.net/upload/artist/ks_chithra_292-mobile1752819406.jpeg","Shreya Ghoshal":"https://ticketstarter.nl/media/cache/resolve/artist_overview/media/artist/Shreya%20Ghoshal.jpg","Vijay Yesudas":"http://filmistreet.com/wp-content/uploads/vijay-yesudas.jpg","Sid Sriram":"https://www.gethucinema.com/wp-content/uploads/2024/08/Sid-Sriram-24-I2Ij2T7281-1228x1536.jpg","Shilpa Rao":"https://curlytales.com/wp-content/uploads/2021/08/Shilpa-Rao.jpg","Sithara Krishnakumar":"https://www.madhyamam.com/h-upload/2022/06/19/1618104-sithara-krishnakumar.jpg","K S Harisankar":"https://image.tmdb.org/t/p/w300/6v8Om9nh2ujDTiPVmKGpwYNJMmg.jpg"};
+function imgTag(n){ let s=IMG[n]||""; if(!s) return n?n[0]:"🎵"; return `<img src="${s}" alt="${n}" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='${n?n[0]:'🎵'}'">`; }
+const DATA={actor:[{n:"Mohanlal",s:"120+ Films",e:"M",c:"t2"},{n:"Mammootty",s:"130+ Films",e:"M",c:"t4"},{n:"Fahadh Faasil",s:"45+ Films",e:"F",c:"t1"},{n:"Dulquer Salmaan",s:"35+ Films",e:"D",c:"t3"},{n:"Nivin Pauly",s:"30+ Films",e:"N",c:"t5"},{n:"Prithviraj",s:"100+ Films",e:"P",c:"t6"},{n:"Tovino Thomas",s:"50+ Films",e:"T",c:"t2"},{n:"Kunchacko Boban",s:"90+ Films",e:"K",c:"t4"}],music:[{n:"A R Rahman",s:"Music Director",e:"AR",c:"t1"},{n:"Vidyasagar",s:"Music Director",e:"V",c:"t2"},{n:"M Jayachandran",s:"Music Director",e:"MJ",c:"t3"},{n:"Gopi Sundar",s:"Music Director",e:"GS",c:"t4"},{n:"Shaan Rahman",s:"Music Director",e:"SR",c:"t5"},{n:"Bijibal",s:"Music Director",e:"B",c:"t6"},{n:"Sushin Shyam",s:"Music Director",e:"SS",c:"t1"},{n:"Justin Varghese",s:"Music Director",e:"JV",c:"t2"}],singer:[{n:"K J Yesudas",s:"Playback Singer",e:"Y",c:"t3"},{n:"K S Chithra",s:"Playback Singer",e:"C",c:"t1"},{n:"Shreya Ghoshal",s:"Playback Singer",e:"S",c:"t2"},{n:"Vijay Yesudas",s:"Playback Singer",e:"V",c:"t4"},{n:"Sid Sriram",s:"Playback Singer",e:"SS",c:"t5"},{n:"Shilpa Rao",s:"Playback Singer",e:"SR",c:"t6"},{n:"Sithara Krishnakumar",s:"Playback Singer",e:"SK",c:"t3"},{n:"K S Harisankar",s:"Playback Singer",e:"H",c:"t1"}]};
+const ALBUMS=[{name:"Premam",year:"2015",songs:"12 Songs",md:"Shaan Rahman",singer:"Vineeth Sreenivasan",cls:"t1",img:"https://images.justwatch.com/poster/142131582/s592/premam"},{name:"Hridayam",year:"2022",songs:"15 Songs",md:"Hesham Abdul Wahab",singer:"Darshana Rajendran",cls:"t2",img:"https://images.moviebuff.com/a33d91c8-87cc-4708-9ad9-2ad85f835137?w=500"},{name:"Manjummel Boys",year:"2024",songs:"8 Songs",md:"Sushin Shyam",singer:"Sushin Shyam",cls:"t3",img:"https://kurulusas.com/wp-content/uploads/2024/05/Manjummel.Boys_.2024-683x1024.jpg"},{name:"Romancham",year:"2023",songs:"10 Songs",md:"Sushin Shyam",singer:"Sushin Shyam",cls:"t4",img:"https://media-cache.cinematerial.com/p/500x/5red2vng/romancham-indian-movie-poster.jpg?v=1680898075"},{name:"Premalu",year:"2024",songs:"9 Songs",md:"Vishnu Vijay",singer:"Kapil Kapilan",cls:"t5",img:"https://orunewculture.in/wp-content/uploads/2024/12/GF_yqe-WcAAylsj.webp"},{name:"Kumbalangi Nights",year:"2019",songs:"11 Songs",md:"Sushin Shyam",singer:"Sithara",cls:"t6",img:"https://cdn.wallpapersafari.com/70/0/E0T2Gr.jpg"},{name:"Velipadinte Pusthakam",year:"2017",songs:"10 Songs",md:"Shaan Rahman",singer:"Vineeth Sreenivasan",cls:"t3",img:"https://m.media-amazon.com/images/M/MV5BN2E0NWJhNWItNTM3Yi00MzNiLWFlNDktZDdjZTQwM2FlNTNlXkEyXkFqcGc@._V1_SL1024_.jpg"},{name:"I'M Game - Malayalam",year:"2026",songs:"8 Songs",md:"Jakes Bejoy",singer:"Armaan Malik",cls:"t1",img:"https://poster.gsc.com.my/2026/260903_I'mTheGameMalayalam_big.jpg"}];
+const TRACKS=[{title:"Mazhavillaye",album:"I'M Game - Malayalam",md:"Jakes Bejoy",singer:"Jakes Bejoy, Armaan Malik, Sharfu",actor:"Dulquer Salmaan",cls:"t1",img:"https://poster.gsc.com.my/2026/260903_I'mTheGameMalayalam_big.jpg"},{title:"Malare",album:"Premam",md:"Shaan Rahman",singer:"Vineeth Sreenivasan",actor:"Nivin Pauly",cls:"t1",img:"https://images.justwatch.com/poster/142131582/s592/premam"},{title:"Uyire",album:"Gauthamante Radham",md:"Ankit Menon",singer:"Sid Sriram",actor:"Neeraj Madhav",cls:"t2",img:"https://images.justwatch.com/poster/142131582/s592/premam"},{title:"Jimikki Kammal",album:"Velipadinte Pusthakam",md:"Shaan Rahman",singer:"Vineeth Sreenivasan",actor:"Mohanlal",cls:"t3",img:"https://m.media-amazon.com/images/M/MV5BN2E0NWJhNWItNTM3Yi00MzNiLWFlNDktZDdjZTQwM2FlNTNlXkEyXkFqcGc@._V1_SL1024_.jpg"},{title:"Kuthanthram",album:"Manjummel Boys",md:"Sushin Shyam",singer:"Sushin Shyam",actor:"Soubin Shahir",cls:"t4",img:"https://kurulusas.com/wp-content/uploads/2024/05/Manjummel.Boys_.2024-683x1024.jpg"},{title:"Darshana",album:"Hridayam",md:"Hesham Abdul Wahab",singer:"Darshana Rajendran",actor:"Pranav Mohanlal",cls:"t5",img:"https://images.moviebuff.com/a33d91c8-87cc-4708-9ad9-2ad85f835137?w=500"},{title:"Raabta",album:"Agent Vinod",md:"Pritam",singer:"Arijit Singh",actor:"Saif Ali Khan",cls:"t6",img:"https://upload.wikimedia.org/wikipedia/en/3/3c/Agent_Vinod_poster.jpg"}];
+function albumImg(n){ let a=ALBUMS.find(x=>x.name===n); return a?a.img:""; } function setTxt(id,t){ let e=document.getElementById(id); if(e) e.innerText=t; }
+let marqueeTimers=[]; function stopMarquee(){ marqueeTimers.forEach(t=>clearTimeout(t)); marqueeTimers=[]; document.querySelectorAll('.marquee-inner').forEach(el=>{ el.style.transition='none'; el.style.transform='translateX(0)'; }); }
+function startMarqueeFor(innerId,textElId,isTitle){ let inner=document.getElementById(innerId); let textEl=document.getElementById(textElId); if(!inner||!textEl) return; let text=textEl.innerText; let wrap=inner.parentElement; let tag=isTitle?'h2':'p'; inner.innerHTML=`<span class="mq-text"><${tag}>${text}</${tag}></span><span class="mq-gap"></span><span class="mq-text"><${tag}>${text}</${tag}></span>`; let f=inner.querySelector('.mq-text '+tag); if(f) f.id=textElId; inner.style.transition='none'; inner.style.transform='translateX(0)'; requestAnimationFrame(()=>{ let single=inner.querySelector('.mq-text').offsetWidth+80; let ov=inner.querySelector('.mq-text').offsetWidth-wrap.clientWidth; if(ov<=8){ inner.innerHTML=`<span class="mq-text"><${tag}>${text}</${tag}></span>`; let s=inner.querySelector(tag); if(s) s.id=textElId; return; } let dur=Math.max(2000,single*28); function loop(){ let t1=setTimeout(()=>{ inner.style.transition=`transform ${dur}ms linear`; inner.style.transform=`translateX(${-single}px)`; let t2=setTimeout(()=>{ inner.style.transition='none'; inner.style.transform='translateX(0)'; let t3=setTimeout(loop,1000); marqueeTimers.push(t3); },dur+1000); marqueeTimers.push(t2); },1000); marqueeTimers.push(t1); } loop(); }); }
 function startAllMarquee(){ stopMarquee(); startMarqueeFor('marqueeTitle','playerTitle',true); startMarqueeFor('marqueeSinger','playerSingerLine',false); }
-function getCurrentSong(){
-  let el=document.getElementById('playerTitle'); return el?el.innerText:'';
-}
-let myPlaylists = JSON.parse(localStorage.getItem('a2z_playlists')||'[]');
-if(myPlaylists.length===0){
-  myPlaylists=[
-    {name:"Late Night Moods", songs:["Malare - From \"Premam\"","Darshana - From \"Hridayam\""]},
-    {name:"Workout Hits", songs:["Kuthanthram - From \"Manjummel Boys\""]},
-    {name:"Chill Vibes", songs:["Uyire - From \"Gauthamante Radham\""]}
-  ];
-  savePlaylists();
-}
-function savePlaylists(){ localStorage.setItem('a2z_playlists', JSON.stringify(myPlaylists)); renderMyPlaylists(); updateAddBtn(); }
-function isSongInAnyPlaylist(song){ return myPlaylists.some(p=>p.songs.includes(song)); }
-function updateAddBtn(){
-  let btn=document.getElementById('addBtn'); if(!btn) return;
-  let song=getCurrentSong();
-  if(isSongInAnyPlaylist(song)){ btn.classList.add('added'); btn.innerHTML='✓'; }
-  else { btn.classList.remove('added'); btn.innerHTML='+'; }
-}
-function openAddSheet(){
-  let song=getCurrentSong();
-  document.getElementById('sheetSongName').innerText=song + (isSongInAnyPlaylist(song) ? ' • ✅ Added' : ' • Not in Playlist');
-  document.getElementById('sheetPlaylists').innerHTML = myPlaylists.length ? myPlaylists.map((p,i)=>{
-    let has=p.songs.includes(song);
-    return `<div class="pl-row" onclick="toggleSongInPlaylist(${i})"><div class="thumb ${TRACKS[i%TRACKS.length].cls}">${TRACKS[i%TRACKS.length].img?`<img src="${TRACKS[i%TRACKS.length].img}" onerror="this.style.display='none'">`:'🎵'}</div><div style="flex:1"><b>${p.name}</b><small>${p.songs.length} songs • ${has?'✅ Added - Tap to Remove':'Tap to Add'}</small></div>${has?'<div class="tick-mini">✓</div>':'<span style="font-size:22px">+</span>'}</div>`;
-  }).join('') : '<p style="color:#aaa">No playlist yet. Create one above.</p>';
-  document.getElementById('sheetOverlay').classList.add('open');
-}
+function getCurrentSong(){ let el=document.getElementById('playerTitle'); return el?el.innerText:''; }
+let myPlaylists=JSON.parse(localStorage.getItem('a2z_playlists')||'[]'); if(myPlaylists.length===0){ myPlaylists=[{name:"Late Night Moods",songs:["Malare - From \"Premam\"","Darshana - From \"Hridayam\""]},{name:"Workout Hits",songs:["Kuthanthram - From \"Manjummel Boys\""]},{name:"Chill Vibes",songs:["Uyire - From \"Gauthamante Radham\""]}]; savePlaylists(); }
+function savePlaylists(){ localStorage.setItem('a2z_playlists',JSON.stringify(myPlaylists)); renderMyPlaylists(); updateAddBtn(); }
+function isSongInAnyPlaylist(s){ return myPlaylists.some(p=>p.songs.includes(s)); }
+function updateAddBtn(){ let b=document.getElementById('addBtn'); if(!b) return; let s=getCurrentSong(); if(isSongInAnyPlaylist(s)){ b.classList.add('added'); b.innerHTML='✓'; } else { b.classList.remove('added'); b.innerHTML='+'; } }
+function openAddSheet(){ let song=getCurrentSong(); document.getElementById('sheetSongName').innerText=song+(isSongInAnyPlaylist(song)?' • ✅ Added':' • Not in Playlist'); document.getElementById('sheetPlaylists').innerHTML=myPlaylists.length?myPlaylists.map((p,i)=>{ let has=p.songs.includes(song); return `<div class="pl-row" onclick="toggleSongInPlaylist(${i})"><div class="thumb ${TRACKS[i%TRACKS.length].cls}">${TRACKS[i%TRACKS.length].img?`<img src="${TRACKS[i%TRACKS.length].img}" onerror="this.style.display='none'">`:'🎵'}</div><div style="flex:1"><b>${p.name}</b><small>${p.songs.length} songs • ${has?'✅ Added - Tap to Remove':'Tap to Add'}</small></div>${has?'<div class="tick-mini">✓</div>':'<span style="font-size:22px">+</span>'}</div>`; }).join(''):'<p style="color:#aaa">No playlist yet</p>'; document.getElementById('sheetOverlay').classList.add('open'); }
 function closeSheet(){ document.getElementById('sheetOverlay').classList.remove('open'); updateAddBtn(); }
-function createPlaylistPrompt(){
-  let name=prompt('New Playlist Name:');
-  if(name){ myPlaylists.push({name:name, songs:[]}); savePlaylists(); alert('Playlist Created: '+name); }
-}
-function createPlaylistFromSheet(){
-  let name=document.getElementById('newPlaylistName').value.trim();
-  if(!name){ alert('Playlist peru ezhuthu!'); return; }
-  let song=getCurrentSong();
-  myPlaylists.push({name:name, songs:[song]});
-  document.getElementById('newPlaylistName').value='';
-  savePlaylists(); closeSheet(); alert('Created & Added ✅ - Button ippo Green ✓ aayi');
-}
-function toggleSongInPlaylist(i){
-  let song=getCurrentSong();
-  let idx=myPlaylists[i].songs.indexOf(song);
-  if(idx>=0){ myPlaylists[i].songs.splice(idx,1); alert('Removed from "'+myPlaylists[i].name+'"'); }
-  else { myPlaylists[i].songs.push(song); alert('Added to "'+myPlaylists[i].name+'" ✅'); }
-  savePlaylists(); openAddSheet();
-}
-function renderMyPlaylists(){
-  let el=document.getElementById('myPlaylists'); if(!el) return;
-  document.getElementById('profilePlaylistCount').innerText=myPlaylists.length;
-  el.innerHTML=myPlaylists.map((p,i)=>`<div class="card"><div class="thumb ${TRACKS[i%TRACKS.length].cls}">${TRACKS[i%TRACKS.length].img?`<img src="${TRACKS[i%TRACKS.length].img}" onerror="this.style.display='none'">`:'🎵'}</div><div style="flex:1"><b>${p.name}</b><br><small>${p.songs.join(', ')||'No songs yet'}</small></div><button class="small-btn blue" onclick="editPlaylist(${i})">Edit</button><button class="small-btn red" onclick="deletePlaylist(${i})">Delete</button></div>`).join('')||'<p style="color:#aaa">No playlists yet</p>';
-}
-function editPlaylist(i){ let n=prompt('Rename Playlist:', myPlaylists[i].name); if(n){ myPlaylists[i].name=n; savePlaylists(); } }
+function createPlaylistPrompt(){ let n=prompt('New Playlist Name:'); if(n){ myPlaylists.push({name:n,songs:[]}); savePlaylists(); alert('Playlist Created: '+n); } }
+function createPlaylistFromSheet(){ let n=document.getElementById('newPlaylistName').value.trim(); if(!n) return alert('Playlist peru ezhuthu!'); let s=getCurrentSong(); myPlaylists.push({name:n,songs:[s]}); document.getElementById('newPlaylistName').value=''; savePlaylists(); closeSheet(); alert('Created & Added ✅'); }
+function toggleSongInPlaylist(i){ let s=getCurrentSong(); let idx=myPlaylists[i].songs.indexOf(s); if(idx>=0){ myPlaylists[i].songs.splice(idx,1); alert('Removed'); } else { myPlaylists[i].songs.push(s); alert('Added ✅'); } savePlaylists(); openAddSheet(); }
+function renderMyPlaylists(){ let el=document.getElementById('myPlaylists'); if(!el) return; document.getElementById('profilePlaylistCount').innerText=myPlaylists.length; el.innerHTML=myPlaylists.map((p,i)=>`<div class="card"><div class="thumb ${TRACKS[i%TRACKS.length].cls}">${TRACKS[i%TRACKS.length].img?`<img src="${TRACKS[i%TRACKS.length].img}" onerror="this.style.display='none'">`:'🎵'}</div><div style="flex:1"><b>${p.name}</b><br><small>${p.songs.join(', ')||'No songs yet'}</small></div><button class="small-btn blue" onclick="editPlaylist(${i})">Edit</button><button class="small-btn red" onclick="deletePlaylist(${i})">Delete</button></div>`).join('')||'<p style="color:#aaa">No playlists yet</p>'; }
+function editPlaylist(i){ let n=prompt('Rename Playlist:',myPlaylists[i].name); if(n){ myPlaylists[i].name=n; savePlaylists(); } }
 function deletePlaylist(i){ if(confirm('Delete "'+myPlaylists[i].name+'" ?')){ myPlaylists.splice(i,1); savePlaylists(); } }
-function go(path){ location.hash='/'+path; }
-function showTab(type){
-  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+type).classList.add('active');
-  document.getElementById('tabInfo').innerText=type==='actor'?'8 Actors • Tap for Profile':type==='music'?'8 Music Directors • Tap for Profile':'8 Singers • Tap for Profile';
-  document.getElementById('artistGrid').innerHTML=DATA[type].map(a=>`<div class="artist-card" onclick="go('artist/${encodeURIComponent(a.n)}')"><div class="circle ${a.c}">${imgTag(a.n)}</div><b>${a.n}</b><small>${a.s} • Tap ›</small></div>`).join('');
-}
-function openArtist(name){
-  name=decodeURIComponent(name);
-  let all=[...DATA.actor,...DATA.music,...DATA.singer];
-  let info=all.find(x=>x.n===name)||{e:name[0],c:"t1"};
-  let type=DATA.actor.some(x=>x.n===name)?'actor':DATA.music.some(x=>x.n===name)?'music':'singer';
-  setTxt('artistPageTitle',name+' - Profile');
-  document.getElementById('artistAvatarLetter').innerText=info.e;
-  let avImg=document.getElementById('artistAvatarImg');
-  if(IMG[name]){ avImg.src=IMG[name]; avImg.style.display='block'; document.getElementById('artistAvatarLetter').style.display='none'; }
-  else { avImg.style.display='none'; document.getElementById('artistAvatarLetter').style.display='block'; }
-  document.getElementById('artistAvatarWrap').className='big-avatar '+info.c;
-  setTxt('artistName',name);
-  setTxt('artistRole',type==='actor'?'Actor • Malayalam':type==='music'?'Music Director • Malayalam':'Playback Singer • Malayalam');
-  setTxt('artistFollowers',(1+name.length%5).toFixed(1)+'M');
-  setTxt('artistAlbumsCount',4+name.length%8);
-  setTxt('artistSongsCount',40+name.length*3);
-  let start=name.length%ALBUMS.length;
-  let myAlbums=[ALBUMS[start],ALBUMS[(start+1)%ALBUMS.length],ALBUMS[(start+2)%ALBUMS.length]];
-  document.getElementById('artistAlbumsGrid').innerHTML=myAlbums.map(a=>`<div class="album-card" onclick="go('album/${encodeURIComponent(a.name)}')"><div class="cover ${a.cls}">${a.img?`<img src="${a.img}" onerror="this.style.display='none'">`:'💿'}</div><b>${a.name}</b><small>${a.year} • Tap ›</small></div>`).join('');
-  let myTracks=TRACKS.slice(0,3).map(t=>({...t, title:t.title+' - '+name.split(' ')[0]}));
-  document.getElementById('artistTracks').innerHTML=myTracks.map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">${t.img?`<img src="${t.img}" onerror="this.style.display='none'">`:'🎵'}</div><div><b>${t.title}</b><br><small>${t.album} • ${t.singer}</small></div><div class="play-btn">▶</div></div>`).join('');
-  showPageOnly('artist');
-}
+function go(p){ location.hash='/'+p; }
+function showTab(t){ document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active')); document.getElementById('tab-'+t).classList.add('active'); document.getElementById('tabInfo').innerText=t==='actor'?'8 Actors • Tap for Profile':t==='music'?'8 Music Directors • Tap for Profile':'8 Singers • Tap for Profile'; document.getElementById('artistGrid').innerHTML=DATA[t].map(a=>`<div class="artist-card" onclick="go('artist/${encodeURIComponent(a.n)}')"><div class="circle ${a.c}">${imgTag(a.n)}</div><b>${a.n}</b><small>${a.s} • Tap ›</small></div>`).join(''); }
+function openArtist(name){ name=decodeURIComponent(name); let all=[...DATA.actor,...DATA.music,...DATA.singer]; let info=all.find(x=>x.n===name)||{e:name[0],c:"t1"}; let type=DATA.actor.some(x=>x.n===name)?'actor':DATA.music.some(x=>x.n===name)?'music':'singer'; setTxt('artistPageTitle',name+' - Profile'); document.getElementById('artistAvatarLetter').innerText=info.e; let av=document.getElementById('artistAvatarImg'); if(IMG[name]){ av.src=IMG[name]; av.style.display='block'; document.getElementById('artistAvatarLetter').style.display='none'; } else { av.style.display='none'; document.getElementById('artistAvatarLetter').style.display='block'; } document.getElementById('artistAvatarWrap').className='big-avatar '+info.c; setTxt('artistName',name); setTxt('artistRole',type==='actor'?'Actor • Malayalam':type==='music'?'Music Director • Malayalam':'Playback Singer • Malayalam'); setTxt('artistFollowers',(1+name.length%5).toFixed(1)+'M'); setTxt('artistAlbumsCount',4+name.length%8); setTxt('artistSongsCount',40+name.length*3); let st=name.length%ALBUMS.length; let myA=[ALBUMS[st],ALBUMS[(st+1)%ALBUMS.length],ALBUMS[(st+2)%ALBUMS.length]]; document.getElementById('artistAlbumsGrid').innerHTML=myA.map(a=>`<div class="album-card" onclick="go('album/${encodeURIComponent(a.name)}')"><div class="cover ${a.cls}">${a.img?`<img src="${a.img}" onerror="this.style.display='none'">`:'💿'}</div><b>${a.name}</b><small>${a.year} • Tap ›</small></div>`).join(''); let myT=TRACKS.slice(0,3).map(t=>({...t,title:t.title+' - '+name.split(' ')[0]})); document.getElementById('artistTracks').innerHTML=myT.map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">${t.img?`<img src="${t.img}" onerror="this.style.display='none'">`:'🎵'}</div><div><b>${t.title}</b><br><small>${t.album} • ${t.singer}</small></div><div class="play-btn">▶</div></div>`).join(''); showPageOnly('artist'); }
 function renderAlbums(){ document.getElementById('albumGrid').innerHTML=ALBUMS.map(a=>`<div class="album-card" onclick="go('album/${encodeURIComponent(a.name)}')"><div class="cover ${a.cls}">${a.img?`<img src="${a.img}" onerror="this.style.display='none'">`:'💿'}</div><b>${a.name}</b><small>${a.year} • ${a.songs} • Tap ›</small></div>`).join(''); }
-function openAlbum(name){
-  name=decodeURIComponent(name);
-  let a=ALBUMS.find(x=>x.name===name)||ALBUMS[0];
-  setTxt('albumDetailName',a.name);
-  setTxt('albumDetailMeta',a.year+' • '+a.songs+' • '+a.md);
-  setTxt('albumDetailMD',a.md);
-  setTxt('albumDetailSingers',a.singer);
-  let cImg=document.getElementById('albumDetailCoverImg');
-  if(a.img){ cImg.src=a.img; cImg.style.display='block'; } else { cImg.style.display='none'; }
-  document.getElementById('albumDetailCoverWrap').className='player-cover-big '+a.cls;
-  let tracks=TRACKS.filter(t=>t.album===name); if(tracks.length===0) tracks=TRACKS.slice(0,3);
-  document.getElementById('albumDetailTracks').innerHTML=tracks.map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">${t.img?`<img src="${t.img}" onerror="this.style.display='none'">`:'🎵'}</div><div><b>${t.title}</b><br><small>${t.singer} • ${t.md}</small></div><div class="play-btn">▶</div></div>`).join('');
-  showPageOnly('albumdetail');
-}
+function openAlbum(name){ name=decodeURIComponent(name); let a=ALBUMS.find(x=>x.name===name)||ALBUMS[0]; setTxt('albumDetailName',a.name); setTxt('albumDetailMeta',a.year+' • '+a.songs+' • '+a.md); setTxt('albumDetailMD',a.md); setTxt('albumDetailSingers',a.singer); let c=document.getElementById('albumDetailCoverImg'); if(a.img){ c.src=a.img; c.style.display='block'; } else c.style.display='none'; document.getElementById('albumDetailCoverWrap').className='player-cover-big '+a.cls; let tr=TRACKS.filter(t=>t.album===name); if(!tr.length) tr=TRACKS.slice(0,3); document.getElementById('albumDetailTracks').innerHTML=tr.map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">${t.img?`<img src="${t.img}" onerror="this.style.display='none'">`:'🎵'}</div><div><b>${t.title}</b><br><small>${t.singer} • ${t.md}</small></div><div class="play-btn">▶</div></div>`).join(''); showPageOnly('albumdetail'); }
 function renderTracks(){ document.getElementById('trackList').innerHTML=TRACKS.map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">${t.img?`<img src="${t.img}" onerror="this.style.display='none'">`:'🎵'}</div><div><b>${t.title}</b><br><small>${t.album} • ${t.singer}</small></div><div class="play-btn">▶</div></div>`).join(''); }
 let currentTrackIndex=0;
-function openPlayer(title){
-  title=decodeURIComponent(title);
-  let idx=TRACKS.findIndex(x=>x.title===title);
-  stopMarquee();
-  document.getElementById('marqueeTitle').innerHTML=`<h2 id="playerTitle"></h2>`;
-  document.getElementById('marqueeSinger').innerHTML=`<p id="playerSingerLine"></p>`;
-  let coverImg=document.getElementById('playerCoverImg');
-  if(idx===-1){
-    setTxt('playerTitle',title);
-    setTxt('playerAlbumTop','Premam');
-    setTxt('playerSingerLine','Vineeth Sreenivasan, Shaan Rahman');
-    document.getElementById('playerCover').className='player-cover-big t1';
-    setTxt('playerCoverTitle',title.toUpperCase());
-    coverImg.src=albumImg('Premam'); coverImg.style.display='block';
-  } else {
-    currentTrackIndex=idx; let t=TRACKS[idx];
-    setTxt('playerTitle',t.title+' - From "'+t.album+'"');
-    setTxt('playerAlbumTop',t.album);
-    setTxt('playerSingerLine',t.singer);
-    document.getElementById('playerCover').className='player-cover-big '+t.cls;
-    setTxt('playerCoverTitle',t.title.toUpperCase());
-    if(t.img){ coverImg.src=t.img; coverImg.style.display='block'; } else { coverImg.style.display='none'; }
-  }
-  document.getElementById('progressFill').style.width='12%'; isPlaying=true; document.getElementById('playBtn').innerText='⏸';
-  showPageOnly('player'); updateAddBtn(); startAllMarquee();
-}
-function openDetail(title){
-  title=decodeURIComponent(title);
-  setTxt('detailTitle',title);
-  setTxt('detailHeading',title);
-  setTxt('detailSub',title+' - Separate Page');
-  setTxt('detailEmoji','📁');
-  document.getElementById('detailContent').innerHTML=TRACKS.slice(0,3).map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">${t.img?`<img src="${t.img}" onerror="this.style.display='none'">`:'🎵'}</div><div><b>${t.title}</b><br><small>${t.album} • ${t.singer}</small></div><div class="play-btn">▶</div></div>`).join('');
-  showPageOnly('detail');
-}
-function showPageOnly(name){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
-  let navMap={home:'home',album:'album',track:'track',profile:'profile',artist:'home',albumdetail:'album',player:'track',detail:'profile',editprofile:'profile',auth:'profile'};
-  document.getElementById('nav-'+(navMap[name]||'home')).classList.add('active');
-  if(name==='player'){
-    document.documentElement.classList.add('player-locked');
-    document.body.classList.add('player-locked');
-    window.scrollTo(0,0);
-  } else {
-    document.documentElement.classList.remove('player-locked');
-    document.body.classList.remove('player-locked');
-    stopMarquee();
-    window.scrollTo(0,0);
-  }
-}
-function router(){
-  let hash=location.hash.replace('#/','')||'home';
-  let parts=hash.split('/'); let page=parts[0]; let param=parts.slice(1).join('/');
-  if(page==='artist'&&param) openArtist(param);
-  else if(page==='album'&&param) openAlbum(param);
-  else if(page==='player'&&param) openPlayer(param);
-  else if(page==='detail'&&param) openDetail(param);
-  else if(page==='editprofile') { if(window.openEditProfile) window.openEditProfile(); }
-  else if(page==='profile') { if(window.openProfilePage) window.openProfilePage(); else showPageOnly('auth'); }
-  else if(page==='auth') showPageOnly('auth');
-  else showPageOnly(page==='albumdetail'?'album':page);
-}
+function openPlayer(title){ title=decodeURIComponent(title); let idx=TRACKS.findIndex(x=>x.title===title); stopMarquee(); document.getElementById('marqueeTitle').innerHTML=`<h2 id="playerTitle"></h2>`; document.getElementById('marqueeSinger').innerHTML=`<p id="playerSingerLine"></p>`; let cover=document.getElementById('playerCoverImg'); if(idx===-1){ setTxt('playerTitle',title); setTxt('playerAlbumTop','Premam'); setTxt('playerSingerLine','Vineeth Sreenivasan, Shaan Rahman'); document.getElementById('playerCover').className='player-cover-big t1'; setTxt('playerCoverTitle',title.toUpperCase()); cover.src=albumImg('Premam'); cover.style.display='block'; } else { currentTrackIndex=idx; let t=TRACKS[idx]; setTxt('playerTitle',t.title+' - From "'+t.album+'"'); setTxt('playerAlbumTop',t.album); setTxt('playerSingerLine',t.singer); document.getElementById('playerCover').className='player-cover-big '+t.cls; setTxt('playerCoverTitle',t.title.toUpperCase()); if(t.img){ cover.src=t.img; cover.style.display='block'; } else cover.style.display='none'; } document.getElementById('progressFill').style.width='12%'; isPlaying=true; document.getElementById('playBtn').innerText='⏸'; showPageOnly('player'); updateAddBtn(); startAllMarquee(); }
+function openDetail(title){ title=decodeURIComponent(title); setTxt('detailTitle',title); setTxt('detailHeading',title); setTxt('detailSub',title+' - Separate Page'); setTxt('detailEmoji','📁'); document.getElementById('detailContent').innerHTML=TRACKS.slice(0,3).map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">${t.img?`<img src="${t.img}" onerror="this.style.display='none'">`:'🎵'}</div><div><b>${t.title}</b><br><small>${t.album} • ${t.singer}</small></div><div class="play-btn">▶</div></div>`).join(''); showPageOnly('detail'); }
+function showPageOnly(name){ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('page-'+name).classList.add('active'); document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active')); let m={home:'home',album:'album',track:'track',profile:'profile',artist:'home',albumdetail:'album',player:'track',detail:'profile',editprofile:'profile',auth:'profile'}; document.getElementById('nav-'+(m[name]||'home')).classList.add('active'); if(name==='player'){ document.documentElement.classList.add('player-locked'); document.body.classList.add('player-locked'); window.scrollTo(0,0); } else { document.documentElement.classList.remove('player-locked'); document.body.classList.remove('player-locked'); stopMarquee(); window.scrollTo(0,0); } }
+function router(){ let hash=location.hash.replace('#/','')||'home'; let parts=hash.split('/'); let page=parts[0]; let param=parts.slice(1).join('/'); if((page==='profile'||page==='editprofile') && window.__A2Z_AUTH_READY===false){ window.__A2Z_AUTH_PENDING_PROFILE=true; document.getElementById('loading').classList.add('show'); document.getElementById('loading').innerText='⏳ Checking login...'; setTimeout(()=>{ if(window.__A2Z_AUTH_READY===false){ window.__A2Z_AUTH_READY=true; window.__A2Z_AUTH_PENDING_PROFILE=false; document.getElementById('loading').classList.remove('show'); router(); } },2000); return; } if(page==='artist'&&param) openArtist(param); else if(page==='album'&&param) openAlbum(param); else if(page==='player'&&param) openPlayer(param); else if(page==='detail'&&param) openDetail(param); else if(page==='editprofile'){ if(window.openEditProfile) window.openEditProfile(); } else if(page==='profile'){ if(window.openProfilePage) window.openProfilePage(); else showPageOnly('auth'); } else if(page==='auth') showPageOnly('auth'); else showPageOnly(page==='albumdetail'?'album':page); }
 window.addEventListener('hashchange',router);
-let isPlaying=true, prog=12;
-function togglePlay(){ isPlaying=!isPlaying; document.getElementById('playBtn').innerText=isPlaying?'⏸':'▶'; }
-function nextTrack(){ currentTrackIndex=(currentTrackIndex+1)%TRACKS.length; go('player/'+encodeURIComponent(TRACKS[currentTrackIndex].title)); }
-function prevTrack(){ currentTrackIndex=(currentTrackIndex-1+TRACKS.length)%TRACKS.length; go('player/'+encodeURIComponent(TRACKS[currentTrackIndex].title)); }
+let isPlaying=true, prog=12; function togglePlay(){ isPlaying=!isPlaying; document.getElementById('playBtn').innerText=isPlaying?'⏸':'▶'; } function nextTrack(){ currentTrackIndex=(currentTrackIndex+1)%TRACKS.length; go('player/'+encodeURIComponent(TRACKS[currentTrackIndex].title)); } function prevTrack(){ currentTrackIndex=(currentTrackIndex-1+TRACKS.length)%TRACKS.length; go('player/'+encodeURIComponent(TRACKS[currentTrackIndex].title)); }
 setInterval(()=>{ if(isPlaying && document.getElementById('page-player').classList.contains('active')){ prog+=1; if(prog>100) prog=0; document.getElementById('progressFill').style.width=prog+'%'; let sec=Math.floor(prog*2.64); document.getElementById('curTime').innerText='0:'+(sec<10?'0'+sec:sec); } },1000);
-function doSearch(val){ if(!val){renderTracks();return;} let f=TRACKS.filter(t=>t.title.toLowerCase().includes(val.toLowerCase())); document.getElementById('trackList').innerHTML=f.map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">${t.img?`<img src="${t.img}" onerror="this.style.display='none'">`:'🎵'}</div><div><b>${t.title}</b><br><small>${t.album}</small></div><div class="play-btn">▶</div></div>`).join(''); }
-showTab('actor'); renderAlbums(); renderTracks(); renderMyPlaylists(); updateAddBtn();
-if(window.renderProfile) window.renderProfile();
-if(!location.hash) location.hash='/home'; else router();
+function doSearch(v){ if(!v){ renderTracks(); return; } let f=TRACKS.filter(t=>t.title.toLowerCase().includes(v.toLowerCase())); document.getElementById('trackList').innerHTML=f.map(t=>`<div class="song-row" onclick="go('player/${encodeURIComponent(t.title)}')"><div class="thumb ${t.cls}">${t.img?`<img src="${t.img}" onerror="this.style.display='none'">`:'🎵'}</div><div><b>${t.title}</b><br><small>${t.album}</small></div><div class="play-btn">▶</div></div>`).join(''); }
+showTab('actor'); renderAlbums(); renderTracks(); renderMyPlaylists(); updateAddBtn(); if(window.renderProfile) window.renderProfile(); if(!location.hash) location.hash='/home'; else router();
 </script>
 </body>
 </html>
